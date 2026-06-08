@@ -105,8 +105,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </div>
   <div class="updated">
-    최종 갱신: <b>2026-06-08 14:21 KST</b><br>
-    <span>서버 배포: 2026-06-05 10:14 KST</span><br>
+    최종 갱신: <b>2026-06-08 17:00 KST</b><br>
+    <span>제주 오픈 6/05 10:14, 내륙 오픈 6/08 15:54 KST</span><br>
     <span style="color:#9ca3af">결제는 실시간 적재<br>앱과 웹 이벤트는 D+1 적재(6/07까지 집계)</span>
   </div>
 </div>
@@ -120,7 +120,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
     <div class="o-block">
       <div class="lbl">노출 대상</div>
-      <div class="val">특정 운영 지역 한정 노출(PoC). 재고가 있는 차량에 한해 옵션 노출</div>
+      <div class="val">제주 6/05 오픈, 내륙 6/08 오픈(PoC)<br>재고가 있는 차량에 한해 옵션 노출</div>
     </div>
     <div class="o-block">
       <div class="lbl">데이터 출처</div>
@@ -132,25 +132,25 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 <!-- 핵심 KPI banner -->
 <div class="period-banner">
   <div class="period-inner">
+    <div class="period-block highlight">
+      <div class="lbl">제주 인앱 신규</div>
+      <div class="val">66 예약</div>
+      <div class="sub">6/05 10:14 오픈 이후</div>
+    </div>
     <div class="period-block">
-      <div class="lbl">인앱 신규 결제 예약</div>
-      <div class="val">63 예약</div>
-      <div class="sub">제주 PoC 신규분 (마이그레이션 제외)</div>
+      <div class="lbl">내륙 인앱 신규</div>
+      <div class="val">0 예약</div>
+      <div class="sub">6/08 15:54 오픈, 3건 시도 전부 취소</div>
     </div>
     <div class="period-block">
       <div class="lbl">기존예약 마이그레이션</div>
       <div class="val">2 예약</div>
-      <div class="sub">아임웹 오프라인 운영분 수기 이관, 별도 분리</div>
+      <div class="sub">제주 아임웹 오프라인 운영분, 별도 분리</div>
     </div>
     <div class="period-block">
-      <div class="lbl">신규 순매출</div>
-      <div class="val">2,980,000 원</div>
-      <div class="sub">신규분 예약 단위 순액 (취소, 환불 제외)</div>
-    </div>
-    <div class="period-block">
-      <div class="lbl">옵션 화면 노출</div>
-      <div class="val">166 명</div>
-      <div class="sub">6/05~6/07 순 사용자(이벤트 D+1)</div>
+      <div class="lbl">인앱 신규 순매출</div>
+      <div class="val">3,190,000 원</div>
+      <div class="sub">제주 신규 기준 (마이그 제외)</div>
     </div>
   </div>
 </div>
@@ -159,33 +159,33 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
   <!-- 결제 누계 KPI -->
   <div class="section-label" style="font-size:14px">
-    결제 실적 누계 (6/05~6/08 KST)
+    제주 인앱 결제 실적 (6/05 10:14 오픈 이후, 실시간)
     <span class="tag tag-fact">검증된 수치</span>
   </div>
   <div class="section-explain">
-    charged_info의 카시트, 유모차 청구 행을 <b>예약 단위로 전 기간 합산</b>해 순액이 양수인 예약만 결제로 집계<br>
-    <b>마이그레이션 2건은 분리함</b><br>아래 KPI는 인앱 신규분 기준<br>결제는 실시간 적재라 6/08 당일분도 포함
+    charged_info의 카시트, 유모차 청구를 예약 단위로 합산해 순액 양수만 결제로 집계<br>
+    <b>마이그레이션 2건은 분리</b>, 아래는 제주 인앱 신규 기준<br>내륙은 6/08 오픈이라 아래 별도 섹션 참고
   </div>
   <div class="kpi-row">
     <div class="kpi">
       <div class="lbl">인앱 신규 결제 예약</div>
-      <div class="num blue">63 <span class="unit">예약</span></div>
-      <div class="sub">상품 단위 69건<br>(카시트+유모차 동시 6건)</div>
+      <div class="num blue">66 <span class="unit">예약</span></div>
+      <div class="sub">상품 단위 73건<br>(카시트+유모차 동시 7건)</div>
     </div>
     <div class="kpi">
       <div class="lbl">신규 순매출</div>
-      <div class="num green">298 <span class="unit">만원</span></div>
-      <div class="sub">2,980,000원 (예약 단위 순액)</div>
+      <div class="num green">319 <span class="unit">만원</span></div>
+      <div class="sub">3,190,000원 (예약 단위 순액)</div>
     </div>
     <div class="kpi">
       <div class="lbl">카시트 (신규)</div>
-      <div class="num purple">62 <span class="unit">건</span></div>
-      <div class="sub">순매출 2,720,000원</div>
+      <div class="num purple">65 <span class="unit">건</span></div>
+      <div class="sub">순매출 2,890,000원</div>
     </div>
     <div class="kpi">
       <div class="lbl">유모차 (신규)</div>
-      <div class="num amber">7 <span class="unit">건</span></div>
-      <div class="sub">순매출 260,000원</div>
+      <div class="num amber">8 <span class="unit">건</span></div>
+      <div class="sub">순매출 300,000원</div>
     </div>
     <div class="kpi">
       <div class="lbl">기존예약 마이그레이션<br><span style="color:#9ca3af;font-weight:400">(별도 분리)</span></div>
@@ -199,7 +199,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <h4>데이터 읽을 때 참고</h4>
     <ul>
       <li><b>마이그레이션 2건은 신규 수치에서 제외함</b><br>아임웹 오프라인 운영분을 6/05 인앱 오픈 때 수기 이관한 건<br>인앱 옵션 화면 미노출, 예약 생성일 배포 전 두 기준이 모두 같은 2건을 가리킴</li>
-      <li><b>결제 후 취소된 예약 61건도 제외함</b><br>결제했다가 예약 자체가 취소돼 부가서비스가 함께 환불된 건<br>순매출과 결제 건수에는 이미 빠져 있음</li>
+      <li><b>결제 후 취소된 예약도 제외함</b><br>결제했다가 예약 자체가 취소돼 부가서비스가 함께 환불된 건<br>순매출과 결제 건수에는 이미 빠져 있음</li>
       <li><b>6/08은 아직 진행 중</b><br>당일 집계라 마감되면 늘어남</li>
       <li><b>옵션 노출과 클릭 지표는 6/07까지만</b><br>앱과 웹 이벤트는 하루 뒤 적재되어 결제와 종료일이 다름</li>
     </ul>
@@ -251,15 +251,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
         </tr>
         <tr>
           <td class="dt">6/08 <span style="font-size:11px;color:#9ca3af;font-weight:400">(진행 중)</span></td>
-          <td class="num">20</td><td class="num">850,000</td>
-          <td class="num">1</td><td class="num">40,000</td>
-          <td class="num">20</td><td class="num">890,000</td>
+          <td class="num">23</td><td class="num">1,020,000</td>
+          <td class="num">2</td><td class="num">80,000</td>
+          <td class="num">23</td><td class="num">1,100,000</td>
         </tr>
         <tr class="total">
           <td class="dt">신규 누계</td>
-          <td class="num">62</td><td class="num">2,720,000</td>
-          <td class="num">7</td><td class="num">260,000</td>
-          <td class="num">63</td><td class="num">2,980,000</td>
+          <td class="num">65</td><td class="num">2,890,000</td>
+          <td class="num">8</td><td class="num">300,000</td>
+          <td class="num">66</td><td class="num">3,190,000</td>
         </tr>
         <tr style="background:#f1f5f9;color:#64748b">
           <td class="dt" style="color:#64748b">6/06 <span style="font-size:10px;background:#cbd5e1;color:#334155;padding:1px 5px;border-radius:3px">마이그</span></td>
@@ -288,14 +288,28 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </details>
 
+  <!-- 내륙 (6/8 오픈) -->
+  <div class="section-label" style="margin-top:30px">
+    내륙 인앱 결제 실적 (6/08 15:54 오픈 이후)
+    <span class="tag tag-info">오픈 당일</span>
+  </div>
+  <div class="card" style="background:#f8fafc;border-color:#e2e8f0">
+    <div style="font-size:15px;font-weight:800;color:#334155;margin-bottom:10px">인앱 신규 결제 0건</div>
+    <div style="font-size:13px;color:#475569;line-height:1.9">
+      6/08 15:54 내륙(대구, 부산) 오픈 후 3건 결제 시도<br>
+      3건 모두 결제 직후 취소되어 유효 결제는 아직 0건<br>
+      오픈 당일이라 표본이 매우 적음. 옵션 노출, 클릭 이벤트는 D+1이라 6/09부터 확인 가능
+    </div>
+  </div>
+
   <!-- funnel -->
   <div class="section-label" style="margin-top:30px">
-    옵션 진입 단계별 사용자 수 (6/05~6/07 누적 UU)
-    <span class="tag tag-fact">검증된 수치</span>
+    제주 옵션 진입 단계 (6/05~6/07 누적 UU)
+    <span class="tag tag-info">이벤트 D+1, 6/07까지</span>
   </div>
   <div class="section-explain">
     결제 화면의 부가서비스 추가 버튼 클릭부터 옵션 화면 노출, 추가 버튼 클릭까지의 순 사용자 수<br>
-    이벤트 로그는 D+1 적재라 6/07까지만 집계<br>결제 단계는 예약 단위 건수라 분모가 달라 참고용
+    이벤트 로그는 D+1 적재라 6/07까지만 집계 (결제 건수는 위 결제 실적 참고)
   </div>
   <div class="card">
     <div class="funnel-bars">
@@ -314,15 +328,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
         <div class="bar-track"><div class="bar-fill" style="width:74.7%;background:#0ea5e9">136명</div></div>
         <div class="bar-pct">노출 대비 82%</div>
       </div>
-      <div class="bar-row final">
-        <div class="bar-label">결제 완료<br><span class="sub">charged_info 예약 단위 (UU 아님, 참고용)</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:23.6%;background:#059669">43 예약</div></div>
-        <div class="bar-pct">6/05~6/07 신규 결제</div>
-      </div>
     </div>
     <div style="margin-top:14px;font-size:12px;color:#6b7280;line-height:1.8">
       옵션 상세 도움말(product_detail_help) 클릭은 35명으로 별도 분리<br>
-      결제 완료는 사용자 단위가 아니라 예약 단위 건수라 위 단계와 분모가 다름
+      이 단계는 옵션 진입 흐름만 표시. 결제 건수는 상단 결제 실적 참고
     </div>
   </div>
 
@@ -482,10 +491,10 @@ new Chart(document.getElementById('dailyChart'), {
   data: {
     labels: ['6/05 (배포)', '6/06', '6/07', '6/08 (진행중)'],
     datasets: [
-      { label: '카시트 건수(신규)', data: [16, 13, 13, 20], backgroundColor: '#a78bfa', stack: 'cnt', yAxisID: 'y' },
-      { label: '유모차 건수(신규)', data: [2, 2, 2, 1], backgroundColor: '#fbbf24', stack: 'cnt', yAxisID: 'y' },
+      { label: '카시트 건수(신규)', data: [16, 13, 13, 23], backgroundColor: '#a78bfa', stack: 'cnt', yAxisID: 'y' },
+      { label: '유모차 건수(신규)', data: [2, 2, 2, 2], backgroundColor: '#fbbf24', stack: 'cnt', yAxisID: 'y' },
       { label: '마이그레이션', data: [0, 1, 1, 0], backgroundColor: '#cbd5e1', stack: 'cnt', yAxisID: 'y' },
-      { label: '신규 순매출(원)', type: 'line', data: [730000, 750000, 610000, 890000], borderColor: '#059669', backgroundColor: '#059669', borderWidth: 2, tension: 0.3, yAxisID: 'y1', pointRadius: 4 },
+      { label: '신규 순매출(원)', type: 'line', data: [730000, 750000, 610000, 1100000], borderColor: '#059669', backgroundColor: '#059669', borderWidth: 2, tension: 0.3, yAxisID: 'y1', pointRadius: 4 },
     ]
   },
   options: {
