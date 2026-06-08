@@ -144,8 +144,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
     <div class="period-block">
       <div class="lbl">기존예약 마이그레이션</div>
-      <div class="val">2 예약</div>
-      <div class="sub">카시트 마이그 시트 272건 중 인앱 결제 적재 2건</div>
+      <div class="val">272 예약</div>
+      <div class="sub">시트 전체 요청 건. 부가서비스 결제로 적재된 건 2건뿐</div>
     </div>
     <div class="period-block">
       <div class="lbl">인앱 신규 순매출</div>
@@ -188,9 +188,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div class="sub">순매출 300,000원</div>
     </div>
     <div class="kpi">
-      <div class="lbl">기존예약 마이그레이션<br><span style="color:#9ca3af;font-weight:400">(별도 분리)</span></div>
-      <div class="num" style="color:#64748b">2 <span class="unit">예약</span></div>
-      <div class="sub">시트 272건 중 인앱 결제 2건<br>순매출 90,000원 (신규서 제외)</div>
+      <div class="lbl">기존예약 마이그레이션<br><span style="color:#9ca3af;font-weight:400">(시트 요청 전체)</span></div>
+      <div class="num" style="color:#64748b">272 <span class="unit">건</span></div>
+      <div class="sub">부가서비스 결제 적재 2건뿐<br>270건은 카시트가 addon 미적재</div>
     </div>
   </div>
 
@@ -198,7 +198,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div class="warn-box">
     <h4>데이터 읽을 때 참고</h4>
     <ul>
-      <li><b>마이그레이션 2건은 신규 수치에서 제외함</b><br>카시트 마이그레이션 시트(아임웹 오프라인 운영분)는 272건이지만, 인앱 결제(charged_info)에 적재된 건 2건뿐<br>나머지 270건은 오프라인 운영분이라 인앱 데이터에 없어 신규 66에 애초에 포함되지 않음 (시트 교집합 쿼리로 확인)</li>
+      <li><b>마이그레이션 요청은 272건 (시트 전체)</b><br>272건 모두 실제 예약이고 일반 대여 청구(rent)는 있으나, 카시트 비용이 부가서비스(addon_carseat)로 적재된 건 2건뿐<br>270건은 카시트가 addon 미적재라 부가서비스 매출에 안 잡힘. 신규 66과는 2건만 겹침</li>
+      <li><b>마이그 카시트 매출 과소집계 주의</b><br>270건 카시트 비용이 일반 요금(rent)에 묻혀 부가서비스 매출로 분리 안 됨. 실제 카시트 수요는 대시보드 수치보다 큼</li>
       <li><b>결제 후 취소된 예약도 제외함</b><br>결제했다가 예약 자체가 취소돼 부가서비스가 함께 환불된 건<br>순매출과 결제 건수에는 이미 빠져 있음</li>
       <li><b>6/08은 아직 진행 중</b><br>당일 집계라 마감되면 늘어남</li>
       <li><b>옵션 노출과 클릭 지표는 6/07까지만</b><br>앱과 웹 이벤트는 하루 뒤 적재되어 결제와 종료일이 다름</li>
@@ -282,25 +283,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       </tbody>
     </table>
     <div style="margin-top:10px;font-size:11px;color:#9ca3af;line-height:1.6">
-      신규 = 인앱 결제 플로우를 거친 예약<br>마이그레이션 = 아임웹 오프라인 운영분을 6/05 인앱 오픈 때 수기 이관한 건<br>
+      신규 = 인앱 결제 플로우를 거친 예약<br>아래 마이그 행은 부가서비스 결제(addon)로 적재된 2건. 마이그레이션 요청 전체 272건은 상단 KPI 참고<br>
       예약 단위 집계라 카시트와 유모차를 함께 결제한 예약은 결제 예약 칼럼에서 1로 카운트(상품 건은 각각 집계). 일자는 첫 결제일 기준. 6/08은 진행 중이라 마이그 검증은 D+1 이벤트 적재 후 가능
     </div>
     </div>
   </details>
-
-  <!-- 내륙 (6/8 오픈) -->
-  <div class="section-label" style="margin-top:30px">
-    내륙 인앱 결제 실적 (6/08 15:54 오픈 이후)
-    <span class="tag tag-info">오픈 당일</span>
-  </div>
-  <div class="card" style="background:#f8fafc;border-color:#e2e8f0">
-    <div style="font-size:15px;font-weight:800;color:#334155;margin-bottom:10px">인앱 신규 결제 0건</div>
-    <div style="font-size:13px;color:#475569;line-height:1.9">
-      6/08 15:54 내륙(대구, 부산) 오픈 후 3건 결제 시도<br>
-      3건 모두 결제 직후 취소되어 유효 결제는 아직 0건<br>
-      오픈 당일이라 표본이 매우 적음<br>옵션 노출, 클릭 이벤트는 D+1이라 6/09부터 확인 가능
-    </div>
-  </div>
 
   <!-- funnel -->
   <div class="section-label" style="margin-top:30px">
@@ -421,6 +408,32 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
     </div>
   </details>
+
+  <!-- 내륙 (6/8 오픈, 하단) -->
+  <div class="section-label" style="margin-top:30px">
+    내륙 (대구, 부산) 결제 실적 (6/08 15:54 오픈)
+    <span class="tag tag-info">오픈 당일</span>
+  </div>
+  <div class="section-explain">
+    내륙은 6/08 오후 오픈이라 표본이 매우 적음<br>옵션 노출, 클릭, 차단 이벤트는 D+1 적재라 수락률과 차단율은 6/09부터 집계 가능
+  </div>
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi">
+      <div class="lbl">인앱 신규 결제</div>
+      <div class="num" style="color:#64748b">0 <span class="unit">건</span></div>
+      <div class="sub">3건 시도, 전부 결제 직후 취소</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">최종 수락률</div>
+      <div style="font-size:18px;font-weight:800;color:#94a3b8;margin-top:6px">집계 전</div>
+      <div class="sub">이벤트 D+1, 6/09부터</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">시간 리드타임 차단율</div>
+      <div style="font-size:18px;font-weight:800;color:#94a3b8;margin-top:6px">집계 전</div>
+      <div class="sub">이벤트 D+1, 6/09부터</div>
+    </div>
+  </div>
 
   <!-- BQ 쿼리 (접힘) -->
   <details style="margin-top:24px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
