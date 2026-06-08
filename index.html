@@ -324,7 +324,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
         <div class="bar-pct">앱 클릭 대비 91%</div>
       </div>
       <div class="bar-row">
-        <div class="bar-label">옵션 추가 버튼 클릭<br><span class="sub">services_option / cta_button</span></div>
+        <div class="bar-label">선택 제출(완료)<br><span class="sub">services_option / cta_button</span></div>
         <div class="bar-track"><div class="bar-fill" style="width:74.7%;background:#0ea5e9">136명</div></div>
         <div class="bar-pct">노출 대비 82%</div>
       </div>
@@ -334,6 +334,65 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       이 단계는 옵션 진입 흐름만 표시. 결제 건수는 상단 결제 실적 참고
     </div>
   </div>
+
+  <!-- 수락·차단 지표 -->
+  <div class="section-label" style="margin-top:30px">
+    제주 수락률과 차단율 (6/05~6/07, 옵션 화면 진입 기준)
+    <span class="tag tag-info">이벤트 D+1</span>
+  </div>
+  <div class="section-explain">
+    옵션 화면에 진입한 회원 중 실제 선택을 끝낸 비율과 시간 제약으로 막힌 비율<br>로깅 정의서 측정지표 기준
+  </div>
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi">
+      <div class="lbl">최종 수락률 <span style="color:#9ca3af;font-weight:400">(핵심)</span></div>
+      <div class="num green">81.9 <span class="unit">%</span></div>
+      <div class="sub">옵션 진입 166명 중 선택 제출 136명</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">카시트 수락률</div>
+      <div class="num purple">81.3 <span class="unit">%</span></div>
+      <div class="sub">진입 166 → 제출 135</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">유모차 수락률</div>
+      <div class="num amber">52.4 <span class="unit">%</span></div>
+      <div class="sub">진입 42 → 제출 22</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">시간 리드타임 차단율</div>
+      <div class="num" style="color:#dc2626">24.7 <span class="unit">%</span></div>
+      <div class="sub">추가 클릭 182명 중 45명<br>시간 알럿(닫기 35, 변경 30)</div>
+    </div>
+  </div>
+
+  <!-- 측정지표 반영 현황 (접힘) -->
+  <details style="margin-top:14px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
+    <summary style="font-size:13px;font-weight:700;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between">
+      <span>로깅 정의서 측정지표 반영 현황</span>
+      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
+    </summary>
+    <div style="margin-top:14px">
+    <table class="data-table">
+      <thead><tr><th>측정지표</th><th>상태</th><th>현재 값 / 비고</th></tr></thead>
+      <tbody>
+        <tr><td>부가서비스 매출 합계</td><td style="color:#059669;font-weight:700">반영</td><td>3,190,000원 (무료이벤트 할인 0)</td></tr>
+        <tr><td>상품별 결제 분포</td><td style="color:#059669;font-weight:700">반영</td><td>카시트 65, 유모차 8</td></tr>
+        <tr><td>웹뷰 페이지 진입율</td><td style="color:#059669;font-weight:700">반영</td><td>91.2% (추가 클릭 182 → 진입 166)</td></tr>
+        <tr><td>최종 수락률 (핵심)</td><td style="color:#059669;font-weight:700">반영</td><td>81.9%</td></tr>
+        <tr><td>카시트 / 유모차 수락률</td><td style="color:#059669;font-weight:700">반영</td><td>81.3% / 52.4%</td></tr>
+        <tr><td>위치 단계 진입율</td><td style="color:#059669;font-weight:700">반영</td><td>78.9% (카시트, 진입 166 → 위치 131)</td></tr>
+        <tr><td>운영시간 리드타임 차단율</td><td style="color:#059669;font-weight:700">반영</td><td>24.7%</td></tr>
+        <tr><td>도움말 열람</td><td style="color:#b45309;font-weight:700">부분</td><td>35명 집계, 구매 영향 비교는 미산출</td></tr>
+        <tr><td>추가 시도율</td><td style="color:#9ca3af">미반영</td><td>분모(노출 조건 명세) 서버 미전달</td></tr>
+        <tr><td>결제 전환율</td><td style="color:#9ca3af">미반영</td><td>결제와 제출 회원 연결 추가 필요</td></tr>
+        <tr><td>재고 부족 구매 실패율</td><td style="color:#9ca3af">미반영</td><td>서버 재고 차단 건수 미적재</td></tr>
+        <tr><td>재고 노출 전환 영향</td><td style="color:#9ca3af">미반영</td><td>stock_state 분석 추가 필요</td></tr>
+        <tr><td>매출 기여도</td><td style="color:#9ca3af">미반영</td><td>전체 매출 대비 미산출</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
 
   <!-- 일별 이벤트 funnel (접힘) -->
   <details style="margin-top:14px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
