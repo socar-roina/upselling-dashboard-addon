@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업셀링 부가서비스 모니터링</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif; background: #f7f8fa; color: #111827; font-size: 14px; line-height: 1.5; min-width: 1200px; }
+
+.top-bar { background: white; color: #111827; border-bottom: 1px solid #e5e7eb; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
+.top-bar h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.top-bar .meta { font-size: 12px; color: #6b7280; margin-top: 6px; line-height: 1.6; max-width: 900px; }
+.top-bar .updated { font-size: 11px; color: #6b7280; text-align: right; line-height: 1.7; }
+.top-bar .updated b { color: #111827; }
+
+.experiment-overview { background: #f0f9ff; border-bottom: 1px solid #bae6fd; padding: 16px 24px; }
+.experiment-overview .inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.experiment-overview .o-block { padding: 8px 14px; border-left: 3px solid #3b82f6; }
+.experiment-overview .o-block .lbl { font-size: 11px; font-weight: 800; color: #0c4a6e; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.experiment-overview .o-block .val { font-size: 13px; color: #1e293b; line-height: 1.7; }
+
+.period-banner { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 18px 24px; }
+.period-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+.period-block { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; }
+.period-block .lbl { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.period-block .val { font-size: 13px; font-weight: 700; color: white; line-height: 1.4; }
+.period-block .sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.5; }
+
+.main { max-width: 1440px; margin: 0 auto; padding: 24px; }
+
+.section-label { font-size: 13px; font-weight: 800; color: #374151; margin: 30px 0 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.section-label::before { content: ""; display: inline-block; width: 4px; height: 16px; background: #3b82f6; border-radius: 2px; }
+.section-label .tag { font-size: 10px; padding: 3px 8px; border-radius: 20px; font-weight: 600; letter-spacing: 0; }
+.tag-fact { background: #d1fae5; color: #065f46; }
+.tag-info { background: #dbeafe; color: #1e40af; }
+.tag-danger { background: #fee2e2; color: #991b1b; }
+
+.section-explain { font-size: 13px; color: #4b5563; line-height: 1.8; padding: 12px 16px; background: #f9fafb; border-radius: 8px; margin-bottom: 14px; border-left: 3px solid #6b7280; }
+.section-explain b { color: #111827; }
+
+.card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 22px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 16px; }
+.card-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 6px; }
+.card-sub { font-size: 12px; color: #6b7280; margin-bottom: 16px; line-height: 1.7; }
+
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+.kpi { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 18px 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.kpi .lbl { font-size: 12px; font-weight: 700; color: #6b7280; margin-bottom: 8px; line-height: 1.5; min-height: 36px; }
+.kpi .num { font-size: 30px; font-weight: 900; line-height: 1; color: #111827; }
+.kpi .num.green { color: #059669; }
+.kpi .num.purple { color: #7c3aed; }
+.kpi .num.blue { color: #2563eb; }
+.kpi .num.amber { color: #b45309; }
+.kpi .unit { font-size: 14px; font-weight: 700; color: #6b7280; margin-left: 2px; }
+.kpi .sub { font-size: 11px; color: #6b7280; margin-top: 10px; line-height: 1.6; }
+
+.query-block { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 12px 14px; font-family: ui-monospace, monospace; font-size: 11px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f9fafb; padding: 12px 14px; text-align: left; font-size: 12px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb; }
+.data-table th.num { text-align: right; }
+.data-table td { padding: 12px 14px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+.data-table td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.data-table td.dt { font-weight: 700; color: #374151; }
+.data-table tr.total td { background: #f9fafb; font-weight: 800; }
+
+.chart-wrap { height: 300px; }
+
+/* FUNNEL BARS */
+.funnel-bars { display: flex; flex-direction: column; gap: 12px; }
+.bar-row { display: grid; grid-template-columns: 280px 1fr 120px; align-items: center; gap: 14px; }
+.bar-label { font-size: 13px; color: #374151; font-weight: 600; }
+.bar-label .sub { font-size: 11px; color: #9ca3af; font-weight: 500; display: block; margin-top: 2px; }
+.bar-track { background: #f3f4f6; border-radius: 6px; height: 34px; position: relative; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; color: white; font-weight: 800; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 60px; }
+.bar-pct { font-size: 12px; color: #6b7280; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.bar-row.final .bar-label { color: #065f46; font-weight: 700; }
+
+.foot-note { font-size: 13px; color: #4b5563; margin-top: 30px; padding: 18px 22px; line-height: 2; background: #f9fafb; border-radius: 10px; border: 1px solid #e5e7eb; }
+.foot-note h4 { font-size: 13px; font-weight: 800; color: #111827; margin-bottom: 10px; }
+.foot-note .term { display: grid; grid-template-columns: 200px 1fr; gap: 12px; padding: 6px 0; border-bottom: 1px solid #f3f4f6; }
+.foot-note .term:last-child { border-bottom: none; }
+.foot-note .term b { color: #111827; }
+
+.warn-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; }
+.warn-box h4 { font-size: 13px; font-weight: 800; color: #9a3412; margin-bottom: 10px; }
+.warn-box ul { list-style: none; }
+.warn-box li { font-size: 13px; color: #7c2d12; line-height: 1.8; padding-left: 16px; position: relative; }
+.warn-box li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: #ea580c; }
+.warn-box li b { color: #9a3412; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div>
+    <h1>업셀링 부가서비스(카시트, 유모차) 모니터링 대시보드</h1>
+    <div class="meta">
+      차를 빌릴 때 결제 직전 화면에서 카시트와 유모차를 추가 결제할 수 있는 부가서비스 기능<br>
+      옵션 노출, 옵션 진입, 결제 건수, 순매출을 추적
+    </div>
+  </div>
+  <div class="updated">
+    최종 갱신: <b>2026-06-08 14:21 KST</b><br>
+    <span>서버 배포: 2026-06-05 10:14 KST</span><br>
+    <span style="color:#9ca3af">결제는 실시간 적재, 앱·웹 이벤트는 D+1 적재(6/07까지 집계)</span>
+  </div>
+</div>
+
+<!-- 개요 -->
+<div class="experiment-overview">
+  <div class="inner">
+    <div class="o-block">
+      <div class="lbl">노출 내용</div>
+      <div class="val">결제 직전 화면에서 카시트, 유모차 추가 옵션 카드 노출. 옵션 화면에서 수량 선택 후 추가 결제</div>
+    </div>
+    <div class="o-block">
+      <div class="lbl">노출 대상</div>
+      <div class="val">특정 운영 지역 한정 노출(PoC). 재고가 있는 차량에 한해 옵션 노출</div>
+    </div>
+    <div class="o-block">
+      <div class="lbl">데이터 출처</div>
+      <div class="val">결제: charged_info(addon_carseat, addon_stroller)<br>이벤트: app_web_log(services_option, checkout_reservation)</div>
+    </div>
+  </div>
+</div>
+
+<!-- 핵심 KPI banner -->
+<div class="period-banner">
+  <div class="period-inner">
+    <div class="period-block">
+      <div class="lbl">결제 예약 수</div>
+      <div class="val">63 예약</div>
+      <div class="sub">상품 69 (카시트 62, 유모차 7) / 6/05~6/08</div>
+    </div>
+    <div class="period-block">
+      <div class="lbl">누적 순매출</div>
+      <div class="val">2,940,000 원</div>
+      <div class="sub">예약 단위 순액 (취소·환불 제외)</div>
+    </div>
+    <div class="period-block">
+      <div class="lbl">옵션 화면 노출</div>
+      <div class="val">166 명</div>
+      <div class="sub">6/05~6/07 순 사용자(이벤트 D+1)</div>
+    </div>
+    <div class="period-block">
+      <div class="lbl">배포 후 경과</div>
+      <div class="val">4일차</div>
+      <div class="sub">6/05 배포, 6/08 진행 중</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- 결제 누계 KPI -->
+  <div class="section-label" style="font-size:14px">
+    결제 실적 누계 (6/05~6/08 KST)
+    <span class="tag tag-fact">검증된 수치</span>
+  </div>
+  <div class="section-explain">
+    charged_info의 카시트, 유모차 청구 행을 <b>예약 단위로 전 기간 합산</b>해 순액이 양수인 예약만 결제로 집계<br>
+    한 예약에 결제와 환불이 여러 날에 걸쳐 들어와도 예약 단위로 묶어 중복·부분환불을 정확히 반영. 결제는 실시간 적재라 6/08 당일분도 포함(14:21 KST 시점까지)
+  </div>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="lbl">결제 예약 수</div>
+      <div class="num blue">63 <span class="unit">예약</span></div>
+      <div class="sub">상품 단위로는 69건<br>(카시트+유모차 동시 결제 6건)</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">총 순매출</div>
+      <div class="num green">294 <span class="unit">만원</span></div>
+      <div class="sub">2,940,000원 (예약 단위 순액)</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">카시트</div>
+      <div class="num purple">62 <span class="unit">건</span></div>
+      <div class="sub">순매출 2,680,000원</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">유모차</div>
+      <div class="num amber">7 <span class="unit">건</span></div>
+      <div class="sub">순매출 260,000원</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">일평균 결제<br><span style="color:#9ca3af;font-weight:400">(6/05~6/07 풀데이 3일)</span></div>
+      <div class="num green">15 <span class="unit">예약/일</span></div>
+      <div class="sub">6/05 16, 6/06 14, 6/07 15</div>
+    </div>
+  </div>
+
+  <!-- 데이터 주의 -->
+  <div class="warn-box">
+    <h4>결제 취소·환불 검증 결과</h4>
+    <ul>
+      <li><b>부가서비스 결제 후 취소 예약 61건</b>: 결제했다가 순액이 0이 된 예약 61건은 모두 예약 자체가 취소(cancel_at 존재)돼 부가서비스가 함께 환불된 건. 순매출·결제 건수에는 이미 제외됨</li>
+      <li><b>두 종류로 나뉨</b>: 결제와 거의 동시(평균 0분, 5초 이내) 취소 26건은 결제 처리 롤백으로 추정, 결제 후 평균 3.4시간 뒤 취소 35건은 실사용 취소·환불</li>
+      <li><b>취소 비중 점검 필요</b>: 유효 결제 63 대비 취소 61로 비율이 높음. 예약 취소에 딸려간 환불이라 부가서비스 고유 이슈로 단정 불가. 6/05 첫 배포일 QA·테스트 결제 환불 포함 가능성</li>
+      <li><b>6/08 진행 중</b>: 당일 14:21 KST 시점까지 집계라 종료 시 증가 예정</li>
+      <li><b>앱·웹 이벤트 D+1</b>: 옵션 노출·클릭 지표는 6/07까지만 적재. 결제(실시간)와 집계 종료일이 다름</li>
+    </ul>
+  </div>
+
+  <!-- 일별 추이 차트 -->
+  <div class="section-label">일별 결제 추이</div>
+  <div class="card">
+    <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+  </div>
+
+  <!-- 일별 결제 상세 (접힘) -->
+  <details style="margin-top:14px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
+    <summary style="font-size:13px;font-weight:700;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between">
+      <span>일별 결제 상세 수치</span>
+      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
+    </summary>
+    <div style="margin-top:14px">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>일자<br><span style="font-size:10px;color:#9ca3af;font-weight:400">첫 결제일 기준</span></th>
+          <th class="num">카시트 건</th>
+          <th class="num">카시트 순매출</th>
+          <th class="num">유모차 건</th>
+          <th class="num">유모차 순매출</th>
+          <th class="num">결제 예약</th>
+          <th class="num">합계 순매출</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dt">6/05 <span style="font-size:11px;color:#9ca3af;font-weight:400">(배포일)</span></td>
+          <td class="num">16</td><td class="num">670,000</td>
+          <td class="num">2</td><td class="num">60,000</td>
+          <td class="num">16</td><td class="num">730,000</td>
+        </tr>
+        <tr>
+          <td class="dt">6/06</td>
+          <td class="num">14</td><td class="num">700,000</td>
+          <td class="num">2</td><td class="num">80,000</td>
+          <td class="num">14</td><td class="num">780,000</td>
+        </tr>
+        <tr>
+          <td class="dt">6/07</td>
+          <td class="num">14</td><td class="num">590,000</td>
+          <td class="num">2</td><td class="num">80,000</td>
+          <td class="num">15</td><td class="num">670,000</td>
+        </tr>
+        <tr>
+          <td class="dt">6/08 <span style="font-size:11px;color:#9ca3af;font-weight:400">(진행 중)</span></td>
+          <td class="num">18</td><td class="num">720,000</td>
+          <td class="num">1</td><td class="num">40,000</td>
+          <td class="num">18</td><td class="num">760,000</td>
+        </tr>
+        <tr class="total">
+          <td class="dt">누계</td>
+          <td class="num">62</td><td class="num">2,680,000</td>
+          <td class="num">7</td><td class="num">260,000</td>
+          <td class="num">63</td><td class="num">2,940,000</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-size:11px;color:#9ca3af;line-height:1.6">
+      예약 단위 집계라 카시트와 유모차를 함께 결제한 예약은 결제 예약 칼럼에서 1로 카운트(상품 건은 각각 집계). 일자는 해당 예약의 첫 결제일 기준
+    </div>
+    </div>
+  </details>
+
+  <!-- funnel -->
+  <div class="section-label" style="margin-top:30px">
+    옵션 진입 단계별 사용자 수 (6/05~6/07 누적 UU)
+    <span class="tag tag-fact">검증된 수치</span>
+  </div>
+  <div class="section-explain">
+    결제 화면의 부가서비스 추가 버튼 클릭부터 옵션 화면 노출, 추가 버튼 클릭까지의 순 사용자 수<br>
+    이벤트 로그는 D+1 적재라 6/07까지만 집계. 결제 단계는 같은 기간 예약 단위 건수로 분모가 달라 참고용
+  </div>
+  <div class="card">
+    <div class="funnel-bars">
+      <div class="bar-row">
+        <div class="bar-label">앱 옵션 추가 버튼 클릭<br><span class="sub">checkout_reservation / custom_option_add_button</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#3b82f6">182명</div></div>
+        <div class="bar-pct">기준</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">옵션 화면 노출<br><span class="sub">services_option / view</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:91.2%;background:#7c3aed">166명</div></div>
+        <div class="bar-pct">앱 클릭 대비 91%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">옵션 추가 버튼 클릭<br><span class="sub">services_option / cta_button</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:74.7%;background:#0ea5e9">136명</div></div>
+        <div class="bar-pct">노출 대비 82%</div>
+      </div>
+      <div class="bar-row final">
+        <div class="bar-label">결제 완료<br><span class="sub">charged_info 예약 단위 (UU 아님, 참고용)</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:24.7%;background:#059669">45 예약</div></div>
+        <div class="bar-pct">6/05~6/07 결제</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:12px;color:#6b7280;line-height:1.8">
+      옵션 상세 도움말(product_detail_help) 클릭은 35명으로 별도 분리<br>
+      결제 완료는 사용자 단위가 아니라 예약 단위 건수라 위 단계와 분모가 다름. 같은 사람이 여러 예약에 결제했거나 한 예약에 카시트와 유모차를 함께 결제한 경우 포함
+    </div>
+  </div>
+
+  <!-- 일별 이벤트 funnel (접힘) -->
+  <details style="margin-top:14px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
+    <summary style="font-size:13px;font-weight:700;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between">
+      <span>일별 옵션 진입 이벤트 상세 (D+1, 6/07까지)</span>
+      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
+    </summary>
+    <div style="margin-top:14px">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>일자</th>
+          <th class="num">앱 옵션 추가 버튼 클릭(UU)</th>
+          <th class="num">옵션 화면 노출(UU)</th>
+          <th class="num">옵션 화면 클릭(UU)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="dt">6/05</td><td class="num">75</td><td class="num">67</td><td class="num">58</td></tr>
+        <tr><td class="dt">6/06</td><td class="num">56</td><td class="num">52</td><td class="num">44</td></tr>
+        <tr><td class="dt">6/07</td><td class="num">70</td><td class="num">65</td><td class="num">52</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-size:11px;color:#9ca3af;line-height:1.6">
+      옵션 화면 클릭(UU)은 cta_button과 product_detail_help를 합산한 순 사용자. 일별 합과 누적 UU가 다른 이유는 회원 중복 제거
+    </div>
+    </div>
+  </details>
+
+  <!-- BQ 쿼리 (접힘) -->
+  <details style="margin-top:24px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
+    <summary style="font-size:13px;font-weight:700;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between">
+      <span>사용된 빅쿼리 쿼리 (직접 검증용)</span>
+      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
+    </summary>
+    <div style="margin-top:14px;display:flex;flex-direction:column;gap:18px">
+
+      <div>
+        <div class="card-title" style="font-size:13px">1. 일별 결제 건수 / 순매출 (예약 단위, 첫 결제일 기준)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">예약·상품 단위로 전 기간 amount를 합산해 순액 양수만 결제로 집계. 날짜는 첫 결제일 기준이라 일자 경계 중복 없음. dt를 GROUP BY에 넣어 날짜별로 묶으면 같은 예약이 중복 집계되므로 주의</div>
+        <div class="query-block">WITH per_rsv_type AS (
+  SELECT reservation_id, charge_type,
+    SUM(amount) AS net_amount,
+    DATE(MIN(IF(amount&gt;0, created_at, NULL)),"Asia/Seoul") AS first_charge_dt
+  FROM `socar-data.tianjin_replica.charged_info`
+  WHERE DATE(created_at,"Asia/Seoul") &gt;= "2026-06-05"
+    AND charge_type IN ("addon_carseat","addon_stroller")
+  GROUP BY reservation_id, charge_type
+  HAVING net_amount &gt; 0
+)
+SELECT first_charge_dt AS dt,
+  COUNTIF(charge_type="addon_carseat")               AS carseat_cnt,
+  SUM(IF(charge_type="addon_carseat", net_amount,0)) AS carseat_rev,
+  COUNTIF(charge_type="addon_stroller")               AS stroller_cnt,
+  SUM(IF(charge_type="addon_stroller", net_amount,0)) AS stroller_rev,
+  COUNT(DISTINCT reservation_id)                      AS rsv_cnt,
+  SUM(net_amount)                                     AS total_rev
+FROM per_rsv_type
+GROUP BY dt ORDER BY dt</div>
+      </div>
+
+      <div>
+        <div class="card-title" style="font-size:13px">2. 결제 후 취소·환불 예약 검증 (net=0의 정체)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">순액 0 예약을 reservation_info state, cancel_at, 결제~환불 시간차로 분해. 전부 cancel_at 존재(취소된 예약). state=8은 결제와 거의 동시 롤백, state=0은 평균 3.4시간 뒤 취소</div>
+        <div class="query-block">WITH rsv AS (
+  SELECT reservation_id, SUM(amount) AS net_amount
+  FROM `socar-data.tianjin_replica.charged_info`
+  WHERE DATE(created_at,"Asia/Seoul") &gt;= "2026-06-05"
+    AND charge_type IN ("addon_carseat","addon_stroller")
+  GROUP BY reservation_id
+),
+zero_rsv AS ( SELECT reservation_id FROM rsv WHERE net_amount = 0 ),
+gap AS (
+  SELECT c.reservation_id,
+    TIMESTAMP_DIFF(MAX(IF(c.amount&lt;0,c.created_at,NULL)),
+                   MIN(IF(c.amount&gt;0,c.created_at,NULL)), MINUTE) AS diff_min
+  FROM `socar-data.tianjin_replica.charged_info` c
+  JOIN zero_rsv z USING(reservation_id)
+  WHERE c.charge_type IN ("addon_carseat","addon_stroller")
+  GROUP BY c.reservation_id
+)
+SELECT ri.state, COUNT(*) AS rsv_cnt,
+  COUNTIF(ri.cancel_at IS NOT NULL) AS has_cancel_at,
+  ROUND(AVG(g.diff_min),1) AS avg_refund_min
+FROM gap g
+JOIN `socar-data.dbt.stg_tianjin_replica__reservation_info` ri ON ri.id = g.reservation_id
+GROUP BY ri.state ORDER BY ri.state</div>
+      </div>
+
+      <div>
+        <div class="card-title" style="font-size:13px">3. 옵션 진입 단계별 누적 순 사용자 (funnel)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">앱 결제 화면의 부가서비스 추가 버튼부터 웹 옵션 화면 노출·클릭까지. 이벤트 로그 D+1이라 6/07까지</div>
+        <div class="query-block">SELECT
+  COUNT(DISTINCT IF(page_name='checkout_reservation' AND event_name='click'
+    AND component_name='custom_option_add_button', member_id, NULL)) AS app_addbtn_uu,
+  COUNT(DISTINCT IF(page_name='services_option' AND event_name='view'
+    AND component_name IS NULL, member_id, NULL)) AS web_view_uu,
+  COUNT(DISTINCT IF(page_name='services_option' AND event_name='click'
+    AND component_name='cta_button', member_id, NULL)) AS web_cta_uu,
+  COUNT(DISTINCT IF(page_name='services_option' AND event_name='click'
+    AND component_name='product_detail_help', member_id, NULL)) AS web_help_uu
+FROM `socar-data.app_web_log.socar_app_web_log`
+WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-07"
+  AND page_name IN ('checkout_reservation','services_option')</div>
+      </div>
+
+      <div>
+        <div class="card-title" style="font-size:13px">4. 일별 옵션 진입 이벤트 (앱 추가 버튼 / 옵션 화면 노출·클릭)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">일별 순 사용자 수. 앱 추가 버튼은 checkout_reservation, 옵션 화면은 services_option</div>
+        <div class="query-block">SELECT event_date_kst AS dt, page_name, event_name, component_name,
+  COUNT(DISTINCT member_id) AS uu
+FROM `socar-data.app_web_log.socar_app_web_log`
+WHERE event_date_kst &gt;= "2026-06-05"
+  AND ( (page_name='checkout_reservation' AND component_name='custom_option_add_button')
+     OR  page_name='services_option' )
+GROUP BY dt, page_name, event_name, component_name
+ORDER BY dt</div>
+      </div>
+
+      <div>
+        <div class="card-title" style="font-size:13px">5. 카시트 예약별 순결제액 분포 (단가 확인용)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">예약 단위 순결제액 분포. 1만원 단위로 묶임(3만원 최다)</div>
+        <div class="query-block">SELECT net_amount AS reservation_net_amount, COUNT(*) AS rsv_cnt
+FROM (
+  SELECT reservation_id, SUM(amount) AS net_amount
+  FROM `socar-data.tianjin_replica.charged_info`
+  WHERE DATE(created_at,"Asia/Seoul") &gt;= "2026-06-05"
+    AND charge_type = "addon_carseat"
+  GROUP BY reservation_id
+  HAVING net_amount &gt; 0
+)
+GROUP BY reservation_net_amount
+ORDER BY reservation_net_amount</div>
+      </div>
+
+    </div>
+  </details>
+
+  <!-- 용어 정리 -->
+  <div class="foot-note">
+    <h4>용어 정리</h4>
+    <div class="term"><b>결제 건수</b><span>같은 예약의 부가서비스 청구·환불을 합산해 순액이 양수인 예약 수<br>카시트와 유모차는 청구 타입(addon_carseat, addon_stroller)으로 구분</span></div>
+    <div class="term"><b>순매출</b><span>결제액에서 환불액을 뺀 순 결제 금액<br>예약별 순액이 양수인 건만 합산</span></div>
+    <div class="term"><b>결제 후 취소 예약</b><span>결제 후 같은 금액이 환불돼 순액이 0이 된 예약<br>전부 예약 자체가 취소(cancel_at 존재)돼 부가서비스가 함께 환불된 건. 순매출·결제 건수에서 제외</span></div>
+    <div class="term"><b>옵션 화면 노출</b><span>결제 직전 부가서비스 옵션 화면(services_option)을 본 순 사용자 수</span></div>
+    <div class="term"><b>앱 옵션 추가 버튼</b><span>결제 화면(checkout_reservation)에서 부가서비스 추가 버튼을 클릭한 행위</span></div>
+    <div class="term"><b>D+1 적재</b><span>앱·웹 이벤트 로그는 하루 뒤 배치 적재라 당일 데이터 확인 불가<br>결제(charged_info)는 실시간 적재</span></div>
+  </div>
+
+</div>
+
+<script>
+new Chart(document.getElementById('dailyChart'), {
+  type: 'bar',
+  data: {
+    labels: ['6/05 (배포)', '6/06', '6/07', '6/08 (진행중)'],
+    datasets: [
+      { label: '카시트 건수', data: [16, 14, 14, 18], backgroundColor: '#a78bfa', stack: 'cnt', yAxisID: 'y' },
+      { label: '유모차 건수', data: [2, 2, 2, 1], backgroundColor: '#fbbf24', stack: 'cnt', yAxisID: 'y' },
+      { label: '합계 순매출(원)', type: 'line', data: [730000, 780000, 670000, 760000], borderColor: '#059669', backgroundColor: '#059669', borderWidth: 2, tension: 0.3, yAxisID: 'y1', pointRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { size: 12 } } } },
+    scales: {
+      y: { beginAtZero: true, stacked: true, position: 'left', title: { display: true, text: '결제 건수' }, ticks: { font: { size: 11 } } },
+      y1: { beginAtZero: true, position: 'right', title: { display: true, text: '순매출(원)' }, grid: { drawOnChartArea: false }, ticks: { font: { size: 11 }, callback: function(v){ return (v/10000)+'만'; } } },
+      x: { stacked: true, ticks: { font: { size: 11 } } },
+    }
+  }
+});
+</script>
+
+</body>
+</html>
