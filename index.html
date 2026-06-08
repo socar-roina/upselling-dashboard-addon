@@ -143,14 +143,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div class="sub">6/08 15:54 오픈, 3건 시도 전부 취소</div>
     </div>
     <div class="period-block">
-      <div class="lbl">기존예약 마이그레이션</div>
-      <div class="val">272 예약</div>
-      <div class="sub">시트 전체 요청 건. 부가서비스 결제로 적재된 건 2건뿐</div>
-    </div>
-    <div class="period-block">
       <div class="lbl">인앱 신규 순매출</div>
       <div class="val">3,190,000 원</div>
-      <div class="sub">제주 신규 기준 (마이그 제외)</div>
+      <div class="sub">제주 신규 기준</div>
+    </div>
+    <div class="period-block">
+      <div class="lbl">제주 옵션 화면 노출</div>
+      <div class="val">166 명</div>
+      <div class="sub">6/05~6/07 순 사용자 (이벤트 D+1)</div>
     </div>
   </div>
 </div>
@@ -198,8 +198,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div class="warn-box">
     <h4>데이터 읽을 때 참고</h4>
     <ul>
-      <li><b>마이그레이션 요청은 272건 (시트 전체)</b><br>272건 모두 실제 예약이고 일반 대여 청구(rent)는 있으나, 카시트 비용이 부가서비스(addon_carseat)로 적재된 건 2건뿐<br>270건은 카시트가 addon 미적재라 부가서비스 매출에 안 잡힘. 신규 66과는 2건만 겹침</li>
-      <li><b>마이그 카시트 매출 과소집계 주의</b><br>270건 카시트 비용이 일반 요금(rent)에 묻혀 부가서비스 매출로 분리 안 됨. 실제 카시트 수요는 대시보드 수치보다 큼</li>
+      <li><b>마이그레이션 요청은 272건 (시트 전체)</b><br>272건 모두 아임웹 오프라인 기존 예약. 인앱 부가서비스 결제(addon_carseat)로 적재된 건 2건뿐이라, 인앱 신규 66과는 2건만 겹침<br>나머지 270건은 인앱 부가서비스 결제와 범위가 다른 오프라인 운영분</li>
       <li><b>결제 후 취소된 예약도 제외함</b><br>결제했다가 예약 자체가 취소돼 부가서비스가 함께 환불된 건<br>순매출과 결제 건수에는 이미 빠져 있음</li>
       <li><b>6/08은 아직 진행 중</b><br>당일 집계라 마감되면 늘어남</li>
       <li><b>옵션 노출과 클릭 지표는 6/07까지만</b><br>앱과 웹 이벤트는 하루 뒤 적재되어 결제와 종료일이 다름</li>
