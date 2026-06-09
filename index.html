@@ -245,7 +245,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div class="warn-box">
     <h4>데이터 읽을 때 참고</h4>
     <ul>
-      <li><b>마이그레이션 요청은 294건 (시트 2개 탭 합)</b><br>294건 모두 아임웹 오프라인 기존 예약. 인앱 부가서비스 결제(addon_carseat)로 적재된 건 2건뿐이라, 인앱 신규 76과는 2건만 겹침<br>나머지 292건은 인앱 부가서비스 결제와 범위가 다른 오프라인 운영분</li>
+      <li><b>마이그레이션 요청은 294건 (시트 2개 탭 합)</b><br>294건 모두 아임웹 오프라인 기존 예약<br>인앱 부가서비스 결제(addon_carseat)로 적재된 건 2건뿐이라, 인앱 신규 76과는 2건만 겹침<br>나머지 292건은 인앱 부가서비스 결제와 범위가 다른 오프라인 운영분</li>
       <li><b>결제 후 취소된 예약도 제외함</b><br>결제했다가 예약 자체가 취소돼 부가서비스가 함께 환불된 건<br>순매출과 결제 건수에는 이미 빠져 있음</li>
       <li><b>6/08은 아직 진행 중</b><br>당일 집계라 마감되면 늘어남</li>
       <li><b>옵션 노출과 클릭 지표는 6/07까지만</b><br>앱과 웹 이벤트는 하루 뒤 적재되어 결제와 종료일이 다름</li>
@@ -335,7 +335,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       </tbody>
     </table>
     <div style="margin-top:10px;font-size:11px;color:#9ca3af;line-height:1.6">
-      신규 = 인앱 결제 플로우를 거친 예약<br>아래 마이그 행은 부가서비스 결제(addon)로 적재된 2건. 마이그레이션 요청 전체 294건은 상단 KPI 참고<br>
+      신규 = 인앱 결제 플로우를 거친 예약<br>아래 마이그 행은 부가서비스 결제(addon)로 적재된 2건<br>마이그레이션 요청 전체 294건은 상단 KPI 참고<br>
       예약 단위 집계라 카시트와 유모차를 함께 결제한 예약은 결제 예약 칼럼에서 1로 카운트(상품 건은 각각 집계). 일자는 첫 결제일 기준. 6/09는 진행 중
     </div>
     </div>
@@ -405,33 +405,23 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </div>
 
-  <!-- 측정지표 반영 현황 (접힘) -->
-  <details style="margin-top:14px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
-    <summary style="font-size:13px;font-weight:700;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between">
-      <span>로깅 정의서 측정지표 반영 현황</span>
-      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
-    </summary>
-    <div style="margin-top:14px">
-    <table class="data-table">
-      <thead><tr><th>측정지표</th><th>상태</th><th>현재 값 / 비고</th></tr></thead>
-      <tbody>
-        <tr><td>부가서비스 매출 합계</td><td style="color:#059669;font-weight:700">반영</td><td>3,190,000원 (무료이벤트 할인 0)</td></tr>
-        <tr><td>상품별 결제 분포</td><td style="color:#059669;font-weight:700">반영</td><td>카시트 65, 유모차 8</td></tr>
-        <tr><td>웹뷰 페이지 진입율</td><td style="color:#059669;font-weight:700">반영</td><td>91.2% (추가 클릭 182 중 진입 166)</td></tr>
-        <tr><td>최종 수락률 (핵심)</td><td style="color:#059669;font-weight:700">반영</td><td>81.9%</td></tr>
-        <tr><td>카시트 / 유모차 수락률</td><td style="color:#059669;font-weight:700">반영</td><td>81.3% / 52.4%</td></tr>
-        <tr><td>위치 단계 진입율</td><td style="color:#059669;font-weight:700">반영</td><td>78.9% (카시트, 진입 166 중 위치 131)</td></tr>
-        <tr><td>운영시간 리드타임 차단율</td><td style="color:#059669;font-weight:700">반영</td><td>24.7%</td></tr>
-        <tr><td>도움말 열람</td><td style="color:#b45309;font-weight:700">부분</td><td>35명 집계, 구매 영향 비교는 미산출</td></tr>
-        <tr><td>추가 시도율</td><td style="color:#9ca3af">미반영</td><td>분모(노출 조건 명세) 서버 미전달</td></tr>
-        <tr><td>결제 전환율</td><td style="color:#9ca3af">미반영</td><td>결제와 제출 회원 연결 추가 필요</td></tr>
-        <tr><td>재고 부족 구매 실패율</td><td style="color:#9ca3af">미반영</td><td>서버 재고 차단 건수 미적재</td></tr>
-        <tr><td>재고 노출 전환 영향</td><td style="color:#9ca3af">미반영</td><td>stock_state 분석 추가 필요</td></tr>
-        <tr><td>매출 기여도</td><td style="color:#9ca3af">미반영</td><td>전체 매출 대비 미산출</td></tr>
-      </tbody>
-    </table>
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi">
+      <div class="lbl">결제 전환율</div>
+      <div class="num blue">36.8 <span class="unit">%</span></div>
+      <div class="sub">선택 제출 136명 중 결제 50명</div>
     </div>
-  </details>
+    <div class="kpi">
+      <div class="lbl">도움말 본 사람 제출률</div>
+      <div class="num green">91.4 <span class="unit">%</span></div>
+      <div class="sub">도움말 본 35명 중 제출 32명<br>안 본 사람은 79.4%(104/131), 도움말이 12%p 높음</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">매출 기여도</div>
+      <div class="num purple">10.1 <span class="unit">%</span></div>
+      <div class="sub">부가서비스 결제 고객의 결제액 중 비중<br>(대여요금 등 포함 전체 대비)</div>
+    </div>
+  </div>
 
   <!-- 일별 이벤트 funnel (접힘) -->
   <details style="margin-top:14px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
@@ -602,7 +592,7 @@ ORDER BY reservation_net_amount</div>
 
       <div>
         <div class="card-title" style="font-size:13px">6. 마이그레이션 분리 검증 (카시트 마이그 시트 교집합)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">카시트 마이그레이션 시트(예약RAW + 06.05 예약raw) 예약번호 294개와 인앱 결제(charged_info)를 교집합<br>결제된 예약 중 시트에 있는 건 2건, 나머지는 인앱 신규. 시트 292건은 오프라인 운영분이라 charged_info addon에 없음</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">카시트 마이그레이션 시트(예약RAW + 06.05 예약raw) 예약번호 294개와 인앱 결제(charged_info)를 교집합<br>결제된 예약 중 시트에 있는 건 2건, 나머지는 인앱 신규<br>시트 292건은 오프라인 운영분이라 charged_info addon에 없음</div>
         <div class="query-block">WITH sheet_mig AS (   -- 카시트 마이그 시트 예약번호 294개 (2개 탭 합, 고유)
   SELECT DISTINCT rid FROM UNNEST([92122161, 89494752, 90003102, /* ...시트 294건... */]) AS rid
 ),
@@ -621,7 +611,7 @@ FROM charged c LEFT JOIN sheet_mig s ON s.rid = c.reservation_id</div>
 
       <div>
         <div class="card-title" style="font-size:13px">7. 제주 수락률 / 시간 차단율 (이벤트 6/05~6/07)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">form_data의 ps(화면 단계, o=옵션 p=위치)로 분해. 수락률=제출 회원 나누기 옵션 진입 회원, 차단율=시간 알럿 회원 나누기 추가 클릭 회원</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">form_data의 ps(화면 단계, o=옵션 p=위치)로 분해<br>수락률=제출 회원 나누기 옵션 진입 회원, 차단율=시간 알럿 회원 나누기 추가 클릭 회원</div>
         <div class="query-block">-- 최종 수락률: 옵션 진입 166 중 제출 136 = 81.9%
 WITH base AS (
   SELECT member_id, event_name, component_name,
@@ -642,6 +632,36 @@ SELECT
 FROM `socar-data.app_web_log.socar_app_web_log`
 WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-07"
   AND page_name = 'checkout_reservation'</div>
+      </div>
+
+      <div>
+        <div class="card-title" style="font-size:13px">8. 결제 전환율 / 도움말 영향 / 매출 기여도</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">제출 회원과 부가서비스 결제 회원을 member_id로 매칭<br>도움말은 본 회원과 안 본 회원의 제출률 비교</div>
+        <div class="query-block">WITH paid AS (
+  SELECT DISTINCT ri.member_id
+  FROM `socar-data.tianjin_replica.charged_info` ci
+  JOIN `socar-data.tianjin_replica.reservation_info` ri ON ri.id = ci.reservation_id
+  WHERE ci.charge_type IN ('addon_carseat','addon_stroller')
+    AND DATE(ci.created_at,"Asia/Seoul") &gt;= "2026-06-05"
+  GROUP BY ri.member_id HAVING SUM(ci.amount) &gt; 0
+),
+ev AS (
+  SELECT member_id,
+    MAX(IF(event_name='view' AND REGEXP_EXTRACT(form_data,r'ps[\\":]+([a-z])')='o',1,0)) AS entered,
+    MAX(IF(event_name='click' AND component_name='cta_button',1,0)) AS submitted,
+    MAX(IF(event_name='click' AND component_name='product_detail_help',1,0)) AS saw_help
+  FROM `socar-data.app_web_log.socar_app_web_log`
+  WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-07" AND page_name='services_option'
+  GROUP BY member_id
+)
+SELECT
+  COUNTIF(e.submitted=1) AS submit_m,                                    -- 136
+  COUNTIF(e.submitted=1 AND p.member_id IS NOT NULL) AS submit_paid,      -- 50, 전환율 36.8%
+  COUNTIF(e.saw_help=1 AND e.entered=1) AS help_enter,                    -- 35
+  COUNTIF(e.saw_help=1 AND e.entered=1 AND e.submitted=1) AS help_submit, -- 32, 91.4%
+  COUNTIF(e.saw_help=0 AND e.entered=1) AS nohelp_enter,                  -- 131
+  COUNTIF(e.saw_help=0 AND e.entered=1 AND e.submitted=1) AS nohelp_submit -- 104, 79.4%
+FROM ev e LEFT JOIN paid p ON p.member_id = e.member_id</div>
       </div>
 
     </div>
