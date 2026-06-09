@@ -363,7 +363,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
         <div class="bar-pct">앱 클릭 대비 91%</div>
       </div>
       <div class="bar-row">
-        <div class="bar-label">선택 제출(완료)<br><span class="sub">services_option / cta_button</span></div>
+        <div class="bar-label">선택 완료<br><span class="sub">services_option / cta_button</span></div>
         <div class="bar-track"><div class="bar-fill" style="width:74.7%;background:#0ea5e9">136명</div></div>
         <div class="bar-pct">노출 대비 82%</div>
       </div>
@@ -386,17 +386,17 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="kpi">
       <div class="lbl">최종 수락률 <span style="color:#9ca3af;font-weight:400">(핵심)</span></div>
       <div class="num green">81.9 <span class="unit">%</span></div>
-      <div class="sub">옵션 진입 166명 중 선택 제출 136명</div>
+      <div class="sub">옵션 진입 166명 중 선택 완료 136명</div>
     </div>
     <div class="kpi">
       <div class="lbl">카시트 수락률</div>
       <div class="num purple">81.3 <span class="unit">%</span></div>
-      <div class="sub">진입 166 중 제출 135</div>
+      <div class="sub">진입 166 중 선택 완료 135</div>
     </div>
     <div class="kpi">
       <div class="lbl">유모차 수락률</div>
       <div class="num amber">52.4 <span class="unit">%</span></div>
-      <div class="sub">진입 42 중 제출 22</div>
+      <div class="sub">진입 42 중 선택 완료 22</div>
     </div>
     <div class="kpi">
       <div class="lbl">시간 리드타임 차단율</div>
@@ -409,12 +409,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="kpi">
       <div class="lbl">결제 전환율</div>
       <div class="num blue">36.8 <span class="unit">%</span></div>
-      <div class="sub">선택 제출 136명 중 결제 50명</div>
+      <div class="sub">선택 완료 136명 중 결제 50명</div>
     </div>
     <div class="kpi">
-      <div class="lbl">도움말 본 사람 제출률</div>
+      <div class="lbl">도움말 본 사람 선택 완료율</div>
       <div class="num green">91.4 <span class="unit">%</span></div>
-      <div class="sub">도움말 본 35명 중 제출 32명<br>안 본 사람은 79.4%(104/131), 도움말이 12%p 높음</div>
+      <div class="sub">도움말 본 35명 중 선택 완료 32명<br>안 본 사람은 79.4%(104/131), 도움말이 12%p 높음</div>
     </div>
     <div class="kpi">
       <div class="lbl">매출 기여도</div>
@@ -611,8 +611,8 @@ FROM charged c LEFT JOIN sheet_mig s ON s.rid = c.reservation_id</div>
 
       <div>
         <div class="card-title" style="font-size:13px">7. 제주 수락률 / 시간 차단율 (이벤트 6/05~6/07)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">form_data의 ps(화면 단계, o=옵션 p=위치)로 분해<br>수락률=제출 회원 나누기 옵션 진입 회원, 차단율=시간 알럿 회원 나누기 추가 클릭 회원</div>
-        <div class="query-block">-- 최종 수락률: 옵션 진입 166 중 제출 136 = 81.9%
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">form_data의 ps(화면 단계, o=옵션 p=위치)로 분해<br>수락률=선택 완료 회원 나누기 옵션 진입 회원, 차단율=시간 알럿 회원 나누기 추가 클릭 회원</div>
+        <div class="query-block">-- 최종 수락률: 옵션 진입 166 중 선택 완료 136 = 81.9%
 WITH base AS (
   SELECT member_id, event_name, component_name,
     REGEXP_EXTRACT(form_data, r'ps[\\":]+([a-z])') AS ps
@@ -636,7 +636,7 @@ WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-07"
 
       <div>
         <div class="card-title" style="font-size:13px">8. 결제 전환율 / 도움말 영향 / 매출 기여도</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">제출 회원과 부가서비스 결제 회원을 member_id로 매칭<br>도움말은 본 회원과 안 본 회원의 제출률 비교</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">선택 완료 회원과 부가서비스 결제 회원을 member_id로 매칭<br>도움말은 본 회원과 안 본 회원의 선택 완료율 비교</div>
         <div class="query-block">WITH paid AS (
   SELECT DISTINCT ri.member_id
   FROM `socar-data.tianjin_replica.charged_info` ci
