@@ -399,7 +399,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div class="sub">진입 42 중 선택 완료 22</div>
     </div>
     <div class="kpi">
-      <div class="lbl">시간 리드타임 차단율</div>
+      <div class="lbl">시간 제약 차단율</div>
       <div class="num" style="color:#dc2626">24.7 <span class="unit">%</span></div>
       <div class="sub">추가 클릭 182명 중 45명<br>시간 알럿(닫기 35, 변경 30)</div>
     </div>
@@ -412,7 +412,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div class="sub">선택 완료 136명 중 결제 50명</div>
     </div>
     <div class="kpi">
-      <div class="lbl">도움말 본 사람 선택 완료율</div>
+      <div class="lbl">도움말 본 사람의 수락률</div>
       <div class="num green">91.4 <span class="unit">%</span></div>
       <div class="sub">도움말 본 35명 중 선택 완료 32명<br>안 본 사람은 79.4%(104/131), 도움말이 12%p 높음</div>
     </div>
@@ -471,7 +471,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div class="sub">이벤트 D+1, 6/09부터</div>
     </div>
     <div class="kpi">
-      <div class="lbl">시간 리드타임 차단율</div>
+      <div class="lbl">시간 제약 차단율</div>
       <div style="font-size:18px;font-weight:800;color:#94a3b8;margin-top:6px">집계 전</div>
       <div class="sub">이벤트 D+1, 6/09부터</div>
     </div>
@@ -625,7 +625,7 @@ SELECT
   COUNT(DISTINCT IF(event_name='click' AND component_name='cta_button', member_id, NULL)) AS submit
 FROM base;
 
--- 시간 리드타임 차단율: 추가 클릭 182 중 시간 알럿 45 = 24.7%
+-- 시간 제약 차단율: 추가 클릭 182 중 시간 알럿 45 = 24.7%
 SELECT
   COUNT(DISTINCT IF(component_name='custom_option_add_button', member_id, NULL)) AS add_click,
   COUNT(DISTINCT IF(component_name LIKE '%time_alert%', member_id, NULL)) AS blocked
@@ -636,7 +636,7 @@ WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-07"
 
       <div>
         <div class="card-title" style="font-size:13px">8. 결제 전환율 / 도움말 영향 / 매출 기여도</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">선택 완료 회원과 부가서비스 결제 회원을 member_id로 매칭<br>도움말은 본 회원과 안 본 회원의 선택 완료율 비교</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">선택 완료 회원과 부가서비스 결제 회원을 member_id로 매칭<br>도움말은 본 회원과 안 본 회원의 수락률 비교</div>
         <div class="query-block">WITH paid AS (
   SELECT DISTINCT ri.member_id
   FROM `socar-data.tianjin_replica.charged_info` ci
