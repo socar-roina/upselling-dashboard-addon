@@ -245,7 +245,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div class="warn-box">
     <h4>데이터 읽을 때 참고</h4>
     <ul>
-      <li><b>마이그레이션 요청은 294건 (시트 2개 탭 합)</b><br>294건 모두 아임웹 오프라인 기존 예약<br>인앱 부가서비스 결제(addon_carseat)로 적재된 건 2건뿐이라, 인앱 신규 76과는 2건만 겹침<br>나머지 292건은 인앱 부가서비스 결제와 범위가 다른 오프라인 운영분</li>
+      <li><b>마이그레이션 요청은 294건</b><br>294건 모두 아임웹 오프라인 기존 예약<br>인앱 부가서비스 결제(addon_carseat)로 적재된 건 2건뿐이라, 인앱 신규 76과는 2건만 겹침<br>나머지 292건은 인앱 부가서비스 결제와 범위가 다른 오프라인 운영분</li>
       <li><b>결제 후 취소된 예약도 제외함</b><br>결제했다가 예약 자체가 취소돼 부가서비스가 함께 환불된 건<br>순매출과 결제 건수에는 이미 빠져 있음</li>
       <li><b>6/08은 아직 진행 중</b><br>당일 집계라 마감되면 늘어남</li>
       <li><b>옵션 노출과 클릭 지표는 6/07까지만</b><br>앱과 웹 이벤트는 하루 뒤 적재되어 결제와 종료일이 다름</li>
@@ -592,8 +592,8 @@ ORDER BY reservation_net_amount</div>
 
       <div>
         <div class="card-title" style="font-size:13px">6. 마이그레이션 분리 검증 (카시트 마이그 시트 교집합)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">카시트 마이그레이션 시트(예약RAW + 06.05 예약raw) 예약번호 294개와 인앱 결제(charged_info)를 교집합<br>결제된 예약 중 시트에 있는 건 2건, 나머지는 인앱 신규<br>시트 292건은 오프라인 운영분이라 charged_info addon에 없음</div>
-        <div class="query-block">WITH sheet_mig AS (   -- 카시트 마이그 시트 예약번호 294개 (2개 탭 합, 고유)
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">카시트 마이그레이션 시트 예약번호 294개와 인앱 결제(charged_info)를 교집합<br>결제된 예약 중 시트에 있는 건 2건, 나머지는 인앱 신규<br>시트 292건은 오프라인 운영분이라 charged_info addon에 없음</div>
+        <div class="query-block">WITH sheet_mig AS (   -- 카시트 마이그 시트 예약번호 294개 (고유)
   SELECT DISTINCT rid FROM UNNEST([92122161, 89494752, 90003102, /* ...시트 294건... */]) AS rid
 ),
 charged AS (
