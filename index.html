@@ -496,26 +496,33 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div style="margin-top:14px;display:flex;flex-direction:column;gap:18px">
 
       <div>
-        <div class="card-title" style="font-size:13px">1. 일별 결제 건수 / 순매출 (예약 단위, 첫 결제일 기준)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">예약과 상품 단위로 전 기간 amount를 합산해 순액 양수만 결제로 집계<br>날짜는 첫 결제일 기준이라 일자 경계 중복 없음</div>
-        <div class="query-block">WITH per_rsv_type AS (
+        <div class="card-title" style="font-size:13px">1. 제주 인앱 신규 일별 결제 / 순매출 (본문 일별표 재현)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">예약과 상품 단위로 합산 후 순액 양수만 결제로 집계. zone_id로 제주만, 예약 생성일 6/05 이후로 마이그 분리<br>내륙과 마이그를 빼야 본문 제주 신규(76건)와 일치. 지역·마이그 필터 빼면 80건이 됨</div>
+        <div class="query-block">WITH addon AS (
   SELECT reservation_id, charge_type,
-    SUM(amount) AS net_amount,
-    DATE(MIN(IF(amount&gt;0, created_at, NULL)),"Asia/Seoul") AS first_charge_dt
+    SUM(amount) AS net,
+    DATE(MIN(IF(amount&gt;0, created_at, NULL)),"Asia/Seoul") AS fc_dt
   FROM `socar-data.tianjin_replica.charged_info`
   WHERE DATE(created_at,"Asia/Seoul") &gt;= "2026-06-05"
     AND charge_type IN ("addon_carseat","addon_stroller")
-  GROUP BY reservation_id, charge_type
-  HAVING net_amount &gt; 0
+  GROUP BY reservation_id, charge_type HAVING net &gt; 0
+),
+zmap AS (
+  SELECT zone_id, ANY_VALUE(region1) AS region1
+  FROM `socar-data.soda_store.reservation_v2`
+  WHERE region1 IS NOT NULL GROUP BY zone_id
 )
-SELECT first_charge_dt AS dt,
-  COUNTIF(charge_type="addon_carseat")               AS carseat_cnt,
-  SUM(IF(charge_type="addon_carseat", net_amount,0)) AS carseat_rev,
-  COUNTIF(charge_type="addon_stroller")               AS stroller_cnt,
-  SUM(IF(charge_type="addon_stroller", net_amount,0)) AS stroller_rev,
-  COUNT(DISTINCT reservation_id)                      AS rsv_cnt,
-  SUM(net_amount)                                     AS total_rev
-FROM per_rsv_type
+SELECT a.fc_dt AS dt,
+  COUNTIF(charge_type="addon_carseat")        AS carseat_cnt,
+  SUM(IF(charge_type="addon_carseat", net,0)) AS carseat_rev,
+  COUNTIF(charge_type="addon_stroller")       AS stroller_cnt,
+  COUNT(DISTINCT a.reservation_id)            AS rsv_cnt,
+  SUM(net)                                    AS total_rev
+FROM addon a
+JOIN `socar-data.tianjin_replica.reservation_info` ri ON ri.id = a.reservation_id
+LEFT JOIN zmap z ON z.zone_id = ri.zone_id
+WHERE z.region1 = "제주특별자치도"
+  AND DATE(ri.created_at,"Asia/Seoul") &gt;= "2026-06-05"
 GROUP BY dt ORDER BY dt</div>
       </div>
 
@@ -610,6 +617,31 @@ SELECT
   COUNTIF(c.net&gt;0 AND s.rid IS NOT NULL) AS mig_paid,
   COUNTIF(c.net&gt;0 AND s.rid IS NULL)     AS new_paid
 FROM charged c LEFT JOIN sheet_mig s ON s.rid = c.reservation_id</div>
+      </div>
+
+      <div>
+        <div class="card-title" style="font-size:13px">7. 제주 수락률 / 시간 차단율 (이벤트 6/05~6/07)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">form_data의 ps(화면 단계, o=옵션 p=위치)로 분해. 수락률=제출 회원 나누기 옵션 진입 회원, 차단율=시간 알럿 회원 나누기 추가 클릭 회원</div>
+        <div class="query-block">-- 최종 수락률: 옵션 진입 166 중 제출 136 = 81.9%
+WITH base AS (
+  SELECT member_id, event_name, component_name,
+    REGEXP_EXTRACT(form_data, r'ps[\\":]+([a-z])') AS ps
+  FROM `socar-data.app_web_log.socar_app_web_log`
+  WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-07"
+    AND page_name = 'services_option'
+)
+SELECT
+  COUNT(DISTINCT IF(event_name='view' AND ps='o', member_id, NULL)) AS opt_enter,
+  COUNT(DISTINCT IF(event_name='click' AND component_name='cta_button', member_id, NULL)) AS submit
+FROM base;
+
+-- 시간 리드타임 차단율: 추가 클릭 182 중 시간 알럿 45 = 24.7%
+SELECT
+  COUNT(DISTINCT IF(component_name='custom_option_add_button', member_id, NULL)) AS add_click,
+  COUNT(DISTINCT IF(component_name LIKE '%time_alert%', member_id, NULL)) AS blocked
+FROM `socar-data.app_web_log.socar_app_web_log`
+WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-07"
+  AND page_name = 'checkout_reservation'</div>
       </div>
 
     </div>
