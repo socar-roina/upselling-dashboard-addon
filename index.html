@@ -497,7 +497,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
       <div>
         <div class="card-title" style="font-size:13px">1. 제주 인앱 신규 일별 결제 / 순매출 (본문 일별표 재현)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">예약과 상품 단위로 합산 후 순액 양수만 결제로 집계. zone_id로 제주만, 예약 생성일 6/05 이후로 마이그 분리<br>내륙과 마이그를 빼야 본문 제주 신규(76건)와 일치. 지역·마이그 필터 빼면 80건이 됨</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">예약과 상품 단위로 합산 후 순액 양수만 결제로 집계<br>zone_id로 제주만, 예약 생성일 6/05 이후로 마이그 분리<br>지역과 마이그 필터를 빼면 80건, 본문 제주 신규는 76건</div>
         <div class="query-block">WITH addon AS (
   SELECT reservation_id, charge_type,
     SUM(amount) AS net,
