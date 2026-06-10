@@ -581,20 +581,23 @@ GROUP BY ri.state ORDER BY ri.state</div>
       </div>
 
       <div>
-        <div class="card-title" style="font-size:13px">3. 옵션 진입 단계별 누적 순 사용자 (funnel)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">앱 결제 화면의 부가서비스 추가 버튼부터 웹 옵션 화면 노출, 클릭까지<br>이벤트 로그 D+1이라 6/08까지</div>
+        <div class="card-title" style="font-size:13px">3. 구매 전환 깔대기 단계별 순 사용자</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">COUNT(DISTINCT IF())를 한 쿼리에 여러 개 쓰면 값이 부풀려져, GROUP BY로 단계별 집계<br>추가 버튼 126 → 옵션 화면 114 → 선택 완료 94</div>
         <div class="query-block">SELECT
-  COUNT(DISTINCT IF(page_name='checkout_reservation' AND event_name='click'
-    AND component_name='custom_option_add_button', member_id, NULL)) AS app_addbtn_uu,
-  COUNT(DISTINCT IF(page_name='services_option' AND event_name='view'
-    AND component_name IS NULL, member_id, NULL)) AS web_view_uu,
-  COUNT(DISTINCT IF(page_name='services_option' AND event_name='click'
-    AND component_name='cta_button', member_id, NULL)) AS web_cta_uu,
-  COUNT(DISTINCT IF(page_name='services_option' AND event_name='click'
-    AND component_name='product_detail_help', member_id, NULL)) AS web_help_uu
+  CASE
+    WHEN page_name='checkout_reservation' AND component_name='custom_option_add_button' THEN '1_추가버튼'
+    WHEN page_name='services_option' AND event_name='view'                              THEN '2_옵션화면'
+    WHEN page_name='services_option' AND component_name='cta_button'                    THEN '3_선택완료'
+    WHEN page_name='services_option' AND component_name='product_detail_help'           THEN '4_도움말'
+  END AS step,
+  COUNT(DISTINCT member_id) AS uu
 FROM `socar-data.app_web_log.socar_app_web_log`
 WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-08"
-  AND page_name IN ('checkout_reservation','services_option')</div>
+  AND ( (page_name='checkout_reservation' AND component_name='custom_option_add_button')
+     OR (page_name='services_option' AND event_name='view')
+     OR (page_name='services_option' AND component_name IN ('cta_button','product_detail_help')) )
+GROUP BY step ORDER BY step
+-- 추가버튼 126, 옵션화면 114, 선택완료 94, 도움말 27</div>
       </div>
 
       <div>
@@ -646,33 +649,30 @@ FROM charged c LEFT JOIN sheet_mig s ON s.rid = c.reservation_id</div>
       </div>
 
       <div>
-        <div class="card-title" style="font-size:13px">7. 제주 수락률 / 시간 차단율 (이벤트 6/05~6/08)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">form_data의 ps(화면 단계, o=옵션 p=위치)로 분해<br>수락률=선택 완료 회원 나누기 옵션 진입 회원, 차단율=시간 알럿 회원 나누기 추가 클릭 회원</div>
-        <div class="query-block">-- 최종 수락률: 옵션 진입 114 중 선택 완료 94 = 82.5%
-WITH base AS (
-  SELECT member_id, event_name, component_name,
-    REGEXP_EXTRACT(form_data, r'ps[\\":]+([a-z])') AS ps
-  FROM `socar-data.app_web_log.socar_app_web_log`
-  WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-08"
-    AND page_name = 'services_option'
-)
+        <div class="card-title" style="font-size:13px">7. 선택 완료율 / 시간 차단율 (이벤트 6/05~6/08)</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">선택 완료율=옵션 화면 본 사람 중 선택 완료, 차단율=추가 클릭 중 시간 알럿<br>GROUP BY와 단일 COUNT로 정확 집계</div>
+        <div class="query-block">-- 선택 완료율: 옵션 화면 114 중 선택 완료 94 = 82.5%
 SELECT
-  COUNT(DISTINCT IF(event_name='view' AND ps='o', member_id, NULL)) AS opt_enter,
-  COUNT(DISTINCT IF(event_name='click' AND component_name='cta_button', member_id, NULL)) AS submit
-FROM base;
+  CASE WHEN event_name='view' THEN '옵션화면' WHEN component_name='cta_button' THEN '선택완료' END AS step,
+  COUNT(DISTINCT member_id) AS uu
+FROM `socar-data.app_web_log.socar_app_web_log`
+WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-08"
+  AND page_name='services_option' AND (event_name='view' OR component_name='cta_button')
+GROUP BY step;
 
 -- 시간 제약 차단율: 추가 클릭 126 중 시간 알럿 36 = 28.6%
 SELECT
-  COUNT(DISTINCT IF(component_name='custom_option_add_button', member_id, NULL)) AS add_click,
-  COUNT(DISTINCT IF(component_name LIKE '%time_alert%', member_id, NULL)) AS blocked
-FROM `socar-data.app_web_log.socar_app_web_log`
-WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-08"
-  AND page_name = 'checkout_reservation'</div>
+  (SELECT COUNT(DISTINCT member_id) FROM `socar-data.app_web_log.socar_app_web_log`
+   WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-08"
+     AND page_name='checkout_reservation' AND component_name='custom_option_add_button') AS add_click,
+  (SELECT COUNT(DISTINCT member_id) FROM `socar-data.app_web_log.socar_app_web_log`
+   WHERE event_date_kst BETWEEN "2026-06-05" AND "2026-06-08"
+     AND page_name='checkout_reservation' AND component_name LIKE '%time_alert%') AS blocked</div>
       </div>
 
       <div>
         <div class="card-title" style="font-size:13px">8. 결제 전환율 / 도움말 영향 / 매출 기여도</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">선택 완료 회원과 부가서비스 결제 회원을 member_id로 매칭<br>도움말은 본 회원과 안 본 회원의 수락률 비교</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">선택 완료 회원과 부가서비스 결제 회원을 member_id로 매칭<br>도움말은 본 회원과 안 본 회원의 선택 완료율 비교</div>
         <div class="query-block">WITH paid AS (
   SELECT DISTINCT ri.member_id
   FROM `socar-data.tianjin_replica.charged_info` ci
