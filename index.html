@@ -241,16 +241,31 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </div>
 
-  <!-- 데이터 주의 -->
-  <div class="warn-box">
-    <h4>데이터 읽을 때 참고</h4>
-    <ul>
-      <li><b>마이그레이션 요청은 294건</b><br>294건 모두 아임웹 오프라인 기존 예약<br>인앱 부가서비스 결제(addon_carseat)로 적재된 건 3건뿐이라, 인앱 신규 109와는 3건만 겹침<br>나머지 291건은 인앱 부가서비스 결제와 범위가 다른 오프라인 운영분</li>
-      <li><b>결제 후 취소된 예약도 제외함</b><br>결제했다가 예약 자체가 취소돼 부가서비스가 함께 환불된 건<br>순매출과 결제 건수에는 이미 빠져 있음</li>
-      <li><b>6/10은 아직 진행 중</b><br>당일 집계라 마감되면 늘어남</li>
-      <li><b>옵션 노출과 클릭 지표는 6/08까지만</b><br>앱과 웹 이벤트는 하루 뒤 적재되어 결제와 종료일이 다름</li>
+  <!-- 집계 기준 (접힘) -->
+  <details style="margin-top:14px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
+    <summary style="font-size:13px;font-weight:700;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between">
+      <span>집계 기준 및 유의사항</span>
+      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
+    </summary>
+    <ul style="margin-top:14px;list-style:none;padding:0">
+      <li style="font-size:13px;color:#374151;line-height:1.8;padding:12px 0;border-bottom:1px solid #f3f4f6">
+        <b style="color:#111827">마이그레이션 분리 집계</b><br>
+        기존 아임웹 예약 294건은 인앱 부가서비스 실적과 별도 관리<br>인앱 결제로 적재된 3건만 인앱 신규에서 제외 처리
+      </li>
+      <li style="font-size:13px;color:#374151;line-height:1.8;padding:12px 0;border-bottom:1px solid #f3f4f6">
+        <b style="color:#111827">취소, 환불 반영</b><br>
+        결제 후 예약 취소로 환불된 건은 순매출과 결제 건수에서 제외
+      </li>
+      <li style="font-size:13px;color:#374151;line-height:1.8;padding:12px 0;border-bottom:1px solid #f3f4f6">
+        <b style="color:#111827">당일 집계 진행 중</b><br>
+        6/10 결제분은 실시간 집계로 마감 시 증가
+      </li>
+      <li style="font-size:13px;color:#374151;line-height:1.8;padding:12px 0">
+        <b style="color:#111827">행동 지표 D+1 적재</b><br>
+        옵션 노출, 클릭 등 앱과 웹 행동 지표는 익일 적재로 6/08까지 반영 (결제는 실시간)
+      </li>
     </ul>
-  </div>
+  </details>
 
   <!-- 일별 추이 차트 -->
   <div class="section-label">일별 결제 추이 <span class="tag tag-info">인앱 신규 기준, 마이그레이션 분리</span></div>
