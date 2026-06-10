@@ -582,7 +582,7 @@ GROUP BY ri.state ORDER BY ri.state</div>
 
       <div>
         <div class="card-title" style="font-size:13px">3. 구매 전환 깔대기 단계별 순 사용자</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">COUNT(DISTINCT IF())를 한 쿼리에 여러 개 쓰면 값이 부풀려져, GROUP BY로 단계별 집계<br>추가 버튼 126 → 옵션 화면 114 → 선택 완료 94</div>
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">COUNT(DISTINCT IF())를 한 쿼리에 여러 개 쓰면 값이 부풀려져, GROUP BY로 단계별 집계<br>추가 버튼 126, 옵션 화면 114, 선택 완료 94</div>
         <div class="query-block">SELECT
   CASE
     WHEN page_name='checkout_reservation' AND component_name='custom_option_add_button' THEN '1_추가버튼'
