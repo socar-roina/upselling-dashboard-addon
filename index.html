@@ -242,8 +242,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
     <div class="kpi">
       <div class="lbl">기존예약 마이그레이션<br><span style="color:#9ca3af;font-weight:400">(시트 요청 전체)</span></div>
-      <div class="num" style="color:#64748b">294 <span class="unit">건</span></div>
-      <div class="sub">부가서비스 결제 적재 3건뿐<br>291건은 카시트가 addon 미적재</div>
+      <div class="num" style="color:#64748b">272 <span class="unit">건</span></div>
+      <div class="sub">부가서비스 결제 적재 3건뿐<br>269건은 카시트 비용이 일반 대여요금에 포함돼 부가서비스로 미집계</div>
     </div>
   </div>
 
@@ -256,7 +256,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <ul style="margin-top:14px;list-style:none;padding:0">
       <li style="font-size:13px;color:#374151;line-height:1.8;padding:12px 0;border-bottom:1px solid #f3f4f6">
         <b style="color:#111827">마이그레이션 분리 집계</b><br>
-        기존 아임웹 예약 294건은 인앱 부가서비스 실적과 별도 관리<br>인앱 결제로 적재된 3건만 인앱 신규에서 제외 처리
+        기존 아임웹 예약 272건은 인앱 부가서비스 실적과 별도 관리<br>인앱 결제로 적재된 3건만 인앱 신규에서 제외 처리
       </li>
       <li style="font-size:13px;color:#374151;line-height:1.8;padding:12px 0;border-bottom:1px solid #f3f4f6">
         <b style="color:#111827">취소, 환불 반영</b><br>
@@ -374,7 +374,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       </tbody>
     </table>
     <div style="margin-top:10px;font-size:11px;color:#9ca3af;line-height:1.6">
-      신규 = 인앱 결제 플로우를 거친 제주 예약<br>마이그레이션 요청 전체 294건(인앱 적재 3건)은 상단 KPI 참고<br>
+      신규 = 인앱 결제 플로우를 거친 제주 예약<br>마이그레이션 요청 전체 272건(인앱 적재 3건)은 상단 KPI 참고<br>
       예약 단위 집계라 카시트와 유모차를 함께 결제한 예약은 결제 예약 칼럼에서 1로 카운트(상품 건은 각각 집계). 일자는 첫 결제일 기준
     </div>
     </div>
@@ -754,9 +754,9 @@ ORDER BY reservation_net_amount</div>
 
       <div>
         <div class="card-title" style="font-size:13px">6. 마이그레이션 분리 검증 (카시트 마이그 시트 교집합)</div>
-        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">카시트 마이그레이션 시트 예약번호 294개와 인앱 결제(charged_info)를 교집합<br>결제된 예약 중 시트에 있는 건 2건, 나머지는 인앱 신규<br>시트 292건은 오프라인 운영분이라 charged_info addon에 없음</div>
-        <div class="query-block">WITH sheet_mig AS (   -- 카시트 마이그 시트 예약번호 294개 (고유)
-  SELECT DISTINCT rid FROM UNNEST([92122161, 89494752, 90003102, /* ...시트 294건... */]) AS rid
+        <div style="font-size:11px;color:#6b7280;margin:4px 0 8px;line-height:1.6">카시트 마이그레이션 시트 예약번호 272개(고유)와 인앱 결제(charged_info)를 교집합<br>시트 예약 중 addon_carseat 적재 3건, 나머지 269건은 일반 대여요금에 포함<br>BQ 직접 검증: 272건 전부 rent 청구 있음, addon_carseat는 3건뿐</div>
+        <div class="query-block">WITH sheet_mig AS (   -- 카시트 마이그 시트 예약번호 272개 (고유)
+  SELECT DISTINCT rid FROM UNNEST([92122161, 89494752, 90003102, /* ...시트 272건... */]) AS rid
 ),
 charged AS (
   SELECT reservation_id, SUM(amount) AS net
