@@ -75,13 +75,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .jmr-name { font-size:12.5px; font-weight:700; color:#374151; line-height:1.4; }
 .jmr-desc { font-size:11px; font-weight:600; color:#9ca3af; }
 .jmr-val { font-size:20px; font-weight:900; color:#059669; white-space:nowrap; line-height:1; }
-/* 낮을수록 좋은 지표: 초록 안전구간 / 빨강 부담구간 + 현재값 마커 */
-.zbar { position:relative; height:8px; margin:24px 0 24px; }
-.zbar-ok { position:absolute; left:0; top:0; bottom:0; background:#a7f3d0; border-radius:99px 0 0 99px; }
-.zbar-bad { position:absolute; top:0; bottom:0; background:#fecaca; border-radius:0 99px 99px 0; }
-.zbar-mark { position:absolute; top:-5px; bottom:-5px; width:3px; background:#065f46; border-radius:2px; }
-.zbar-mark span { position:absolute; top:-17px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:900; color:#065f46; white-space:nowrap; }
-.zbar-edge { position:absolute; top:13px; transform:translateX(-50%); font-size:10px; font-weight:700; color:#b91c1c; white-space:nowrap; }
+/* 대부분 정상이고 일부만 차단/취소임을 비율로 (초록=정상 다수) */
+.pbar { display:flex; height:24px; border-radius:7px; overflow:hidden; margin:12px 0 4px; }
+.pbar > div { display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; white-space:nowrap; padding:0 6px; }
+.pbar .pb-go { background:#a7f3d0; color:#065f46; }
+.pbar .pb-blk { background:#fde68a; color:#92400e; }
 
 /* 종합 판단 */
 .verdict { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin-bottom: 8px; }
@@ -216,10 +214,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">운영 건전성</span><span class="jc-badge">정상</span></div>
-      <div class="jmr-top"><span class="jmr-name">시간 차단율<br><span class="jmr-desc">출발 임박으로 준비 시간 부족해 못 삼</span></span><b class="jmr-val">14.5%</b></div>
-      <div class="zbar"><div class="zbar-ok" style="width:67%"></div><div class="zbar-bad" style="left:67%;right:0"></div><div class="zbar-mark" style="left:48%"><span>14.5%</span></div><div class="zbar-edge" style="left:67%">20% 넘으면 부담</div></div>
-      <div class="jmr-top" style="margin-top:16px"><span class="jmr-name">취소율<br><span class="jmr-desc">예약 취소되면 부가도 자동 환불</span></span><b class="jmr-val">25.3%</b></div>
-      <div class="zbar"><div class="zbar-ok" style="width:81%"></div><div class="zbar-bad" style="left:81%;right:0"></div><div class="zbar-mark" style="left:46%"><span>25.3%</span></div><div class="zbar-edge" style="left:81%">제주 평균 44.6%</div></div>
+      <div class="jmr-top"><span class="jmr-name">시간 차단율<br><span class="jmr-desc">출발 임박으로 준비 시간 부족해 못 삼</span></span><b class="jmr-val" style="color:#0f172a">14.5%</b></div>
+      <div class="pbar"><div class="pb-go" style="width:85.5%">시간 제약 없이 진행 85.5%</div><div class="pb-blk" style="width:14.5%">14.5%</div></div>
+      <div class="jmr-top" style="margin-top:15px"><span class="jmr-name">취소율<br><span class="jmr-desc">예약 취소되면 부가도 자동 환불</span></span><b class="jmr-val" style="color:#0f172a">25.3%</b></div>
+      <div class="pbar"><div class="pb-go" style="width:74.7%">유지 74.7%</div><div class="pb-blk" style="width:25.3%">취소 25.3%</div></div>
+      <div class="jc-ev" style="margin-top:7px">취소율은 제주 예약 평균 44.6%보다 낮음 (부가 산 사람이 덜 취소)</div>
     </div>
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">수익성</span><span class="jc-badge">매출 확보</span></div>
@@ -273,7 +272,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
           <td>6/08 15:54</td>
           <td class="num">31</td>
           <td class="num">31</td>
-          <td class="num">0</td>
+          <td class="num" style="color:#b91c1c;font-weight:700;font-size:11px">판매 안함</td>
           <td class="num">610,000</td>
         </tr>
         <tr style="background:#f8fafc;color:#475569">
@@ -281,13 +280,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
           <td>6/08 15:54</td>
           <td class="num">5</td>
           <td class="num">5</td>
-          <td class="num">0</td>
+          <td class="num" style="color:#b91c1c;font-weight:700;font-size:11px">판매 안함</td>
           <td class="num">105,000</td>
         </tr>
       </tbody>
     </table>
     <div style="padding:10px 16px;font-size:11px;color:#9ca3af;line-height:1.6;border-top:1px solid #f3f4f6">
-      마이그레이션 제외 인앱 신규 기준 (6/05~6/22)<br>선택 완료율과 시간 차단율은 전체 기준(구매율과 시간 차단의 지역별은 아래 '지역별 구매율과 차단' 참고)<br>내륙(부산, 대구)은 6/08 오후 오픈이라 표본이 작아 건수와 순매출만 분리
+      마이그레이션 제외 인앱 신규 기준 (6/05~6/22)<br>부산, 대구는 유모차 미취급으로 카시트만 판매 (0이 아니라 메뉴에 없음)<br>선택 완료율과 시간 차단율은 전체 기준(구매율과 시간 차단의 지역별은 아래 '지역별 구매율과 차단' 참고)<br>내륙(부산, 대구)은 6/08 오후 오픈이라 표본이 작아 건수와 순매출만 분리
     </div>
   </div>
 
@@ -742,7 +741,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       </tbody>
     </table>
     <div style="margin-top:10px;font-size:11px;color:#9ca3af;line-height:1.6">
-      내륙은 전부 카시트(유모차 0건), 결제 예약 = 부산 + 대구<br>일자는 첫 결제일 기준
+      내륙은 유모차 미취급이라 전부 카시트, 결제 예약 = 부산 + 대구<br>일자는 첫 결제일 기준
     </div>
     </div>
   </details>
