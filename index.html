@@ -30,6 +30,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .period-block .lbl { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
 .period-block .val { font-size: 13px; font-weight: 700; color: white; line-height: 1.4; }
 .period-block .sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.5; }
+/* 지역 기준 배지 */
+.rbadge { display:inline-block; font-size:10px; font-weight:800; padding:2px 8px; border-radius:5px; margin-bottom:7px; letter-spacing:0; }
+.rbadge-jeju { background:#3b82f6; color:#fff; }
+.rbadge-inland { background:#f59e0b; color:#fff; }
+.rbadge-all { background:#94a3b8; color:#0f172a; }
+.rtag { font-size:10px; font-weight:800; padding:2px 7px; border-radius:5px; letter-spacing:0; }
+.rtag-jeju { background:#dbeafe; color:#1e40af; }
+.rtag-inland { background:#fef3c7; color:#92400e; }
+.rtag-all { background:#e2e8f0; color:#334155; }
 
 .main { max-width: 1440px; margin: 0 auto; padding: 24px; }
 
@@ -172,24 +181,28 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 <div class="period-banner">
   <div class="period-inner">
     <div class="period-block highlight">
-      <div class="lbl">제주 인앱 신규</div>
+      <span class="rbadge rbadge-jeju">제주</span>
+      <div class="lbl">인앱 신규 예약</div>
       <div class="val">348 예약</div>
       <div class="sub">6/05 10:14 오픈 이후</div>
     </div>
     <div class="period-block">
-      <div class="lbl">내륙 인앱 신규</div>
+      <span class="rbadge rbadge-inland">내륙</span>
+      <div class="lbl">인앱 신규 예약</div>
       <div class="val">36 예약</div>
       <div class="sub">부산 31, 대구 5 (6/08 오픈)</div>
     </div>
     <div class="period-block">
-      <div class="lbl">제주 인앱 신규 순매출</div>
+      <span class="rbadge rbadge-jeju">제주</span>
+      <div class="lbl">인앱 신규 순매출</div>
       <div class="val">17,360,000 원</div>
-      <div class="sub">제주 신규 기준 (전체 1,808만)</div>
+      <div class="sub">전 지역 합치면 1,808만</div>
     </div>
     <div class="period-block">
+      <span class="rbadge rbadge-all">전체</span>
       <div class="lbl">옵션 화면 노출</div>
       <div class="val">1,309 명</div>
-      <div class="sub">6/05~6/22 순 사용자 (전체)</div>
+      <div class="sub">6/05~6/22 순 사용자</div>
     </div>
   </div>
 </div>
@@ -207,13 +220,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   </div>
   <div class="judge-row">
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">수요</span><span class="jc-badge">목표 초과</span></div>
+      <div class="jc-head"><span class="jc-axis">수요 <span class="rtag rtag-all">전체</span></span><span class="jc-badge">목표 초과</span></div>
       <div class="jc-now">옵션 진입자 구매율 <b>29.2%</b> <span class="jc-ci">(26.7~31.7%)</span></div>
       <div class="jc-gauge"><div class="jc-gfill" style="width:73%"></div><div class="jc-target" style="left:50%"><span>목표 20% 이상</span></div></div>
       <div class="jc-ev">신뢰구간 하한 26.7%도 목표를 넘어 수요 확실</div>
     </div>
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">운영 건전성</span><span class="jc-badge">정상</span></div>
+      <div class="jc-head"><span class="jc-axis">운영 건전성 <span class="rtag rtag-all">전체</span></span><span class="jc-badge">정상</span></div>
       <div class="jmr-top"><span class="jmr-name">시간 차단율<br><span class="jmr-desc">출발 임박으로 준비 시간 부족해 못 삼</span></span><b class="jmr-val" style="color:#0f172a">14.5%</b></div>
       <div class="pbar"><div class="pb-go" style="width:85.5%">시간 제약 없이 진행 85.5%</div><div class="pb-blk" style="width:14.5%">14.5%</div></div>
       <div class="jmr-top" style="margin-top:15px"><span class="jmr-name">취소율<br><span class="jmr-desc">예약 취소되면 부가도 자동 환불</span></span><b class="jmr-val" style="color:#0f172a">25.3%</b></div>
@@ -221,7 +234,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div class="jc-ev" style="margin-top:7px">취소율은 제주 예약 평균 44.6%보다 낮음 (부가 산 사람이 덜 취소)</div>
     </div>
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">수익성</span><span class="jc-badge">매출 확보</span></div>
+      <div class="jc-head"><span class="jc-axis">수익성 <span class="rtag rtag-jeju">제주</span></span><span class="jc-badge">매출 확보</span></div>
       <div class="jc-now">제주 월 환산 순매출 <b>약 2,900만원</b></div>
       <div class="jc-ev" style="margin-top:14px">6/5 제주 오픈 후 신규 결제 17,360,000원을 한 달로 환산한 값</div>
     </div>
@@ -354,7 +367,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   </details>
 
   <!-- 일별 추이 차트 -->
-  <div class="section-label">일별 결제 추이 <span class="tag tag-info">인앱 신규 기준, 마이그레이션 분리</span></div>
+  <div class="section-label">일별 결제 추이 <span class="rtag rtag-jeju">제주</span> <span class="tag tag-info">인앱 신규 기준, 마이그레이션 분리</span></div>
   <div class="card">
     <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
   </div>
@@ -457,7 +470,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
   <!-- 수락률과 차단율 지표 -->
   <div class="section-label" style="margin-top:30px">
-    전환 및 차단 지표 (6/05~6/22)
+    전환 및 차단 지표 (6/05~6/22) <span class="rtag rtag-all">전체</span>
     <span class="tag tag-info">이벤트 D+1, 6/22까지</span>
   </div>
   <div class="section-explain">
@@ -565,7 +578,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
   <!-- 누가 사는가 (수락자 프로파일) -->
   <div class="section-label" style="margin-top:30px">
-    누가 사는가 (수락자 프로파일)
+    누가 사는가 (수락자 프로파일) <span class="rtag rtag-all">전체</span>
     <span class="tag tag-fact">BQ 실측, 결제 예약 384건</span>
   </div>
   <div class="section-explain">
