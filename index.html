@@ -71,6 +71,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .jc-target { position:absolute; top:-5px; bottom:-5px; width:2px; background:#111827; }
 .jc-target span { position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:800; color:#374151; white-space:nowrap; }
 .jc-ev { font-size:12px; color:#6b7280; line-height:1.55; margin-top:6px; }
+.jmr-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+.jmr-name { font-size:12.5px; font-weight:700; color:#374151; line-height:1.4; }
+.jmr-desc { font-size:11px; font-weight:600; color:#9ca3af; }
+.jmr-val { font-size:20px; font-weight:900; color:#059669; white-space:nowrap; line-height:1; }
 
 /* 종합 판단 */
 .verdict { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin-bottom: 8px; }
@@ -200,13 +204,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">수요</span><span class="jc-badge">목표 초과</span></div>
       <div class="jc-now">옵션 진입자 구매율 <b>29.2%</b> <span class="jc-ci">(26.7~31.7%)</span></div>
-      <div class="jc-gauge"><div class="jc-gfill" style="width:73%"></div><div class="jc-target" style="left:50%"><span>목표 20%</span></div></div>
+      <div class="jc-gauge"><div class="jc-gfill" style="width:73%"></div><div class="jc-target" style="left:50%"><span>목표 20% 이상</span></div></div>
       <div class="jc-ev">신뢰구간 하한 26.7%도 목표를 넘어 수요 확실</div>
     </div>
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">운영 건전성</span><span class="jc-badge">정상</span></div>
-      <div class="jc-now">시간 차단율 <b>14.5%</b> <span class="jc-ci">/ 취소율 25.3%</span></div>
-      <div class="jc-ev" style="margin-top:13px">출발이 임박해 카시트 준비 시간이 안 나오면 시간 알럿으로 막힘. 목표였던 <b>차단 20% 이하</b>를 충족(14.5%)하고, 취소율도 렌탈 통상 범위</div>
+      <div class="jmr-top"><span class="jmr-name">시간 차단율<br><span class="jmr-desc">출발 임박으로 준비 시간 부족해 못 삼</span></span><b class="jmr-val">14.5%</b></div>
+      <div class="jc-gauge" style="margin:22px 0 5px"><div class="jc-gfill" style="width:48%"></div><div class="jc-target" style="left:67%"><span>목표 20% 이하</span></div></div>
+      <div class="jmr-top" style="margin-top:14px"><span class="jmr-name">취소율<br><span class="jmr-desc">예약 취소되면 부가도 자동 환불</span></span><b class="jmr-val">25.3%</b></div>
+      <div class="jc-gauge" style="margin:22px 0 5px"><div class="jc-gfill" style="width:46%"></div><div class="jc-target" style="left:81%"><span>제주 예약 평균 44.6%</span></div></div>
     </div>
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">수익성</span><span class="jc-badge">매출 확보</span></div>
@@ -216,7 +222,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   </div>
   <div class="card" style="background:#f0fdf4;border-color:#bbf7d0">
     <div style="font-size:13px;line-height:1.85;color:#14532d">
-      <b>종합</b> 수요(구매율 29.2%, 신뢰구간 하한도 목표 초과), 운영(차단 14.5%, 취소 정상), 매출(제주 월 2,900만원) 모두 정규화 근거 확보<br>
+      <b>종합</b> 수요(구매율 29.2%, 신뢰구간 하한도 목표 초과), 운영(차단 14.5%로 목표 이하, 취소 25.3%로 제주 평균 44.6%보다 낮음), 매출(제주 월 2,900만원) 모두 정규화 근거 확보<br>
       내륙은 표본이 작아(옵션 86명, 구매율 신뢰구간 13~31%) 제주와 차이를 단정하긴 이름
     </div>
   </div>
