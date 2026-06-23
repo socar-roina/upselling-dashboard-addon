@@ -179,8 +179,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <span class="tag tag-fact">6/22 기준</span>
   </div>
   <div class="section-explain">
-    PoC 결정 질문: 카시트, 유모차 유료 부가서비스를 정규화(블랙라벨 차량 한정 확대)할 것인가<br>
-    대조군 없는 단일군 PoC라 A/B 유의검정은 부적합. 핵심 비율은 표본 크기 기반 신뢰구간으로 추정 안정성을 판단
+    PoC 결정 질문: 카시트, 유모차 유료 부가서비스를 정규화할 것인가<br>
+    각 비율 옆 괄호는 95% 신뢰구간(표본이 작을수록 넓어짐). 구간 하한도 목표선을 넘으면 통과
   </div>
   <div class="card" style="padding:0;overflow:hidden">
     <table class="data-table">
@@ -409,7 +409,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <span class="tag tag-info">이벤트 D+1, 6/22까지</span>
   </div>
   <div class="section-explain">
-    옵션 화면을 본 사람이 카시트를 고르고(선택 완료), 실제 결제까지 가는 흐름<br><b>선택 완료율</b>은 골랐는지, <b>구매율</b>은 실제로 샀는지를 나타냄
+    옵션 화면 본 사람이 골라서(선택 완료) 결제까지 가는 흐름
   </div>
   <div class="card">
     <div class="funnel-bars">
@@ -435,14 +435,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       </div>
     </div>
     <div style="margin-top:14px;font-size:12px;color:#6b7280;line-height:1.8">
-      옵션 화면 본 1,309명 기준: 74.0%가 선택까지 가고(969명), 29.2%가 실제 결제(382명)<br>도움말 클릭은 298명으로 별도 분리
+      도움말 클릭 298명은 구매 흐름과 별개로 분리
     </div>
     <div class="note-box">
-      <div class="q">추가 버튼(1,366)에서 옵션 화면(1,309) 사이 누락은 대부분 시간 차단</div>
+      <div class="q">추가 버튼 누른 1,366명 중 57명만 옵션 화면에 못 들어감 (거의 다 시간 차단)</div>
       <div class="a">
-        누락 57명 중 <b>51명(89%)이 시간 제약 알럿으로 옵션 화면에 미진입</b><br>
-        추가 버튼을 누른 직후 출발 임박이라 시간 알럿이 떠서 막힌 것이라 이탈이나 앱 종료가 아님<br>
-        알럿 없이 사라진 순수 전환 손실은 6명(0.4%)으로 측정 손실은 미미함
+        57명 중 <b>51명은 출발이 임박해 시간 알럿에 막힘</b> (카시트 준비 시간이 안 나옴)<br>
+        나머지 6명만 원인 불명이라, 옵션 화면 직전 실제 이탈은 거의 없음
       </div>
     </div>
   </div>
@@ -453,7 +452,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <span class="tag tag-info">이벤트 D+1, 6/22까지</span>
   </div>
   <div class="section-explain">
-    구매율과 선택 완료율은 옵션 화면 본 1,309명 기준<br>시간 차단율만 추가 버튼 클릭 1,366명 기준(옵션 화면 진입 전 시간 제약으로 막힌 비율이라 분모가 다름)
+    구매율과 선택 완료율은 옵션 화면 본 1,309명 기준. 시간 차단율만 추가 버튼 1,366명 기준 (분모 다름)
   </div>
   <div class="kpi-row">
     <div class="kpi">
