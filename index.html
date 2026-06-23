@@ -175,15 +175,56 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
   <!-- 종합 판단 -->
   <div class="section-label" style="font-size:14px">
-    종합 판단
+    PoC 목표 및 판단 기준
     <span class="tag tag-fact">6/22 기준</span>
   </div>
-  <div class="verdict">
-    <div class="verdict-head">제주는 오픈 후 결제 수요가 꾸준히 유지</div>
-    <div style="padding:18px 22px;font-size:13px;line-height:1.9;color:#374151">
-      옵션 화면 본 사람 10명 중 약 3명이 실제 결제로 이어짐 (구매율 29.2%)<br>
-      노출만 늘어난 게 아니라 결제 수요가 받쳐주고, 환불 반영 후에도 일 결제가 안정적으로 유지됨<br>
-      PoC라 대조군은 없어 구매율과 순매출 추세를 핵심 판단 지표로 봄
+  <div class="section-explain">
+    PoC 결정 질문: 카시트, 유모차 유료 부가서비스를 정규화(블랙라벨 차량 한정 확대)할 것인가<br>
+    대조군 없는 단일군 PoC라 A/B 유의검정은 부적합. 핵심 비율은 표본 크기 기반 신뢰구간으로 추정 안정성을 판단
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>판단 축</th>
+          <th>목표 (기준선)</th>
+          <th class="num">현재 (95% 신뢰구간)</th>
+          <th>판정</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dt">수요</td>
+          <td>옵션 진입자 구매율 20% 이상</td>
+          <td class="num">29.2% (26.7~31.7%)</td>
+          <td style="color:#059669;font-weight:800">통과</td>
+        </tr>
+        <tr>
+          <td class="dt">수익성</td>
+          <td>월 순매출이 월 운영비 이상</td>
+          <td class="num">제주 월 환산 약 2,900만원</td>
+          <td style="color:#b45309;font-weight:800">매출 충분, 운영비 입력 시 확정</td>
+        </tr>
+        <tr>
+          <td class="dt">운영</td>
+          <td>시간 차단율 20% 이하, 취소율 렌탈 통상 범위, 재고 차단 측정</td>
+          <td class="num">차단 14.5% / 취소 25.3% / 재고 미적재</td>
+          <td style="color:#b45309;font-weight:800">차단, 취소 정상 / 재고 미측정</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding:12px 16px;font-size:11px;color:#9ca3af;line-height:1.8;border-top:1px solid #f3f4f6">
+      수요 기준 20%: 부가, 액세서리 상품의 조회 대비 결제(attach)가 통상 10~30%이고 노출이 기존 결제 화면 재활용이라 신규 획득비가 없어 20%면 유지 가치 충분. 구매율 신뢰구간 하한(26.7%)도 기준을 넘음<br>
+      취소율 25.3%: 완료 결제 407건 중 시차 취소 138건 기준(결제 직후 3분 내 즉시 롤백 195건 제외). 정의서 핵심 지표 '최종 수락률'은 74.0%(선택 제출 기준이라 구매율과 별도)<br>
+      미확보: 손익분기 판정용 운영비(도급사 인력, 재고 감가)와 재고 차단 건수는 데이터가 없어 별도 입력 필요
+    </div>
+  </div>
+  <div class="card" style="background:#f0fdf4;border-color:#bbf7d0">
+    <div style="font-size:13px;line-height:1.85;color:#14532d">
+      <b>종합</b><br>
+      수요(구매율 29.2%, 신뢰구간 안정)와 운영(시간 차단, 취소율 정상 범위)은 정규화 근거 확보<br>
+      수익성은 매출 규모는 충분하고 운영비 1개 수치만 채우면 손익 판정이 완결됨<br>
+      내륙은 표본이 작아(옵션 86명, 구매율 신뢰구간 13~31%) 제주와 차이를 단정하긴 이름
     </div>
   </div>
 
