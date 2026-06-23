@@ -28,7 +28,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .period-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
 .period-block { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; }
 .period-block .lbl { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-.period-block .val { font-size: 13px; font-weight: 700; color: white; line-height: 1.4; }
+.period-block .val { font-size: 13px; font-weight: 700; color: white; line-height: 1.3; }
+.period-block .val b { font-size: 24px; font-weight: 900; letter-spacing: -0.01em; }
 .period-block .sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.5; }
 /* 지역 기준 배지 */
 .rbadge { display:inline-block; font-size:10px; font-weight:800; padding:2px 8px; border-radius:5px; margin-bottom:7px; letter-spacing:0; }
@@ -183,25 +184,25 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="period-block highlight">
       <span class="rbadge rbadge-jeju">제주</span>
       <div class="lbl">인앱 신규 예약</div>
-      <div class="val">348 예약</div>
+      <div class="val"><b>348</b> 예약</div>
       <div class="sub">6/05 10:14 오픈 이후</div>
     </div>
     <div class="period-block">
       <span class="rbadge rbadge-inland">내륙</span>
       <div class="lbl">인앱 신규 예약</div>
-      <div class="val">36 예약</div>
+      <div class="val"><b>36</b> 예약</div>
       <div class="sub">부산 31, 대구 5 (6/08 오픈)</div>
     </div>
     <div class="period-block">
       <span class="rbadge rbadge-jeju">제주</span>
       <div class="lbl">인앱 신규 순매출</div>
-      <div class="val">17,360,000 원</div>
+      <div class="val"><b>17,360,000</b> 원</div>
       <div class="sub">전 지역 합치면 1,808만</div>
     </div>
     <div class="period-block">
       <span class="rbadge rbadge-all">전체</span>
       <div class="lbl">옵션 화면 노출</div>
-      <div class="val">1,309 명</div>
+      <div class="val"><b>1,309</b> 명</div>
       <div class="sub">6/05~6/22 순 사용자</div>
     </div>
   </div>
@@ -246,8 +247,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </div>
   <div style="font-size:11px;color:#9ca3af;line-height:1.7;margin:-4px 0 8px">
-    수요 기준 20%: 부가, 액세서리 attach가 통상 10~30%이고 기존 결제 화면 재활용이라 신규 획득비 없어 20%면 유지 가치 충분<br>
-    취소율 25.3%: 완료 결제 407건 중 시차 취소 138건(즉시 롤백 195건 제외). 정의서 핵심 지표 최종 수락률은 74.0%(선택 제출 기준이라 구매율과 별도)
+    수요 목표 20%: 부가 상품 attach가 통상 10~30%인데, 기존 결제 화면 재활용이라 획득비 없어 20%면 유지 가치 충분<br>
+    취소율: 완료 결제 407건 중 시차 취소 138건 (즉시 롤백 195건 제외)
   </div>
 
   <!-- 지역별 요약 비교 -->
@@ -437,17 +438,17 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="funnel-bars">
       <div class="bar-row">
         <div class="bar-label">앱에서 추가 버튼 클릭<br><span class="sub">결제 화면에서 부가서비스 추가</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#3b82f6">1,366명</div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#60a5fa">1,366명</div></div>
         <div class="bar-pct">기준</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">옵션 화면 봄<br><span class="sub">부가서비스 옵션 화면 진입</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:95.8%;background:#7c3aed">1,309명</div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:95.8%;background:#3b82f6">1,309명</div></div>
         <div class="bar-pct">추가 클릭의 96%</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">선택 완료<br><span class="sub">옵션 골라 선택 완료</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:70.9%;background:#0ea5e9">969명</div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:70.9%;background:#2563eb">969명</div></div>
         <div class="bar-pct">선택 완료율 74.0%</div>
       </div>
       <div class="bar-row final">
