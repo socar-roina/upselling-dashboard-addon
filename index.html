@@ -57,6 +57,20 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .kpi .num.amber { color: #b45309; }
 .kpi .unit { font-size: 14px; font-weight: 700; color: #6b7280; margin-left: 2px; }
 .kpi .sub { font-size: 11px; color: #6b7280; margin-top: 10px; line-height: 1.6; }
+/* PoC 판단 축 카드 (목표 대비 달성 한눈에) */
+.judge-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:12px; }
+.jcard { background:white; border:1px solid #e5e7eb; border-top:4px solid #059669; border-radius:14px; padding:16px 18px; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+.jc-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
+.jc-axis { font-size:14px; font-weight:800; color:#111827; }
+.jc-badge { font-size:12px; font-weight:800; padding:4px 11px; border-radius:20px; background:#d1fae5; color:#065f46; white-space:nowrap; }
+.jc-now { font-size:13px; color:#374151; font-weight:700; line-height:1.4; }
+.jc-now b { font-size:24px; color:#059669; font-weight:900; }
+.jc-ci { font-size:12px; color:#9ca3af; font-weight:700; }
+.jc-gauge { position:relative; height:9px; background:#f3f4f6; border-radius:99px; margin:20px 0 7px; }
+.jc-gfill { position:absolute; left:0; top:0; bottom:0; background:#059669; border-radius:99px; }
+.jc-target { position:absolute; top:-5px; bottom:-5px; width:2px; background:#111827; }
+.jc-target span { position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:800; color:#374151; white-space:nowrap; }
+.jc-ev { font-size:12px; color:#6b7280; line-height:1.55; margin-top:6px; }
 
 /* 종합 판단 */
 .verdict { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin-bottom: 8px; }
@@ -182,50 +196,34 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     PoC 결정 질문: 카시트, 유모차 유료 부가서비스를 정규화할 것인가<br>
     각 비율 옆 괄호는 95% 신뢰구간(표본이 작을수록 넓어짐). 구간 하한도 목표선을 넘으면 통과
   </div>
-  <div class="card" style="padding:0;overflow:hidden">
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>판단 축</th>
-          <th>목표 (기준선)</th>
-          <th class="num">현재 (95% 신뢰구간)</th>
-          <th>판정</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="dt">수요</td>
-          <td>옵션 진입자 구매율 20% 이상</td>
-          <td class="num">29.2% (26.7~31.7%)</td>
-          <td style="color:#059669;font-weight:800">통과</td>
-        </tr>
-        <tr>
-          <td class="dt">수익성</td>
-          <td>월 순매출이 월 운영비 이상</td>
-          <td class="num">제주 월 환산 약 2,900만원</td>
-          <td style="color:#b45309;font-weight:800">매출 충분, 운영비 입력 시 확정</td>
-        </tr>
-        <tr>
-          <td class="dt">운영</td>
-          <td>시간 차단율 20% 이하, 취소율 렌탈 통상 범위, 재고 차단 측정</td>
-          <td class="num">차단 14.5% / 취소 25.3% / 재고 미적재</td>
-          <td style="color:#b45309;font-weight:800">차단, 취소 정상 / 재고 미측정</td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="padding:12px 16px;font-size:11px;color:#9ca3af;line-height:1.8;border-top:1px solid #f3f4f6">
-      수요 기준 20%: 부가, 액세서리 상품의 조회 대비 결제(attach)가 통상 10~30%이고 노출이 기존 결제 화면 재활용이라 신규 획득비가 없어 20%면 유지 가치 충분. 구매율 신뢰구간 하한(26.7%)도 기준을 넘음<br>
-      취소율 25.3%: 완료 결제 407건 중 시차 취소 138건 기준(결제 직후 3분 내 즉시 롤백 195건 제외). 정의서 핵심 지표 '최종 수락률'은 74.0%(선택 제출 기준이라 구매율과 별도)<br>
-      미확보: 손익분기 판정용 운영비(도급사 인력, 재고 감가)와 재고 차단 건수는 데이터가 없어 별도 입력 필요
+  <div class="judge-row">
+    <div class="jcard">
+      <div class="jc-head"><span class="jc-axis">수요</span><span class="jc-badge">목표 초과</span></div>
+      <div class="jc-now">옵션 진입자 구매율 <b>29.2%</b> <span class="jc-ci">(26.7~31.7%)</span></div>
+      <div class="jc-gauge"><div class="jc-gfill" style="width:73%"></div><div class="jc-target" style="left:50%"><span>목표 20%</span></div></div>
+      <div class="jc-ev">신뢰구간 하한 26.7%도 목표를 넘어 수요 확실</div>
+    </div>
+    <div class="jcard">
+      <div class="jc-head"><span class="jc-axis">운영 건전성</span><span class="jc-badge">정상</span></div>
+      <div class="jc-now">시간 차단율 <b>14.5%</b> <span class="jc-ci">/ 취소율 25.3%</span></div>
+      <div class="jc-gauge"><div class="jc-gfill" style="width:48%"></div><div class="jc-target" style="left:67%"><span>한도 20%</span></div></div>
+      <div class="jc-ev">차단은 한도 아래, 취소는 렌탈 통상 범위</div>
+    </div>
+    <div class="jcard">
+      <div class="jc-head"><span class="jc-axis">수익성</span><span class="jc-badge">매출 확보</span></div>
+      <div class="jc-now">제주 월 환산 순매출 <b>약 2,900만원</b></div>
+      <div class="jc-ev" style="margin-top:14px">노출이 기존 결제 화면 재활용이라 신규 획득비가 없어, 매출 대부분이 마진으로 남음</div>
     </div>
   </div>
   <div class="card" style="background:#f0fdf4;border-color:#bbf7d0">
     <div style="font-size:13px;line-height:1.85;color:#14532d">
-      <b>종합</b><br>
-      수요(구매율 29.2%, 신뢰구간 안정)와 운영(시간 차단, 취소율 정상 범위)은 정규화 근거 확보<br>
-      수익성은 매출 규모는 충분하고 운영비 1개 수치만 채우면 손익 판정이 완결됨<br>
+      <b>종합</b> 수요(구매율 29.2%, 신뢰구간 하한도 목표 초과), 운영(차단 14.5%, 취소 정상), 매출(제주 월 2,900만원) 모두 정규화 근거 확보<br>
       내륙은 표본이 작아(옵션 86명, 구매율 신뢰구간 13~31%) 제주와 차이를 단정하긴 이름
     </div>
+  </div>
+  <div style="font-size:11px;color:#9ca3af;line-height:1.7;margin:-4px 0 8px">
+    수요 기준 20%: 부가, 액세서리 attach가 통상 10~30%이고 기존 결제 화면 재활용이라 신규 획득비 없어 20%면 유지 가치 충분<br>
+    취소율 25.3%: 완료 결제 407건 중 시차 취소 138건(즉시 롤백 195건 제외). 정의서 핵심 지표 최종 수락률은 74.0%(선택 제출 기준이라 구매율과 별도)
   </div>
 
   <!-- 지역별 요약 비교 -->
@@ -542,7 +540,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       </tbody>
     </table>
     <div style="padding:10px 16px;font-size:11px;color:#9ca3af;line-height:1.6;border-top:1px solid #f3f4f6">
-구매자와 구매율은 옵션 본 회원(명) 기준이라, 상단 결제 예약(348 등 예약 단위)과는 집계 단위가 다름<br>시간 차단은 추가 클릭 후 시간 알럿 노출 인원, 재고 차단(품절로 못 산 경우)은 현재 BQ 미적재라 로깅 적재 요청중
+구매자와 구매율은 옵션 본 회원(명) 기준이라, 상단 결제 예약(348 등 예약 단위)과는 집계 단위가 다름<br>시간 차단은 추가 클릭 후 시간 알럿 노출 인원
     </div>
   </div>
   <div class="note-box">
