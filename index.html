@@ -75,6 +75,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .jmr-name { font-size:12.5px; font-weight:700; color:#374151; line-height:1.4; }
 .jmr-desc { font-size:11px; font-weight:600; color:#9ca3af; }
 .jmr-val { font-size:20px; font-weight:900; color:#059669; white-space:nowrap; line-height:1; }
+/* 낮을수록 좋은 지표: 초록 안전구간 / 빨강 부담구간 + 현재값 마커 */
+.zbar { position:relative; height:8px; margin:24px 0 24px; }
+.zbar-ok { position:absolute; left:0; top:0; bottom:0; background:#a7f3d0; border-radius:99px 0 0 99px; }
+.zbar-bad { position:absolute; top:0; bottom:0; background:#fecaca; border-radius:0 99px 99px 0; }
+.zbar-mark { position:absolute; top:-5px; bottom:-5px; width:3px; background:#065f46; border-radius:2px; }
+.zbar-mark span { position:absolute; top:-17px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:900; color:#065f46; white-space:nowrap; }
+.zbar-edge { position:absolute; top:13px; transform:translateX(-50%); font-size:10px; font-weight:700; color:#b91c1c; white-space:nowrap; }
 
 /* 종합 판단 */
 .verdict { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin-bottom: 8px; }
@@ -210,9 +217,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">운영 건전성</span><span class="jc-badge">정상</span></div>
       <div class="jmr-top"><span class="jmr-name">시간 차단율<br><span class="jmr-desc">출발 임박으로 준비 시간 부족해 못 삼</span></span><b class="jmr-val">14.5%</b></div>
-      <div class="jc-gauge" style="margin:22px 0 5px"><div class="jc-gfill" style="width:48%"></div><div class="jc-target" style="left:67%"><span>목표 20% 이하</span></div></div>
-      <div class="jmr-top" style="margin-top:14px"><span class="jmr-name">취소율<br><span class="jmr-desc">예약 취소되면 부가도 자동 환불</span></span><b class="jmr-val">25.3%</b></div>
-      <div class="jc-gauge" style="margin:22px 0 5px"><div class="jc-gfill" style="width:46%"></div><div class="jc-target" style="left:81%"><span>제주 예약 평균 44.6%</span></div></div>
+      <div class="zbar"><div class="zbar-ok" style="width:67%"></div><div class="zbar-bad" style="left:67%;right:0"></div><div class="zbar-mark" style="left:48%"><span>14.5%</span></div><div class="zbar-edge" style="left:67%">20% 넘으면 부담</div></div>
+      <div class="jmr-top" style="margin-top:16px"><span class="jmr-name">취소율<br><span class="jmr-desc">예약 취소되면 부가도 자동 환불</span></span><b class="jmr-val">25.3%</b></div>
+      <div class="zbar"><div class="zbar-ok" style="width:81%"></div><div class="zbar-bad" style="left:81%;right:0"></div><div class="zbar-mark" style="left:46%"><span>25.3%</span></div><div class="zbar-edge" style="left:81%">제주 평균 44.6%</div></div>
     </div>
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">수익성</span><span class="jc-badge">매출 확보</span></div>
