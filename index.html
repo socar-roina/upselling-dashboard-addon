@@ -141,10 +141,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .foot-note .term:last-child { border-bottom: none; }
 .foot-note .term b { color: #111827; }
 /* 지역 상세 토글 */
-.rtoggle { display: inline-flex; gap: 4px; background: #eef2f7; border: 1px solid #e5e7eb; border-radius: 12px; padding: 4px; margin: 30px 0 6px; }
+.rtoggle-bar { position: sticky; top: 0; z-index: 50; background: #f7f8fa; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 0; margin-bottom: 8px; border-bottom: 1px solid #e5e7eb; }
+.rtoggle { display: inline-flex; gap: 4px; background: #eef2f7; border: 1px solid #e5e7eb; border-radius: 12px; padding: 4px; }
 .rtoggle button { border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 700; color: #6b7280; padding: 9px 22px; border-radius: 9px; cursor: pointer; }
 .rtoggle button.active { background: #2563eb; color: white; box-shadow: 0 1px 3px rgba(37,99,235,0.3); }
-.rtoggle-hint { font-size: 12px; color: #9ca3af; margin: 0 0 14px; line-height: 1.6; }
+.rtoggle-hint { font-size: 12px; color: #9ca3af; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -214,6 +215,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 </div>
 
 <div class="main">
+
+  <div class="rtoggle-bar">
+    <div class="rtoggle">
+      <button id="btn-jeju" class="active" onclick="showRegion('jeju')">제주</button>
+      <button id="btn-inland" onclick="showRegion('inland')">내륙 (부산, 대구)</button>
+    </div>
+    <span class="rtoggle-hint">제주가 기본. 내륙 누르면 부산, 대구 결제 실적으로 전환 (구매 전환, 차단, 프로파일은 두 지역 공통)</span>
+  </div>
 
   <!-- 종합 판단 -->
   <div class="section-label" style="font-size:14px">
@@ -308,13 +317,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       마이그레이션 제외 인앱 신규 기준 (6/05~6/22)<br>부산, 대구는 유모차 미취급으로 카시트만 판매 (0이 아니라 메뉴에 없음)<br>선택 완료율과 시간 차단율은 전체 기준(구매율과 시간 차단의 지역별은 아래 '지역별 구매율과 차단' 참고)<br>내륙(부산, 대구)은 6/08 오후 오픈이라 표본이 작아 건수와 순매출만 분리
     </div>
   </div>
-
-  <!-- 지역 상세 토글 -->
-  <div class="rtoggle">
-    <button id="btn-jeju" class="active" onclick="showRegion('jeju')">제주</button>
-    <button id="btn-inland" onclick="showRegion('inland')">내륙 (부산, 대구)</button>
-  </div>
-  <div class="rtoggle-hint">제주가 기본. 내륙을 누르면 부산, 대구 결제 실적으로 전환<br>아래 구매 전환, 차단, 프로파일은 두 지역 공통 분석</div>
 
   <div id="view-jeju">
   <!-- 결제 누계 KPI -->
