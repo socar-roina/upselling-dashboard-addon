@@ -200,10 +200,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div class="sub">부산 31, 대구 5 (6/08 오픈)</div>
     </div>
     <div class="period-block">
-      <span class="rbadge rbadge-jeju">제주</span>
+      <span class="rbadge rbadge-all">전체</span>
       <div class="lbl">인앱 신규 순매출</div>
-      <div class="val"><b>17,360,000</b> 원</div>
-      <div class="sub">전 지역 합치면 1,808만</div>
+      <div class="val"><b>18,075,000</b> 원</div>
+      <div class="sub">제주 1,736만 + 내륙 71.5만</div>
     </div>
     <div class="period-block">
       <span class="rbadge rbadge-all">전체</span>
@@ -215,14 +215,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 </div>
 
 <div class="main">
-
-  <div class="rtoggle-bar">
-    <div class="rtoggle">
-      <button id="btn-jeju" class="active" onclick="showRegion('jeju')">제주</button>
-      <button id="btn-inland" onclick="showRegion('inland')">내륙 (부산, 대구)</button>
-    </div>
-    <span class="rtoggle-hint">제주가 기본. 내륙 누르면 부산, 대구 결제 실적으로 전환 (구매 전환, 차단, 프로파일은 두 지역 공통)</span>
-  </div>
 
   <!-- 종합 판단 -->
   <div class="section-label" style="font-size:14px">
@@ -280,8 +272,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
           <th class="num">카시트</th>
           <th class="num">유모차</th>
           <th class="num">순매출</th>
-          <th class="num">선택 완료율</th>
-          <th class="num">시간 차단율</th>
         </tr>
       </thead>
       <tbody>
@@ -292,8 +282,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
           <td class="num">344</td>
           <td class="num">38</td>
           <td class="num">17,360,000</td>
-          <td class="num" rowspan="3" style="vertical-align:middle">74.0%</td>
-          <td class="num" rowspan="3" style="vertical-align:middle">14.5%</td>
         </tr>
         <tr style="background:#f8fafc;color:#475569">
           <td class="dt" style="color:#475569">부산</td>
@@ -314,8 +302,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       </tbody>
     </table>
     <div style="padding:10px 16px;font-size:11px;color:#9ca3af;line-height:1.6;border-top:1px solid #f3f4f6">
-      마이그레이션 제외 인앱 신규 기준 (6/05~6/22)<br>부산, 대구는 유모차 미취급으로 카시트만 판매 (0이 아니라 메뉴에 없음)<br>선택 완료율과 시간 차단율은 전체 기준(구매율과 시간 차단의 지역별은 아래 '지역별 구매율과 차단' 참고)<br>내륙(부산, 대구)은 6/08 오후 오픈이라 표본이 작아 건수와 순매출만 분리
+      마이그레이션 제외 인앱 신규 기준 (6/05~6/22)<br>부산, 대구는 유모차 미취급으로 카시트만 판매 (0이 아니라 메뉴에 없음)<br>구매율, 선택 완료율, 시간 차단율 등 지역별 전환 지표는 아래 제주 / 내륙 토글에서 확인
     </div>
+  </div>
+
+  <div class="rtoggle-bar">
+    <div class="rtoggle">
+      <button id="btn-jeju" class="active" onclick="showRegion('jeju')">제주</button>
+      <button id="btn-inland" onclick="showRegion('inland')">내륙 (부산, 대구)</button>
+    </div>
+    <span class="rtoggle-hint">제주가 기본. 내륙 누르면 부산, 대구 결제 실적과 전환 분석으로 전환</span>
   </div>
 
   <div id="view-jeju">
@@ -441,6 +437,34 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </details>
 
+  <!-- 제주 구매 전환 깔대기 -->
+  <div class="section-label" style="margin-top:30px">제주 구매 전환 깔대기 <span class="rtag rtag-jeju">제주</span> <span class="tag tag-info">이벤트 D+1, 6/22까지</span></div>
+  <div class="section-explain">옵션 화면 본 사람이 골라서(선택 완료) 결제까지 가는 흐름</div>
+  <div class="card">
+    <div class="funnel-bars">
+      <div class="bar-row"><div class="bar-label">앱에서 추가 버튼 클릭<br><span class="sub">결제 화면에서 부가서비스 추가</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#60a5fa">1,158명</div></div><div class="bar-pct">기준</div></div>
+      <div class="bar-row"><div class="bar-label">옵션 화면 봄<br><span class="sub">부가서비스 옵션 화면 진입</span></div><div class="bar-track"><div class="bar-fill" style="width:96.7%;background:#3b82f6">1,120명</div></div><div class="bar-pct">추가 클릭의 97%</div></div>
+      <div class="bar-row"><div class="bar-label">선택 완료<br><span class="sub">옵션 골라 선택 완료</span></div><div class="bar-track"><div class="bar-fill" style="width:75.6%;background:#2563eb">876명</div></div><div class="bar-pct">선택 완료율 78.2%</div></div>
+      <div class="bar-row final"><div class="bar-label">실제 결제<br><span class="sub">부가서비스 결제 완료</span></div><div class="bar-track"><div class="bar-fill" style="width:30.1%;background:#059669">348명</div></div><div class="bar-pct">구매율 31.1%</div></div>
+    </div>
+    <div style="margin-top:14px;font-size:12px;color:#6b7280;line-height:1.8">도움말 클릭 279명은 구매 흐름과 별개로 분리</div>
+  </div>
+
+  <!-- 제주 전환/차단 -->
+  <div class="section-label" style="margin-top:30px">제주 전환 및 차단 지표 <span class="rtag rtag-jeju">제주</span></div>
+  <div class="section-explain">구매율과 선택 완료율은 제주 옵션 화면 본 1,120명 기준. 시간 차단율만 추가 버튼 1,158명 기준 (분모 다름)</div>
+  <div class="kpi-row">
+    <div class="kpi"><div class="lbl">구매율 <span style="color:#9ca3af;font-weight:400">(핵심)</span></div><div class="num green">31.1 <span class="unit">%</span></div><div class="sub">옵션 본 1,120명 중 결제 348명</div></div>
+    <div class="kpi"><div class="lbl">선택 완료율</div><div class="num blue">78.2 <span class="unit">%</span></div><div class="sub">옵션 본 1,120명 중 선택 876명</div></div>
+    <div class="kpi"><div class="lbl">카시트 선택 완료율</div><div class="num purple">78.8 <span class="unit">%</span></div><div class="sub">진입 1,100 중 선택 867</div></div>
+    <div class="kpi"><div class="lbl">유모차 선택 완료율</div><div class="num amber">43.1 <span class="unit">%</span></div><div class="sub">진입 283 중 선택 122</div></div>
+    <div class="kpi"><div class="lbl">시간 제약 차단율</div><div class="num" style="color:#dc2626">13.0 <span class="unit">%</span></div><div class="sub">추가 클릭 1,158명 중 151명</div></div>
+  </div>
+  <div class="kpi-row" style="grid-template-columns:repeat(2,1fr)">
+    <div class="kpi"><div class="lbl">결제 전환율 <span style="color:#9ca3af;font-weight:400">(선택 후)</span></div><div class="num blue">39.4 <span class="unit">%</span></div><div class="sub">선택 876명 중 결제 345명</div></div>
+    <div class="kpi"><div class="lbl">도움말 본 사람의 선택 완료율</div><div class="num green">89.6 <span class="unit">%</span></div><div class="sub">도움말 본 279명 중 선택 250명<br>안 본 사람은 74.4%(626/841)</div></div>
+  </div>
+
   </div><!-- /view-jeju -->
 
   <div id="view-inland" style="display:none">
@@ -517,156 +541,33 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
     </div>
   </details>
-  </div><!-- /view-inland -->
-
-  <!-- 구매 전환 깔대기 -->
-  <div class="section-label" style="margin-top:30px">
-    구매 전환 깔대기 (6/05~6/22, 전체)
-    <span class="tag tag-info">이벤트 D+1, 6/22까지</span>
-  </div>
-  <div class="section-explain">
-    옵션 화면 본 사람이 골라서(선택 완료) 결제까지 가는 흐름
-  </div>
+  <!-- 내륙 구매 전환 깔대기 -->
+  <div class="section-label" style="margin-top:30px">내륙 구매 전환 깔대기 <span class="rtag rtag-inland">내륙</span> <span class="tag tag-danger">표본 작음</span></div>
+  <div class="section-explain">표본이 작아(추가 클릭 93명) 비율은 참고용</div>
   <div class="card">
     <div class="funnel-bars">
-      <div class="bar-row">
-        <div class="bar-label">앱에서 추가 버튼 클릭<br><span class="sub">결제 화면에서 부가서비스 추가</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#60a5fa">1,366명</div></div>
-        <div class="bar-pct">기준</div>
-      </div>
-      <div class="bar-row">
-        <div class="bar-label">옵션 화면 봄<br><span class="sub">부가서비스 옵션 화면 진입</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:95.8%;background:#3b82f6">1,309명</div></div>
-        <div class="bar-pct">추가 클릭의 96%</div>
-      </div>
-      <div class="bar-row">
-        <div class="bar-label">선택 완료<br><span class="sub">옵션 골라 선택 완료</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:70.9%;background:#2563eb">969명</div></div>
-        <div class="bar-pct">선택 완료율 74.0%</div>
-      </div>
-      <div class="bar-row final">
-        <div class="bar-label">실제 결제<br><span class="sub">부가서비스 결제 완료</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:28.0%;background:#059669">382명</div></div>
-        <div class="bar-pct">구매율 29.2%</div>
-      </div>
-    </div>
-    <div style="margin-top:14px;font-size:12px;color:#6b7280;line-height:1.8">
-      도움말 클릭 298명은 구매 흐름과 별개로 분리
-    </div>
-    <div class="note-box">
-      <div class="q">추가 버튼 누른 1,366명 중 57명만 옵션 화면에 못 들어감 (거의 다 시간 차단)</div>
-      <div class="a">
-        57명 중 <b>51명은 출발이 임박해 시간 알럿에 막힘</b> (카시트 준비 시간이 안 나옴)<br>
-        나머지 6명은 추가를 누른 뒤 옵션 화면으로 넘어가지 않고 결제를 이탈 (이후 체크아웃, 부가서비스 결제 모두 없음)
-      </div>
+      <div class="bar-row"><div class="bar-label">앱에서 추가 버튼 클릭</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#fbbf72">93명</div></div><div class="bar-pct">기준</div></div>
+      <div class="bar-row"><div class="bar-label">옵션 화면 봄</div><div class="bar-track"><div class="bar-fill" style="width:93.5%;background:#f59e0b">87명</div></div><div class="bar-pct">추가 클릭의 94%</div></div>
+      <div class="bar-row"><div class="bar-label">선택 완료</div><div class="bar-track"><div class="bar-fill" style="width:45.2%;background:#d97706">42명</div></div><div class="bar-pct">선택 완료율 48.3%</div></div>
+      <div class="bar-row final"><div class="bar-label">실제 결제</div><div class="bar-track"><div class="bar-fill" style="width:21.5%;background:#059669">20명</div></div><div class="bar-pct">구매율 23.0%</div></div>
     </div>
   </div>
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi"><div class="lbl">구매율 <span style="color:#9ca3af;font-weight:400">(핵심)</span></div><div class="num green">23.0 <span class="unit">%</span></div><div class="sub">옵션 본 87명 중 결제 20명</div></div>
+    <div class="kpi"><div class="lbl">선택 완료율</div><div class="num blue">48.3 <span class="unit">%</span></div><div class="sub">옵션 본 87명 중 선택 42명</div></div>
+    <div class="kpi"><div class="lbl">결제 전환율 <span style="color:#9ca3af;font-weight:400">(선택 후)</span></div><div class="num blue">47.6 <span class="unit">%</span></div><div class="sub">선택 42명 중 결제 20명</div></div>
+    <div class="kpi"><div class="lbl">시간 제약 차단율</div><div class="num" style="color:#dc2626">17.2 <span class="unit">%</span></div><div class="sub">추가 클릭 93명 중 16명</div></div>
+  </div>
+  <div style="font-size:11px;color:#9ca3af;line-height:1.6;margin-bottom:8px">내륙은 유모차 미취급이라 카시트만. 제주 대비 리드타임 짧고(중앙 9일 vs 17일) 짧은 대여(평균 1.9박 vs 2.9박)가 특징이나 36건이라 참고용</div>
 
-  <!-- 수락률과 차단율 지표 -->
-  <div class="section-label" style="margin-top:30px">
-    전환 및 차단 지표 (6/05~6/22) <span class="rtag rtag-all">전체</span>
-    <span class="tag tag-info">이벤트 D+1, 6/22까지</span>
-  </div>
-  <div class="section-explain">
-    구매율과 선택 완료율은 옵션 화면 본 1,309명 기준. 시간 차단율만 추가 버튼 1,366명 기준 (분모 다름)
-  </div>
-  <div class="kpi-row">
-    <div class="kpi">
-      <div class="lbl">구매율 <span style="color:#9ca3af;font-weight:400">(핵심)</span></div>
-      <div class="num green">29.2 <span class="unit">%</span></div>
-      <div class="sub">옵션 본 1,309명 중 실제 결제 382명</div>
-    </div>
-    <div class="kpi">
-      <div class="lbl">선택 완료율</div>
-      <div class="num blue">74.0 <span class="unit">%</span></div>
-      <div class="sub">옵션 본 1,309명 중 선택 완료 969명</div>
-    </div>
-    <div class="kpi">
-      <div class="lbl">카시트 선택 완료율</div>
-      <div class="num purple">74.4 <span class="unit">%</span></div>
-      <div class="sub">진입 1,290 중 선택 완료 960</div>
-    </div>
-    <div class="kpi">
-      <div class="lbl">유모차 선택 완료율</div>
-      <div class="num amber">42.9 <span class="unit">%</span></div>
-      <div class="sub">진입 289 중 선택 완료 124</div>
-    </div>
-    <div class="kpi">
-      <div class="lbl">시간 제약 차단율</div>
-      <div class="num" style="color:#dc2626">14.5 <span class="unit">%</span></div>
-      <div class="sub">추가 클릭 1,366명 중 198명<br>시간 알럿 노출</div>
-    </div>
-  </div>
+  </div><!-- /view-inland -->
 
-  <div class="kpi-row" style="grid-template-columns:repeat(2,1fr)">
-    <div class="kpi">
-      <div class="lbl">결제 전환율 <span style="color:#9ca3af;font-weight:400">(선택 후)</span></div>
-      <div class="num blue">39.2 <span class="unit">%</span></div>
-      <div class="sub">선택 완료 969명 중 실제 결제 380명</div>
-    </div>
-    <div class="kpi">
-      <div class="lbl">도움말 본 사람의 선택 완료율</div>
-      <div class="num green">88.9 <span class="unit">%</span></div>
-      <div class="sub">도움말 본 298명 중 선택 완료 265명<br>안 본 사람은 69.6%(704/1,011), 도움말이 19%p 높음</div>
-    </div>
-  </div>
-
-  <div class="note-box">
+  <!-- 시간 차단 정책 주석 (지역 공통) -->
+  <div class="note-box" style="margin-top:8px">
     <div class="q">시간 차단은 리드타임 정책 때문이며 현행 유지 중</div>
     <div class="a">
       출발이 임박해 카시트, 유모차 준비 리드타임 안쪽인 예약은 옵션 구매를 막는 운영 정책<br>
       <b>현재 시간 제약 정책은 변경 없이 그대로 유지</b>. 내륙 리드타임 완화 등 개선은 향후 검토 대상이며 적용된 변경은 없음
-    </div>
-  </div>
-
-  <!-- 지역별 구매율과 차단 -->
-  <div class="section-label" style="margin-top:30px">
-    지역별 구매율과 차단
-    <span class="tag tag-fact">BQ 실측</span>
-  </div>
-  <div class="section-explain">
-    옵션 화면 본 사람을 결제 화면에서 보던 차량 zone으로 제주, 내륙에 매핑(1,309명 중 1,205명, 92%)<br>내륙은 표본이 작아(옵션 본 86명) 참고용
-  </div>
-  <div class="card" style="padding:0;overflow:hidden">
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>지역</th>
-          <th class="num">옵션 본 사람</th>
-          <th class="num">구매자</th>
-          <th class="num">구매율</th>
-          <th class="num">시간 차단</th>
-          <th class="num">재고 차단</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="background:#eff6ff">
-          <td class="dt">제주</td>
-          <td class="num">1,119</td>
-          <td class="num">346</td>
-          <td class="num">30.9%</td>
-          <td class="num">88명</td>
-          <td class="num" rowspan="2" style="vertical-align:middle;color:#9ca3af">로깅 적재 요청중</td>
-        </tr>
-        <tr style="background:#f8fafc;color:#475569">
-          <td class="dt" style="color:#475569">내륙(부산, 대구)</td>
-          <td class="num">86</td>
-          <td class="num">19</td>
-          <td class="num">22.1%</td>
-          <td class="num">4명</td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="padding:10px 16px;font-size:11px;color:#9ca3af;line-height:1.6;border-top:1px solid #f3f4f6">
-구매자와 구매율은 옵션 본 회원(명) 기준이라, 상단 결제 예약(348 등 예약 단위)과는 집계 단위가 다름<br>시간 차단은 추가 클릭 후 시간 알럿 노출 인원
-    </div>
-  </div>
-  <div class="note-box">
-    <div class="q">내륙 구매율은 제주보다 낮으나 표본이 작고 차단이 원인은 아님</div>
-    <div class="a">
-      내륙 구매율 22.1%로 제주(30.9%)보다 8.8%p 낮음. 단 옵션 본 사람이 86명으로 표본이 작아 변동성이 큼<br>
-      시간 차단은 내륙 4명뿐이라 차단이 낮은 구매율의 원인은 아님<br>
-      절대 결제 건수(수요 규모)가 작은 것과 구매율(전환율)은 구분해서 봐야 함. 수요 특성(도착지로 카시트를 들고 들어오는 비중 등) 해석은 가설이며 현재 데이터로 확정은 어려움
     </div>
   </div>
 
