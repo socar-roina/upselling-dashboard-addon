@@ -146,13 +146,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 <div class="top-bar">
   <div>
     <h1>업셀링 부가서비스(카시트, 유모차) 모니터링 대시보드</h1>
-    <div class="meta">
-      차를 빌릴 때 결제 직전 화면에서 카시트와 유모차를 추가 결제할 수 있는 부가서비스 기능 (PoC)
-    </div>
   </div>
   <div class="updated">
     최종 갱신: <b id="gen-at">-</b><br>
-    <span>데이터 기준 <b id="cut-date" style="color:#6b7280">-</b>까지, 매일 오전 자동 갱신</span>
+    <span>매일 오전 자동 갱신</span>
   </div>
 </div>
 
@@ -574,7 +571,6 @@ function showRegion(r){
   fillFields();
   // 메타
   $('gen-at').textContent = D.meta.generated_at;
-  $('cut-date').textContent = mdy(D.meta.cut);
   // PoC 게이지/바
   const br = D.poc.buy_rate, ci = D.poc.buy_ci;
   $('poc-buy-ci').textContent = '('+d1(ci[0])+'~'+d1(ci[1])+'%)';
