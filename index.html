@@ -188,15 +188,17 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
 <div class="main">
 
-  <!-- 정규화 검토 -->
-  <div class="section-label" style="font-size:14px">
-    정규화 검토
-    <span class="tag tag-fact">전체 기간 기준</span>
-  </div>
-  <div class="section-explain">
-    수요, 운영, 수익성 세 축으로 정규화 가능 여부를 점검
-  </div>
-  <div class="judge-row">
+  <!-- 정규화 검토 (접힘, 제품 관점 잠정) -->
+  <details style="margin-top:8px;margin-bottom:16px;background:white;border:1px solid #e5e7eb;border-radius:14px;padding:16px 22px">
+    <summary style="font-size:14px;font-weight:800;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <span>정규화 검토 <span style="font-size:11px;font-weight:600;color:#9ca3af;margin-left:4px">제품 관점 잠정 판단, 회사 확정 아님</span></span>
+      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
+    </summary>
+    <div style="margin-top:16px">
+    <div class="section-explain">
+      수요, 운영, 수익성 세 축으로 정규화 가능 여부를 제품 관점에서 점검. 측정지표와 PoC 목표를 기준으로 하며, 손익분기는 운영비 확인 후 확정
+    </div>
+    <div class="judge-row">
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">수요 <span class="help">?<span class="tip">괄호는 구매율의 95% 신뢰구간으로, 표본이 작을수록 넓어짐. 목표 20%는 부가 상품의 통상 구매 전환(10~30%)을 기준으로 잡았고, 신뢰구간 하한도 20%를 넘으면 통과로 봄</span></span></span><span class="jc-badge">목표 초과</span></div>
       <div class="jc-now">옵션 진입자 구매율 <b data-f="poc.buy_rate" data-fmt="1dp">-</b>% <span class="jc-ci" id="poc-buy-ci">-</span></div>
@@ -217,6 +219,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <div style="font-size:11px;color:#9ca3af;margin-top:6px">지역별 매출 비중</div>
     </div>
   </div>
+    </div>
+  </details>
   <!-- 지역별 요약 비교 -->
   <div class="section-label" style="font-size:14px">
     제주 / 내륙 요약 비교
