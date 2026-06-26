@@ -1,0 +1,4 @@
+scripts/refresh.log
+scripts/launchd.out.log
+scripts/launchd.err.log
+scripts/.last_success
