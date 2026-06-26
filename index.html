@@ -132,7 +132,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .date-bar .dt-title { font-size:13px; font-weight:800; color:#374151; }
 .date-bar input[type=date] { font-family:inherit; font-size:13px; padding:7px 10px; border:1px solid #d1d5db; border-radius:8px; color:#111827; }
 .date-bar button { font-family:inherit; font-size:12px; font-weight:700; padding:7px 14px; border-radius:8px; border:1px solid #d1d5db; background:#fff; color:#374151; cursor:pointer; }
-.date-bar button.reset { color:#2563eb; border-color:#bfdbfe; }
+.date-bar button.reset { color:#fff; background:#2563eb; border-color:#2563eb; }
+.date-bar button.reset:hover { background:#1d4ed8; }
+.date-bar .dt-auto { font-size:11px; color:#9ca3af; }
 .date-bar .dt-scope { font-size:11px; color:#9ca3af; margin-left:auto; line-height:1.5; }
 .date-bar .dt-range { font-size:12px; font-weight:700; color:#2563eb; }
 </style>
@@ -211,7 +213,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <input type="date" id="dt-start">
     <span style="color:#9ca3af">~</span>
     <input type="date" id="dt-end">
-    <button class="reset" id="dt-reset">전체 기간</button>
+    <span class="dt-auto">날짜 바꾸면 바로 적용</span>
+    <button class="reset" id="dt-reset">전체 기간으로 초기화</button>
     <span class="dt-range" id="range-label"></span>
     <span class="dt-scope">결제 실적(KPI, 일별 차트, 표, 요약 비교)에 적용<br>구매 전환, 차단, 프로파일은 전체 기간 고정 (기간 내 순 사용자라 일별 합산 불가)</span>
   </div>
