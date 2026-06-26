@@ -132,10 +132,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .date-bar .dt-title { font-size:13px; font-weight:800; color:#374151; }
 .date-bar input[type=date] { font-family:inherit; font-size:13px; padding:7px 10px; border:1px solid #d1d5db; border-radius:8px; color:#111827; }
 .date-bar button { font-family:inherit; font-size:12px; font-weight:700; padding:7px 14px; border-radius:8px; border:1px solid #d1d5db; background:#fff; color:#374151; cursor:pointer; }
-.date-bar button.reset { color:#fff; background:#2563eb; border-color:#2563eb; }
-.date-bar button.reset:hover { background:#1d4ed8; }
-.date-bar .dt-auto { font-size:11px; color:#9ca3af; }
-.date-bar .dt-scope { font-size:11px; color:#9ca3af; margin-left:auto; line-height:1.5; }
+.date-bar button.apply { color:#fff; background:#2563eb; border-color:#2563eb; }
+.date-bar button.apply:hover { background:#1d4ed8; }
+.date-bar button.reset { color:#6b7280; }
 .date-bar .dt-range { font-size:12px; font-weight:700; color:#2563eb; }
 </style>
 </head>
@@ -206,18 +205,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 </div>
 
 <div class="main">
-
-  <!-- 날짜 필터 -->
-  <div class="date-bar">
-    <span class="dt-title">조회 기간</span>
-    <input type="date" id="dt-start">
-    <span style="color:#9ca3af">~</span>
-    <input type="date" id="dt-end">
-    <span class="dt-auto">날짜 바꾸면 바로 적용</span>
-    <button class="reset" id="dt-reset">전체 기간으로 초기화</button>
-    <span class="dt-range" id="range-label"></span>
-    <span class="dt-scope">결제 실적(KPI, 일별 차트, 표, 요약 비교)에 적용<br>구매 전환, 차단, 프로파일은 전체 기간 고정 (기간 내 순 사용자라 일별 합산 불가)</span>
-  </div>
 
   <!-- 종합 판단 -->
   <div class="section-label" style="font-size:14px">
@@ -293,6 +280,17 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div style="padding:10px 16px;font-size:11px;color:#9ca3af;line-height:1.6;border-top:1px solid #f3f4f6">
       마이그레이션 제외 인앱 신규 기준<br>부산, 대구는 유모차 미취급으로 카시트만 판매 (0이 아니라 메뉴에 없음)<br>구매율, 선택 완료율, 시간 차단율 등 지역별 전환 지표는 아래 제주 / 내륙 토글에서 확인
     </div>
+  </div>
+
+  <!-- 결제 실적 조회 기간 -->
+  <div class="date-bar">
+    <span class="dt-title">결제 실적 조회 기간</span>
+    <input type="date" id="dt-start">
+    <span style="color:#9ca3af">~</span>
+    <input type="date" id="dt-end">
+    <button class="apply" id="dt-apply">조회</button>
+    <button class="reset" id="dt-reset">전체</button>
+    <span class="dt-range" id="range-label"></span>
   </div>
 
   <div class="rtoggle-bar">
@@ -488,7 +486,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="term"><b>순매출</b><span>결제액에서 환불액을 뺀 순 결제 금액. 예약별 순액이 양수인 건만 합산</span></div>
     <div class="term"><b>구매율</b><span>옵션 화면 본 회원 중 부가서비스를 실제 결제한 회원 비율. PoC라 대조군은 없고 추세와 함께 봄</span></div>
     <div class="term"><b>시간 제약 차단</b><span>출발 임박 예약이 카시트 준비 리드타임 안쪽이라 옵션 구매가 막힌 경우</span></div>
-    <div class="term"><b>조회 기간 적용 범위</b><span>상단 날짜 필터는 결제 실적(KPI, 일별, 요약 비교)에만 적용. 구매 전환, 차단, 프로파일은 기간 내 순 사용자(중복 제거)라 일별 합산이 불가해 전체 기간 고정</span></div>
+    <div class="term"><b>조회 기간 적용 범위</b><span>날짜 필터는 제주, 내륙 결제 실적(KPI, 일별 차트와 표)에만 적용. 배너, 요약 비교, 구매 전환, 차단, 프로파일은 전체 기간 고정 (구매 전환 등은 기간 내 순 사용자라 일별 합산 불가)</span></div>
     <div class="term"><b>D+1 적재</b><span>앱과 웹 이벤트 로그는 하루 뒤 배치 적재라 당일 데이터 확인 불가. 결제(charged_info)는 실시간 적재</span></div>
     <div class="term"><b>자동 갱신</b><span>매일 오전 자동으로 BigQuery를 재집계해 data.js 갱신. 사람 손으로 숫자를 고치지 않아 정합성 유지</span></div>
   </div>
@@ -563,14 +561,6 @@ function renderPayment(s, e){
   const bcnt=sum(I,'busan'), brev=sum(I,'busan_rev'), dcnt=sum(I,'daegu'), drev=sum(I,'daegu_rev');
   const irsv=bcnt+dcnt, irev=brev+drev;
 
-  // 배너
-  $('b-jeju-rsv').textContent=cma(jrsv); $('b-inland-rsv').textContent=cma(irsv);
-  $('b-busan').textContent=cma(bcnt); $('b-daegu').textContent=cma(dcnt);
-  $('b-total-rev').textContent=cma(jrev+irev);
-  // 요약 비교
-  $('s-jeju-rsv').textContent=cma(jrsv); $('s-jeju-cs').textContent=cma(jcs); $('s-jeju-st').textContent=cma(jst); $('s-jeju-rev').textContent=cma(jrev);
-  $('s-busan-cnt').textContent=cma(bcnt); $('s-busan-cs').textContent=cma(bcnt); $('s-busan-rev').textContent=cma(brev);
-  $('s-daegu-cnt').textContent=cma(dcnt); $('s-daegu-cs').textContent=cma(dcnt); $('s-daegu-rev').textContent=cma(drev);
   // 제주 KPI
   $('k-jeju-rsv').textContent=cma(jrsv); $('k-jeju-prod').textContent=cma(jprod); $('k-jeju-both').textContent=cma(jboth);
   $('k-jeju-rev-man').textContent=man(jrev); $('k-jeju-rev-won').textContent=cma(jrev);
@@ -637,14 +627,19 @@ function showRegion(r){
   $('prof-lead').innerHTML = profBars(p.lead, ['당일','1~2일','3~6일','1~2주','2주 이상'], p.n, '#1e40af', '#3b82f6');
   $('prof-nights').innerHTML = profBars(p.nights, ['1박 이하','2박','3박','4박 이상'], p.n, '#6d28d9', '#7c3aed');
   $('prof-age').innerHTML = profBars(p.age, ['20대','30대','40대','50대 이상'], p.n, '#b45309', '#d97706');
-  // 날짜 필터 초기값
+  // 배너 + 요약 비교 = 전체 기간 고정 (날짜 필터 영향 안 받음)
+  $('b-jeju-rsv').textContent=cma(D.jeju.rsv); $('b-inland-rsv').textContent=cma(D.inland.rsv);
+  $('b-busan').textContent=cma(D.inland.busan); $('b-daegu').textContent=cma(D.inland.daegu);
+  $('b-total-rev').textContent=cma(D.total.rev);
+  $('s-jeju-rsv').textContent=cma(D.jeju.rsv); $('s-jeju-cs').textContent=cma(D.jeju.carseat); $('s-jeju-st').textContent=cma(D.jeju.stroller); $('s-jeju-rev').textContent=cma(D.jeju.rev);
+  $('s-busan-cnt').textContent=cma(D.inland.busan); $('s-busan-cs').textContent=cma(D.inland.busan); $('s-busan-rev').textContent=cma(D.inland.busan_rev);
+  $('s-daegu-cnt').textContent=cma(D.inland.daegu); $('s-daegu-cs').textContent=cma(D.inland.daegu); $('s-daegu-rev').textContent=cma(D.inland.daegu_rev);
+  // 날짜 필터 = 제주/내륙 결제 실적에만 적용 (조회 버튼으로)
   const ds=$('dt-start'), de=$('dt-end');
   ds.min=de.min=D.meta.start; ds.max=de.max=D.meta.cut;
   ds.value=D.meta.start; de.value=D.meta.cut;
-  const apply = ()=>{ let s=ds.value||D.meta.start, e=de.value||D.meta.cut; if(s>e){[s,e]=[e,s];} renderPayment(s,e); };
-  ds.addEventListener('change', apply); de.addEventListener('change', apply);
+  $('dt-apply').addEventListener('click', ()=>{ let s=ds.value||D.meta.start, e=de.value||D.meta.cut; if(s>e){[s,e]=[e,s];} renderPayment(s,e); });
   $('dt-reset').addEventListener('click', ()=>{ ds.value=D.meta.start; de.value=D.meta.cut; renderPayment(D.meta.start, D.meta.cut); });
-  // 최초 결제 렌더 (전체 기간)
   renderPayment(D.meta.start, D.meta.cut);
 })();
 </script>
