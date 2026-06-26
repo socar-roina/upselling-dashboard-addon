@@ -127,15 +127,17 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .rtoggle button { border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 700; color: #6b7280; padding: 9px 22px; border-radius: 9px; cursor: pointer; }
 .rtoggle button.active { background: #2563eb; color: white; box-shadow: 0 1px 3px rgba(37,99,235,0.3); }
 .rtoggle-hint { font-size: 12px; color: #9ca3af; line-height: 1.5; }
-/* 날짜 필터 */
-.date-bar { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
-.date-bar .dt-title { font-size:13px; font-weight:800; color:#374151; }
-.date-bar input[type=date] { font-family:inherit; font-size:13px; padding:7px 10px; border:1px solid #d1d5db; border-radius:8px; color:#111827; }
-.date-bar button { font-family:inherit; font-size:12px; font-weight:700; padding:7px 14px; border-radius:8px; border:1px solid #d1d5db; background:#fff; color:#374151; cursor:pointer; }
-.date-bar button.apply { color:#fff; background:#2563eb; border-color:#2563eb; }
+/* 결제 실적 묶음 (조회 기간 적용 구간) */
+.pay-group { border:1px solid #dbeafe; background:#f7fafe; border-radius:16px; padding:6px 20px 18px; margin-bottom:20px; }
+.date-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:14px 2px 13px; margin-bottom:14px; border-bottom:1px solid #e3edf9; }
+.date-bar .dt-title { font-size:13px; font-weight:800; color:#1e40af; }
+.date-bar input[type=date] { font-family:inherit; font-size:13px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:8px; color:#111827; background:#fff; }
+.date-bar button { font-family:inherit; font-weight:700; cursor:pointer; }
+.date-bar button.apply { font-size:12px; padding:7px 18px; border-radius:8px; border:1px solid #2563eb; color:#fff; background:#2563eb; }
 .date-bar button.apply:hover { background:#1d4ed8; }
-.date-bar button.reset { color:#6b7280; }
-.date-bar .dt-range { font-size:12px; font-weight:700; color:#2563eb; }
+.date-bar button.reset { font-size:11px; padding:6px 11px; border-radius:7px; border:1px solid #d1d5db; color:#6b7280; background:#fff; }
+.date-bar button.reset:hover { background:#f3f4f6; }
+.rtoggle-bar { background:#f7fafe; }
 </style>
 </head>
 <body>
@@ -282,15 +284,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </div>
 
-  <!-- 결제 실적 조회 기간 -->
+  <!-- 결제 실적 (조회 기간 적용 구간) -->
+  <div class="section-label" style="font-size:14px;margin-bottom:6px">제주 / 내륙 결제 실적 <span class="tag tag-info">조회 기간 적용</span></div>
+  <div class="pay-group">
   <div class="date-bar">
-    <span class="dt-title">결제 실적 조회 기간</span>
+    <span class="dt-title">조회 기간</span>
     <input type="date" id="dt-start">
     <span style="color:#9ca3af">~</span>
     <input type="date" id="dt-end">
     <button class="apply" id="dt-apply">조회</button>
-    <button class="reset" id="dt-reset">전체</button>
-    <span class="dt-range" id="range-label"></span>
+    <button class="reset" id="dt-reset">전체 기간</button>
   </div>
 
   <div class="rtoggle-bar">
@@ -432,6 +435,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   </div>
   <div style="font-size:11px;color:#9ca3af;line-height:1.6;margin-bottom:8px">내륙은 유모차 미취급이라 카시트만. 제주 대비 리드타임 짧고 짧은 대여가 특징이나 표본이 작아 참고용</div>
   </div><!-- /view-inland -->
+  </div><!-- /pay-group -->
 
   <!-- 시간 차단 정책 주석 (지역 공통) -->
   <div class="note-box" style="margin-top:8px">
@@ -591,8 +595,6 @@ function renderPayment(s, e){
     { label:'대구 건수', data:I.map(d=>d.daegu), backgroundColor:'#fbbf24', stack:'cnt', yAxisID:'y', order:2 },
     { label:'순매출(원)', type:'line', data:I.map(d=>d.rev), borderColor:'#059669', backgroundColor:'#fff', borderWidth:3, tension:0.3, yAxisID:'y1', pointRadius:4, pointBackgroundColor:'#fff', pointBorderColor:'#059669', pointBorderWidth:2, order:0 },
   ]);
-
-  $('range-label').textContent = mdy(s)+' ~ '+mdy(e);
 }
 
 function showRegion(r){
