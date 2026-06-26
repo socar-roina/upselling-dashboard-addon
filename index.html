@@ -213,6 +213,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="jcard">
       <div class="jc-head"><span class="jc-axis">수익성 <span class="help">?<span class="tip">누적 순매출(제주와 내륙)을 일평균 기준으로 월 환산한 값. 매출 대부분이 제주. 크레딧 적용은 허용, 쿠폰은 미적용(정가 판매)</span></span></span><span class="jc-badge">매출 확보</span></div>
       <div class="jc-now">월 환산 순매출 <b>약 <span data-f="poc.monthly_rev_manwon" data-fmt="comma">-</span>만원</b></div>
+      <div class="pbar" style="margin-top:18px"><div id="rev-jeju" style="background:#bfdbfe;color:#1e40af"></div><div id="rev-inland" style="background:#fed7aa;color:#9a3412"></div></div>
+      <div style="font-size:11px;color:#9ca3af;margin-top:6px">지역별 매출 비중</div>
     </div>
   </div>
   <!-- 지역별 요약 비교 -->
@@ -574,6 +576,10 @@ function showRegion(r){
   $('pbar-blk-block').style.width = bl+'%'; $('pbar-blk-block').textContent = d1(bl)+'%';
   $('pbar-go-cancel').style.width = (100-cp)+'%'; $('pbar-go-cancel').textContent = '유지 '+d1(100-cp)+'%';
   $('pbar-blk-cancel').style.width = cp+'%'; $('pbar-blk-cancel').textContent = '취소 '+d1(cp)+'%';
+  // 수익성 지역별 매출 비중
+  const jrp = D.total.rev ? D.jeju.rev/D.total.rev*100 : 0;
+  $('rev-jeju').style.width = jrp.toFixed(1)+'%'; $('rev-jeju').textContent = '제주 '+Math.round(jrp)+'%';
+  $('rev-inland').style.width = (100-jrp).toFixed(1)+'%';
   // 퍼널
   $('jeju-funnel').innerHTML = funnelBars(D.jeju.funnel, false);
   $('inland-funnel').innerHTML = funnelBars(D.inland.funnel, true);
