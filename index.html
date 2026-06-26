@@ -147,32 +147,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div>
     <h1>업셀링 부가서비스(카시트, 유모차) 모니터링 대시보드</h1>
     <div class="meta">
-      차를 빌릴 때 결제 직전 화면에서 카시트와 유모차를 추가 결제할 수 있는 부가서비스 기능<br>
-      옵션 노출, 옵션 진입, 결제 건수, 순매출을 추적
+      차를 빌릴 때 결제 직전 화면에서 카시트와 유모차를 추가 결제할 수 있는 부가서비스 기능 (PoC)
     </div>
   </div>
   <div class="updated">
     최종 갱신: <b id="gen-at">-</b><br>
-    <span>제주 오픈 6/05 10:14, 내륙(부산, 대구) 오픈 6/08 15:54 KST</span><br>
-    <span style="color:#9ca3af">데이터 기준 <b id="cut-date" style="color:#6b7280">-</b>까지 (이벤트는 D+1 적재라 어제까지 반영, 결제도 같은 날까지로 맞춤)<br>매일 오전 자동 갱신. 결제와 순매출은 환불이 계속 반영돼 재조회 시 소폭 변동</span>
-  </div>
-</div>
-
-<!-- 개요 -->
-<div class="experiment-overview">
-  <div class="inner">
-    <div class="o-block">
-      <div class="lbl">노출 내용</div>
-      <div class="val">결제 직전 화면에서 카시트, 유모차 추가 옵션 카드 노출<br>옵션 화면에서 수량 선택 후 추가 결제</div>
-    </div>
-    <div class="o-block">
-      <div class="lbl">노출 대상</div>
-      <div class="val">제주 6/05 오픈, 내륙 6/08 오픈(PoC)<br>재고가 있는 차량에 한해 옵션 노출</div>
-    </div>
-    <div class="o-block">
-      <div class="lbl">데이터 출처</div>
-      <div class="val">결제: charged_info(addon_carseat, addon_stroller)<br>이벤트: app_web_log(services_option, checkout_reservation)</div>
-    </div>
+    <span>데이터 기준 <b id="cut-date" style="color:#6b7280">-</b>까지, 매일 오전 자동 갱신</span>
   </div>
 </div>
 
@@ -201,21 +181,19 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <span class="rbadge rbadge-all">전체</span>
       <div class="lbl">옵션 화면 노출</div>
       <div class="val"><b data-f="poc.opt_n" data-fmt="comma">-</b> 명</div>
-      <div class="sub">전체 기간 순 사용자</div>
     </div>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- 종합 판단 -->
+  <!-- 정규화 판단 -->
   <div class="section-label" style="font-size:14px">
-    PoC 목표 및 판단 기준
+    정규화 판단
     <span class="tag tag-fact">전체 기간 기준</span>
   </div>
   <div class="section-explain">
-    PoC 결정 질문: 카시트, 유모차 유료 부가서비스를 정규화할 것인가<br>
-    각 비율 옆 괄호는 95% 신뢰구간(표본이 작을수록 넓어짐). 구간 하한도 목표선을 넘으면 통과
+    카시트, 유모차 부가서비스를 정규화(전 차량으로 확대)할지 수요, 운영, 수익성 3가지 축으로 봄
   </div>
   <div class="judge-row">
     <div class="jcard">
@@ -239,13 +217,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </div>
   <div class="card" style="background:#f0fdf4;border-color:#bbf7d0">
-    <div style="font-size:13px;line-height:1.85;color:#14532d">
-      <b>종합</b> 수요(구매율 신뢰구간 하한도 목표 초과), 운영(시간 차단, 취소율 정상 범위), 매출(월 환산 흑자 규모) 모두 정규화 근거 확보<br>
-      내륙은 표본이 작아 제주와 차이를 통계적으로 단정하긴 이름
+    <div style="font-size:13px;line-height:1.8;color:#14532d">
+      <b style="display:block;margin-bottom:5px;font-size:14px">종합: 정규화 갈 만함</b>
+      수요는 목표를 넘고, 운영(시간 차단, 취소)도 정상 범위, 매출도 월 환산 흑자 규모라 3개 축 모두 통과<br>
+      단 내륙은 표본이 작아 제주와의 차이는 아직 단정하기 이름
     </div>
-  </div>
-  <div style="font-size:11px;color:#9ca3af;line-height:1.7;margin:-4px 0 8px">
-    수요 목표 20%: 부가 상품 attach가 통상 10~30%인데, 기존 결제 화면 재활용이라 획득비 없어 20%면 유지 가치 충분
   </div>
 
   <!-- 지역별 요약 비교 -->
@@ -301,7 +277,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
       <button id="btn-jeju" class="active" onclick="showRegion('jeju')">제주</button>
       <button id="btn-inland" onclick="showRegion('inland')">내륙 (부산, 대구)</button>
     </div>
-    <span class="rtoggle-hint">제주가 기본. 내륙 누르면 부산, 대구 결제 실적과 전환 분석으로 전환</span>
   </div>
 
   <div id="view-jeju">
@@ -393,7 +368,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div id="view-inland" style="display:none">
   <!-- 내륙 결제 KPI -->
   <div class="section-label" style="font-size:14px">내륙 (부산, 대구) 결제 실적 <span class="rtag rtag-inland">내륙</span> <span class="tag tag-info">6/08 오픈</span></div>
-  <div class="section-explain">내륙은 6/08 오후 오픈이라 제주 대비 표본이 적음</div>
   <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
     <div class="kpi"><div class="lbl">내륙 인앱 신규 결제</div><div class="num" style="color:#64748b"><span id="k-inland-rsv">-</span> <span class="unit">건</span></div><div class="sub">부산 <span id="k-inland-busan">-</span>, 대구 <span id="k-inland-daegu">-</span> (전부 카시트)</div></div>
     <div class="kpi"><div class="lbl">내륙 순매출</div><div class="num" style="color:#64748b"><span id="k-inland-rev-man">-</span> <span class="unit">만원</span></div><div class="sub">부산 <span id="k-inland-busan-rev">-</span>원, 대구 <span id="k-inland-daegu-rev">-</span>원</div></div>
@@ -425,7 +399,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
   <!-- 내륙 구매 전환 깔대기 -->
   <div class="section-label" style="margin-top:30px">내륙 구매 전환 깔대기 <span class="rtag rtag-inland">내륙</span> <span class="tag tag-danger">표본 작음</span> <span class="tag tag-info">전체 기간</span></div>
-  <div class="section-explain">표본이 작아 비율은 참고용</div>
   <div class="card"><div class="funnel-bars" id="inland-funnel"></div></div>
   <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
     <div class="kpi"><div class="lbl">구매율 <span style="color:#9ca3af;font-weight:400">(핵심)</span></div><div class="num green"><span data-f="inland.funnel.buy_rate" data-fmt="1dp">-</span> <span class="unit">%</span></div><div class="sub">옵션 본 <span data-f="inland.funnel.opt" data-fmt="comma">-</span>명 중 결제 <span data-f="inland.funnel.buyers" data-fmt="comma">-</span>명</div></div>
@@ -436,15 +409,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div style="font-size:11px;color:#9ca3af;line-height:1.6;margin-bottom:8px">내륙은 유모차 미취급이라 카시트만. 제주 대비 리드타임 짧고 짧은 대여가 특징이나 표본이 작아 참고용</div>
   </div><!-- /view-inland -->
   </div><!-- /pay-group -->
-
-  <!-- 시간 차단 정책 주석 (지역 공통) -->
-  <div class="note-box" style="margin-top:8px">
-    <div class="q">시간 차단은 리드타임 정책 때문이며 현행 유지 중</div>
-    <div class="a">
-      출발이 임박해 카시트, 유모차 준비 리드타임 안쪽인 예약은 옵션 구매를 막는 운영 정책<br>
-      <b>현재 시간 제약 정책은 변경 없이 그대로 유지</b>. 내륙 리드타임 완화 등 개선은 향후 검토 대상이며 적용된 변경은 없음
-    </div>
-  </div>
 
   <!-- 수락자 프로파일 (전체) -->
   <div class="section-label" style="margin-top:30px">
