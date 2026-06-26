@@ -140,7 +140,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .rtoggle-bar { background:#f7fafe; }
 /* 도움말 툴팁 */
 .help { display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px; border-radius:50%; background:#e5e7eb; color:#6b7280; font-size:10px; font-weight:800; cursor:help; position:relative; vertical-align:middle; }
-.help .tip { display:none; position:absolute; bottom:140%; left:50%; transform:translateX(-50%); width:240px; background:#0f172a; color:#fff; font-size:11px; font-weight:500; line-height:1.65; padding:9px 12px; border-radius:8px; z-index:60; text-align:left; box-shadow:0 6px 16px rgba(0,0,0,0.22); letter-spacing:0; }
+.help .tip { display:none; position:absolute; bottom:150%; left:50%; transform:translateX(-50%); width:300px; background:#1e293b; color:#f1f5f9; font-size:12px; font-weight:500; line-height:1.8; padding:13px 15px; border-radius:10px; z-index:60; text-align:left; box-shadow:0 8px 20px rgba(0,0,0,0.25); letter-spacing:0; word-break:keep-all; white-space:normal; }
 .help:hover .tip { display:block; }
 </style>
 </head>
@@ -198,28 +198,28 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   </div>
   <div class="judge-row">
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">수요 <span class="rtag rtag-all">전체</span> <span class="help">?<span class="tip">괄호는 구매율의 95% 신뢰구간으로, 표본이 작을수록 넓어짐. 목표 20%는 부가 상품의 통상 구매 전환(10~30%)을 기준으로 잡았고, 신뢰구간 하한도 20%를 넘으면 통과로 봄</span></span></span><span class="jc-badge">목표 초과</span></div>
+      <div class="jc-head"><span class="jc-axis">수요 <span class="help">?<span class="tip">괄호는 구매율의 95% 신뢰구간으로, 표본이 작을수록 넓어짐. 목표 20%는 부가 상품의 통상 구매 전환(10~30%)을 기준으로 잡았고, 신뢰구간 하한도 20%를 넘으면 통과로 봄</span></span></span><span class="jc-badge">목표 초과</span></div>
       <div class="jc-now">옵션 진입자 구매율 <b data-f="poc.buy_rate" data-fmt="1dp">-</b>% <span class="jc-ci" id="poc-buy-ci">-</span></div>
       <div class="jc-gauge"><div class="jc-gfill" id="poc-gauge" style="width:73%"></div><div class="jc-target" style="left:50%"><span>목표 20%</span></div></div>
       <div class="jc-ev">신뢰구간 하한도 목표 20%를 넘음</div>
     </div>
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">운영 건전성 <span class="rtag rtag-all">전체</span> <span class="help">?<span class="tip">시간 차단율은 출발 임박으로 준비 시간이 부족해 못 산 비율. 취소율은 완료 결제 중 예약 취소로 부가도 환불된 비율(결제 직후 즉시 롤백은 제외)</span></span></span><span class="jc-badge">정상</span></div>
+      <div class="jc-head"><span class="jc-axis">운영 건전성 <span class="help">?<span class="tip">시간 차단율은 출발 임박으로 준비 시간이 부족해 못 산 비율. 취소율은 완료 결제 중 예약 취소로 부가도 환불된 비율(결제 직후 즉시 롤백은 제외)</span></span></span><span class="jc-badge">정상</span></div>
       <div class="jmr-top"><span class="jmr-name">시간 차단율</span><b class="jmr-val" style="color:#0f172a"><span data-f="poc.block_rate" data-fmt="1dp">-</span>%</b></div>
       <div class="pbar"><div class="pb-go" id="pbar-go-block">시간 제약 없이 진행</div><div class="pb-blk" id="pbar-blk-block"></div></div>
       <div class="jmr-top" style="margin-top:15px"><span class="jmr-name">취소율</span><b class="jmr-val" style="color:#0f172a"><span data-f="poc.cancel_pct" data-fmt="1dp">-</span>%</b></div>
       <div class="pbar"><div class="pb-go" id="pbar-go-cancel">유지</div><div class="pb-blk" id="pbar-blk-cancel"></div></div>
     </div>
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">수익성 <span class="rtag rtag-all">전체</span> <span class="help">?<span class="tip">누적 순매출(제주와 내륙)을 일평균 기준으로 월 환산한 값. 매출 대부분이 제주. 크레딧 적용은 허용, 쿠폰은 미적용(정가 판매)</span></span></span><span class="jc-badge">매출 확보</span></div>
-      <div class="jc-now">전 지역 월 환산 순매출 <b>약 <span data-f="poc.monthly_rev_manwon" data-fmt="comma">-</span>만원</b></div>
+      <div class="jc-head"><span class="jc-axis">수익성 <span class="help">?<span class="tip">누적 순매출(제주와 내륙)을 일평균 기준으로 월 환산한 값. 매출 대부분이 제주. 크레딧 적용은 허용, 쿠폰은 미적용(정가 판매)</span></span></span><span class="jc-badge">매출 확보</span></div>
+      <div class="jc-now">월 환산 순매출 <b>약 <span data-f="poc.monthly_rev_manwon" data-fmt="comma">-</span>만원</b></div>
     </div>
   </div>
   <div class="card" style="background:#f0fdf4;border-color:#bbf7d0">
     <div style="font-size:13px;line-height:1.8;color:#14532d">
-      <b style="display:block;margin-bottom:5px;font-size:14px">종합 판단: 세 축 모두 정규화 기준 충족</b>
-      수요는 목표를 넘었고, 운영(시간 차단, 취소)도 정상 범위, 수익성도 월 환산 흑자 규모<br>
-      단 내륙은 표본이 작아 제주와의 차이는 아직 단정하기 이름
+      <b style="display:block;margin-bottom:5px;font-size:14px">종합 판단</b>
+      수요는 목표를 넘었고(구매율 신뢰구간 하한도 20% 초과), 운영(시간 차단, 취소)도 정상 범위. 매출은 월 약 <span data-f="poc.monthly_rev_manwon" data-fmt="comma">-</span>만원 규모<br>
+      손익분기는 운영비(도급사 인력, 재고)가 확인되면 판정 가능. 내륙은 표본이 작아 제주와의 차이는 아직 단정하기 이름
     </div>
   </div>
 
