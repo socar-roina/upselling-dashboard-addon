@@ -138,6 +138,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .date-bar button.reset { font-size:11px; padding:6px 11px; border-radius:7px; border:1px solid #d1d5db; color:#6b7280; background:#fff; }
 .date-bar button.reset:hover { background:#f3f4f6; }
 .rtoggle-bar { background:#f7fafe; }
+/* 도움말 툴팁 */
+.help { display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px; border-radius:50%; background:#e5e7eb; color:#6b7280; font-size:10px; font-weight:800; cursor:help; position:relative; vertical-align:middle; }
+.help .tip { display:none; position:absolute; bottom:140%; left:50%; transform:translateX(-50%); width:240px; background:#0f172a; color:#fff; font-size:11px; font-weight:500; line-height:1.65; padding:9px 12px; border-radius:8px; z-index:60; text-align:left; box-shadow:0 6px 16px rgba(0,0,0,0.22); letter-spacing:0; }
+.help:hover .tip { display:block; }
 </style>
 </head>
 <body>
@@ -194,23 +198,21 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   </div>
   <div class="judge-row">
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">수요 <span class="rtag rtag-all">전체</span></span><span class="jc-badge">목표 초과</span></div>
+      <div class="jc-head"><span class="jc-axis">수요 <span class="rtag rtag-all">전체</span> <span class="help">?<span class="tip">괄호는 구매율의 95% 신뢰구간으로, 표본이 작을수록 넓어짐. 목표 20%는 부가 상품의 통상 구매 전환(10~30%)을 기준으로 잡았고, 신뢰구간 하한도 20%를 넘으면 통과로 봄</span></span></span><span class="jc-badge">목표 초과</span></div>
       <div class="jc-now">옵션 진입자 구매율 <b data-f="poc.buy_rate" data-fmt="1dp">-</b>% <span class="jc-ci" id="poc-buy-ci">-</span></div>
-      <div class="jc-gauge"><div class="jc-gfill" id="poc-gauge" style="width:73%"></div><div class="jc-target" style="left:50%"><span>목표 20% 이상</span></div></div>
-      <div class="jc-ev">신뢰구간 하한(<span id="poc-ci-lo">-</span>%)도 목표 20%를 넘어 수요 확실</div>
+      <div class="jc-gauge"><div class="jc-gfill" id="poc-gauge" style="width:73%"></div><div class="jc-target" style="left:50%"><span>목표 20%</span></div></div>
+      <div class="jc-ev">신뢰구간 하한도 목표 20%를 넘음</div>
     </div>
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">운영 건전성 <span class="rtag rtag-all">전체</span></span><span class="jc-badge">정상</span></div>
-      <div class="jmr-top"><span class="jmr-name">시간 차단율<br><span class="jmr-desc">출발 임박으로 준비 시간 부족해 못 삼</span></span><b class="jmr-val" style="color:#0f172a"><span data-f="poc.block_rate" data-fmt="1dp">-</span>%</b></div>
+      <div class="jc-head"><span class="jc-axis">운영 건전성 <span class="rtag rtag-all">전체</span> <span class="help">?<span class="tip">시간 차단율은 출발 임박으로 준비 시간이 부족해 못 산 비율. 취소율은 완료 결제 중 예약 취소로 부가도 환불된 비율(결제 직후 즉시 롤백은 제외)</span></span></span><span class="jc-badge">정상</span></div>
+      <div class="jmr-top"><span class="jmr-name">시간 차단율</span><b class="jmr-val" style="color:#0f172a"><span data-f="poc.block_rate" data-fmt="1dp">-</span>%</b></div>
       <div class="pbar"><div class="pb-go" id="pbar-go-block">시간 제약 없이 진행</div><div class="pb-blk" id="pbar-blk-block"></div></div>
-      <div class="jmr-top" style="margin-top:15px"><span class="jmr-name">취소율<br><span class="jmr-desc">예약 취소되면 부가도 자동 환불</span></span><b class="jmr-val" style="color:#0f172a"><span data-f="poc.cancel_pct" data-fmt="1dp">-</span>%</b></div>
+      <div class="jmr-top" style="margin-top:15px"><span class="jmr-name">취소율</span><b class="jmr-val" style="color:#0f172a"><span data-f="poc.cancel_pct" data-fmt="1dp">-</span>%</b></div>
       <div class="pbar"><div class="pb-go" id="pbar-go-cancel">유지</div><div class="pb-blk" id="pbar-blk-cancel"></div></div>
-      <div class="jc-ev" style="margin-top:7px">완료 결제 <span data-f="poc.kept" data-fmt="comma">-</span>건 중 시차 취소 <span data-f="poc.real_cancel" data-fmt="comma">-</span>건 (결제 직후 즉시 롤백 <span data-f="poc.rollback" data-fmt="comma">-</span>건 제외)</div>
     </div>
     <div class="jcard">
-      <div class="jc-head"><span class="jc-axis">수익성 <span class="rtag rtag-all">전체</span></span><span class="jc-badge">매출 확보</span></div>
+      <div class="jc-head"><span class="jc-axis">수익성 <span class="rtag rtag-all">전체</span> <span class="help">?<span class="tip">누적 순매출(제주와 내륙)을 일평균 기준으로 월 환산한 값. 매출 대부분이 제주. 크레딧 적용은 허용, 쿠폰은 미적용(정가 판매)</span></span></span><span class="jc-badge">매출 확보</span></div>
       <div class="jc-now">전 지역 월 환산 순매출 <b>약 <span data-f="poc.monthly_rev_manwon" data-fmt="comma">-</span>만원</b></div>
-      <div class="jc-ev" style="margin-top:14px">누적 순매출(제주 + 내륙)을 일평균 기준 월로 환산. 매출 대부분이 제주<br>크레딧 적용은 허용, 쿠폰은 미적용 (정가 판매)</div>
     </div>
   </div>
   <div class="card" style="background:#f0fdf4;border-color:#bbf7d0">
@@ -574,7 +576,6 @@ function showRegion(r){
   // PoC 게이지/바
   const br = D.poc.buy_rate, ci = D.poc.buy_ci;
   $('poc-buy-ci').textContent = '('+d1(ci[0])+'~'+d1(ci[1])+'%)';
-  $('poc-ci-lo').textContent = d1(ci[0]);
   $('poc-gauge').style.width = Math.min(br/40*100, 100).toFixed(0)+'%';
   const bl = D.poc.block_rate, cp = D.poc.cancel_pct;
   $('pbar-go-block').style.width = (100-bl)+'%'; $('pbar-go-block').textContent = '시간 제약 없이 진행 '+d1(100-bl)+'%';
