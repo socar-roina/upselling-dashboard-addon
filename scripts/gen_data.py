@@ -76,7 +76,16 @@ def main():
     ap.add_argument("--start", default="2026-06-05")
     ap.add_argument("--out", default="data.js")
     a = ap.parse_args()
-    cut = a.cut or (datetime.now(KST) - timedelta(days=1)).strftime("%Y-%m-%d")
+    # cut 미지정 시 = 이벤트가 적재된 마지막 날 (D+1, 주말 배치 지연 등 자동 대응)
+    if a.cut:
+        cut = a.cut
+    else:
+        r = bq("SELECT CAST(MAX(event_date_kst) AS STRING) AS m "
+               "FROM `socar-data.app_web_log.socar_app_web_log` "
+               "WHERE event_date_kst >= DATE_SUB(CURRENT_DATE('Asia/Seoul'), INTERVAL 7 DAY) "
+               "AND (page_name='services_option' OR event_name='custom_option_add_button')")
+        cut = (r[0]["m"] if r and r[0]["m"]
+               else (datetime.now(KST) - timedelta(days=1)).strftime("%Y-%m-%d"))
     start = a.start
 
     D = {"meta": {"start": start, "cut": cut,
