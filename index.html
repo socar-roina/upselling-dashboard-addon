@@ -443,9 +443,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     </div>
   </details>
 
-  <!-- 용어 정리 -->
-  <div class="foot-note">
-    <h4>용어 정리</h4>
+  <!-- 용어 정리 (접힘) -->
+  <details style="margin-top:24px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:16px 22px">
+    <summary style="font-size:13px;font-weight:700;color:#374151;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between">
+      <span>용어 정리</span>
+      <span style="font-size:11px;color:#9ca3af;font-weight:500">펼치기</span>
+    </summary>
+    <div class="foot-note" style="margin:14px 0 0;background:transparent;border:none;padding:0">
     <div class="term"><b>결제 건수</b><span>같은 예약의 부가서비스 청구와 환불을 합산해 순액이 양수인 예약 수<br>카시트와 유모차는 청구 타입(addon_carseat, addon_stroller)으로 구분</span></div>
     <div class="term"><b>순매출</b><span>결제액에서 환불액을 뺀 순 결제 금액. 예약별 순액이 양수인 건만 합산</span></div>
     <div class="term"><b>구매율</b><span>옵션 화면 본 회원 중 부가서비스를 실제 결제한 회원 비율. PoC라 대조군은 없고 추세와 함께 봄</span></div>
@@ -453,7 +457,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="term"><b>조회 기간 적용 범위</b><span>날짜 필터는 제주, 내륙 결제 실적(KPI, 일별 차트와 표)에만 적용. 배너, 요약 비교, 구매 전환, 차단, 프로파일은 전체 기간 고정 (구매 전환 등은 기간 내 순 사용자라 일별 합산 불가)</span></div>
     <div class="term"><b>D+1 적재</b><span>앱과 웹 이벤트 로그는 하루 뒤 배치 적재라 당일 데이터 확인 불가. 결제(charged_info)는 실시간 적재</span></div>
     <div class="term"><b>자동 갱신</b><span>매일 오전 자동으로 BigQuery를 재집계해 data.js 갱신. 사람 손으로 숫자를 고치지 않아 정합성 유지</span></div>
-  </div>
+    </div>
+  </details>
 
 </div>
 
