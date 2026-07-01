@@ -462,9 +462,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
 </div>
 
-<script src="data.js"></script>
 <script>
-const D = window.DASH;
+let D;
 const $ = id => document.getElementById(id);
 const cma = n => Number(n||0).toLocaleString();
 const man = n => Math.round(Number(n||0)/10000).toLocaleString();
@@ -571,7 +570,7 @@ function showRegion(r){
 }
 
 // 초기 렌더
-(function init(){
+function init(){
   fillFields();
   // 메타
   $('gen-at').textContent = D.meta.generated_at;
@@ -610,6 +609,13 @@ function showRegion(r){
   $('dt-apply').addEventListener('click', ()=>{ let s=ds.value||D.meta.start, e=de.value||D.meta.cut; if(s>e){[s,e]=[e,s];} renderPayment(s,e); });
   $('dt-reset').addEventListener('click', ()=>{ ds.value=D.meta.start; de.value=D.meta.cut; renderPayment(D.meta.start, D.meta.cut); });
   renderPayment(D.meta.start, D.meta.cut);
+}
+// data.js를 캐시 무효화하며 로드한 뒤 렌더 (매일 갱신 즉시 반영)
+(function(){
+  var s = document.createElement('script');
+  s.src = 'data.js?t=' + Date.now();
+  s.onload = function(){ D = window.DASH; init(); };
+  document.head.appendChild(s);
 })();
 </script>
 
