@@ -9,7 +9,7 @@ MARKER="$REPO/scripts/.last_success"
 TODAY=$(date +%Y-%m-%d)
 
 # launchd 환경 PATH 보정
-export PATH="/opt/homebrew/bin:/Users/admin/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export PATH="/opt/homebrew/bin:/usr/local/bin:/Users/admin/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 export HOME="/Users/admin"
 
 cd "$REPO" || exit 1
