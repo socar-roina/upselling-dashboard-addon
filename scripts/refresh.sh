@@ -11,6 +11,8 @@ TODAY=$(date +%Y-%m-%d)
 # launchd 환경 PATH 보정
 export PATH="/opt/homebrew/bin:/usr/local/bin:/Users/admin/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 export HOME="/Users/admin"
+# BQ 인증: gcloud 사용자 계정이 비어도 ADC 토큰으로 bq 실행 (auth 만료 방어)
+export CLOUDSDK_AUTH_ACCESS_TOKEN=$(gcloud auth application-default print-access-token 2>/dev/null)
 
 cd "$REPO" || exit 1
 
