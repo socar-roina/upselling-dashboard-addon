@@ -408,14 +408,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 
   <!-- 수락자 프로파일 (전체) -->
   <div class="section-label" style="margin-top:30px">
-    구매 고객 프로파일 <span class="rtag rtag-all">전체</span>
+    구매 고객 특성 <span class="rtag rtag-all">전체</span>
     <span class="tag tag-info">전체 기간, 결제 예약 <span data-f="profile.n" data-fmt="comma">-</span>건</span>
   </div>
   <div class="section-explain">
     부가서비스를 결제한 예약이 어떤 예약인지 (대여 리드타임, 대여 기간, 연령)<br>제주, 내륙 합산이며 마이그레이션 제외 인앱 신규 기준 (내륙 표본이 작아 지역 분리 없이 합산)
   </div>
   <div class="kpi-row">
-    <div class="kpi"><div class="lbl">예약에서 출발까지</div><div class="num blue"><span data-f="profile.lead_med">-</span> <span class="unit">일(중앙)</span></div><div class="sub">평균 <span data-f="profile.lead_avg" data-fmt="1dp">-</span>일, 2주 전 선예약이 <span data-f="profile.lead_2wk_pct" data-fmt="1dp">-</span>%</div></div>
+    <div class="kpi"><div class="lbl">예약에서 출발까지 (보통)</div><div class="num blue"><span data-f="profile.lead_med">-</span> <span class="unit">일</span></div><div class="sub">평균은 <span data-f="profile.lead_avg" data-fmt="1dp">-</span>일, 2주 전 선예약이 <span data-f="profile.lead_2wk_pct" data-fmt="1dp">-</span>%</div></div>
     <div class="kpi"><div class="lbl">대여 기간</div><div class="num purple"><span data-f="profile.nights_avg" data-fmt="1dp">-</span> <span class="unit">박(평균)</span></div><div class="sub">2박, 3박이 가장 많음</div></div>
     <div class="kpi"><div class="lbl">평균 연령</div><div class="num amber"><span data-f="profile.age_avg" data-fmt="1dp">-</span> <span class="unit">세</span></div><div class="sub">30대가 중심</div></div>
     <div class="kpi"><div class="lbl">30~40대 비중</div><div class="num green"><span data-f="profile.age_3040_pct" data-fmt="1dp">-</span> <span class="unit">%</span></div><div class="sub">20, 50대 이상은 소수</div></div>
@@ -454,7 +454,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
     <div class="term"><b>순매출</b><span>결제액에서 환불액을 뺀 순 결제 금액. 예약별 순액이 양수인 건만 합산</span></div>
     <div class="term"><b>구매율</b><span>옵션 화면 본 회원 중 부가서비스를 실제 결제한 회원 비율. PoC라 대조군은 없고 추세와 함께 봄</span></div>
     <div class="term"><b>시간 제약 차단</b><span>출발 임박 예약이 카시트 준비 리드타임 안쪽이라 옵션 구매가 막힌 경우</span></div>
-    <div class="term"><b>조회 기간 적용 범위</b><span>날짜 필터는 제주, 내륙 결제 실적(KPI, 일별 차트와 표)에만 적용. 배너, 요약 비교, 구매 전환, 차단, 프로파일은 전체 기간 고정 (구매 전환 등은 기간 내 순 사용자라 일별 합산 불가)</span></div>
+    <div class="term"><b>조회 기간 적용 범위</b><span>날짜 필터는 제주, 내륙 결제 실적(KPI, 일별 차트와 표)에만 적용. 배너, 요약 비교, 구매 전환, 차단, 구매 고객 특성은 전체 기간 고정 (구매 전환 등은 기간 내 순 사용자라 일별 합산 불가)</span></div>
     <div class="term"><b>D+1 적재</b><span>앱과 웹 이벤트 로그는 하루 뒤 배치 적재라 당일 데이터 확인 불가. 결제(charged_info)는 실시간 적재</span></div>
     <div class="term"><b>자동 갱신</b><span>매일 오전 자동으로 BigQuery를 재집계해 data.js 갱신. 사람 손으로 숫자를 고치지 않아 정합성 유지</span></div>
     </div>
