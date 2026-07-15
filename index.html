@@ -142,6 +142,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
 .help { display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px; border-radius:50%; background:#e5e7eb; color:#6b7280; font-size:10px; font-weight:800; cursor:help; position:relative; vertical-align:middle; }
 .help .tip { display:none; position:absolute; bottom:150%; left:50%; transform:translateX(-50%); width:300px; background:#1e293b; color:#f1f5f9; font-size:12px; font-weight:500; line-height:1.8; padding:13px 15px; border-radius:10px; z-index:60; text-align:left; box-shadow:0 8px 20px rgba(0,0,0,0.25); letter-spacing:0; word-break:keep-all; white-space:normal; }
 .help:hover .tip { display:block; }
+.ins-item { padding:16px 20px; border-top:1px solid #f1f5f9; }
+.ins-item:first-child { border-top:none; }
+.ins-t { font-size:14px; font-weight:800; color:#111827; margin-bottom:7px; }
+.ins-d { font-size:13px; color:#4b5563; line-height:1.6; }
+.ins-d + .ins-d { margin-top:3px; }
+.ins-d b { color:#1e40af; font-weight:800; }
 </style>
 </head>
 <body>
@@ -478,26 +484,57 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <div style="font-size:12.5px;color:#6b7280;margin:-6px 0 10px;line-height:1.6">부가서비스 판매 데이터에서 정리한 사업 시사점. 매일 자동 갱신.</div>
 
   <div class="section-label">제주 <span class="rtag rtag-jeju">주력</span></div>
-  <div class="card" style="display:flex;flex-direction:column;gap:14px">
-    <div><b style="color:#1e40af;font-size:14px">카시트가 주력 상품</b><br><span style="color:#374151">카시트 <b data-f="jeju.carseat" data-fmt="comma">-</b>건 결제로 유모차(<b data-f="jeju.stroller" data-fmt="comma">-</b>건)의 약 10배. 물량은 카시트 위주로 준비.</span></div>
-    <div style="border-top:1px solid #f1f5f9;padding-top:14px"><b style="color:#1e40af;font-size:14px">노출되면 높은 확률로 구매</b><br><span style="color:#374151">카시트 옵션 화면 본 고객의 <b data-f="jeju.funnel.carseat_sel" data-fmt="1dp">-</b>%가 선택으로 이어짐 (유모차는 <b data-f="jeju.funnel.stroller_sel" data-fmt="1dp">-</b>%).</span></div>
-    <div style="border-top:1px solid #f1f5f9;padding-top:14px"><b style="color:#1e40af;font-size:14px">대부분 한 품목만 구매</b><br><span style="color:#374151">카시트와 유모차를 함께 사는 예약은 <b data-f="jeju.both" data-fmt="comma">-</b>건뿐.</span></div>
+  <div class="card" style="padding:0">
+    <div class="ins-item">
+      <div class="ins-t">카시트가 주력 상품</div>
+      <div class="ins-d">카시트 <b data-f="jeju.carseat" data-fmt="comma">-</b>건, 유모차 <b data-f="jeju.stroller" data-fmt="comma">-</b>건으로 약 10배</div>
+      <div class="ins-d">물량은 카시트 위주로 준비</div>
+    </div>
+    <div class="ins-item">
+      <div class="ins-t">노출되면 높은 확률로 구매</div>
+      <div class="ins-d">카시트 옵션 화면 본 고객의 <b data-f="jeju.funnel.carseat_sel" data-fmt="1dp">-</b>%가 선택</div>
+      <div class="ins-d">유모차는 <b data-f="jeju.funnel.stroller_sel" data-fmt="1dp">-</b>%</div>
+    </div>
+    <div class="ins-item">
+      <div class="ins-t">대부분 한 품목만 구매</div>
+      <div class="ins-d">카시트와 유모차를 함께 사는 예약은 <b data-f="jeju.both" data-fmt="comma">-</b>건뿐</div>
+    </div>
   </div>
 
   <div class="section-label">내륙 <span class="rtag rtag-inland">부산, 대구</span></div>
-  <div class="card">
-    <div><b style="color:#92400e;font-size:14px">카시트만 판매</b><br><span style="color:#374151">유모차 미취급. 부산 <b data-f="inland.busan" data-fmt="comma">-</b>건, 대구 <b data-f="inland.daegu" data-fmt="comma">-</b>건. 카시트 옵션 본 고객 선택률 <b data-f="inland.funnel.carseat_sel" data-fmt="1dp">-</b>%로 제주보다 낮음.</span></div>
+  <div class="card" style="padding:0">
+    <div class="ins-item">
+      <div class="ins-t">카시트만 판매</div>
+      <div class="ins-d">유모차는 취급하지 않음</div>
+      <div class="ins-d">부산 <b data-f="inland.busan" data-fmt="comma">-</b>건, 대구 <b data-f="inland.daegu" data-fmt="comma">-</b>건</div>
+    </div>
+    <div class="ins-item">
+      <div class="ins-t">선택률은 제주보다 낮음</div>
+      <div class="ins-d">카시트 옵션 본 고객의 <b data-f="inland.funnel.carseat_sel" data-fmt="1dp">-</b>%가 선택 (제주는 <b data-f="jeju.funnel.carseat_sel" data-fmt="1dp">-</b>%)</div>
+    </div>
   </div>
 
   <div class="section-label">전체 고객 <span class="rtag rtag-all">제주 내륙 합산</span></div>
-  <div class="card" style="display:flex;flex-direction:column;gap:14px">
-    <div><b style="color:#334155;font-size:14px">여행 2주 이상 전에 미리 결제</b><br><span style="color:#374151">구매자의 <b data-f="profile.lead_2wk_pct" data-fmt="1dp">-</b>%가 출발 2주 이상 전에 결제 (보통 3주 전쯤). 물량 준비 시간은 확보되는 편.</span></div>
-    <div style="border-top:1px solid #f1f5f9;padding-top:14px"><b style="color:#334155;font-size:14px">30~40대 부모가 대부분</b><br><span style="color:#374151">구매 고객의 <b data-f="profile.age_3040_pct" data-fmt="1dp">-</b>%가 30~40대.</span></div>
+  <div class="card" style="padding:0">
+    <div class="ins-item">
+      <div class="ins-t">여행 2주 이상 전에 미리 결제</div>
+      <div class="ins-d">구매자의 <b data-f="profile.lead_2wk_pct" data-fmt="1dp">-</b>%가 출발 2주 이상 전에 결제 (보통 3주 전)</div>
+      <div class="ins-d">물량 준비 시간은 확보되는 편</div>
+    </div>
+    <div class="ins-item">
+      <div class="ins-t">30~40대 부모가 대부분</div>
+      <div class="ins-d">구매 고객의 <b data-f="profile.age_3040_pct" data-fmt="1dp">-</b>%가 30~40대</div>
+    </div>
   </div>
 
   <div class="section-label">리드타임 조절 여지</div>
-  <div class="card" style="background:#fff7ed;border-color:#fed7aa">
-    <div><b style="color:#9a3412;font-size:14px">출발 임박 예약에서 놓치는 수요</b><br><span style="color:#7c2d12">카시트를 추가하려던 고객 중 제주 <b data-f="jeju.funnel.block_rate" data-fmt="1dp">-</b>%, 내륙 <b data-f="inland.funnel.block_rate" data-fmt="1dp">-</b>%가 출발이 임박해 준비 시간 부족으로 막힘. 준비, 배송 리드타임을 줄이면 이 구간에서 추가 판매 여지 있음.</span></div>
+  <div class="card" style="padding:0;background:#fff7ed;border-color:#fed7aa">
+    <div class="ins-item">
+      <div class="ins-t" style="color:#9a3412">출발 임박 예약에서 놓치는 수요</div>
+      <div class="ins-d" style="color:#7c2d12">카시트를 추가하려던 고객 중 제주 <b data-f="jeju.funnel.block_rate" data-fmt="1dp" style="color:#9a3412">-</b>%가 준비 시간 부족으로 막힘</div>
+      <div class="ins-d" style="color:#7c2d12">내륙도 <b data-f="inland.funnel.block_rate" data-fmt="1dp" style="color:#9a3412">-</b>%로 비슷</div>
+      <div class="ins-d" style="color:#7c2d12">준비, 배송 리드타임을 줄이면 추가 판매 여지</div>
+    </div>
   </div>
 
 </div>
