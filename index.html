@@ -191,15 +191,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', sa
   <!-- 사업 공유용 핵심 인사이트 -->
   <details open style="margin-top:8px;margin-bottom:16px;background:#f0f7ff;border:1px solid #bfdbfe;border-left:4px solid #2563eb;border-radius:14px;padding:16px 22px">
     <summary style="font-size:14px;font-weight:800;color:#1e40af;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px">
-      <span>핵심 인사이트 (제주 기준)</span>
+      <span>핵심 인사이트</span>
       <span style="font-size:11px;color:#60a5fa;font-weight:500">접기</span>
     </summary>
     <div style="margin-top:14px;font-size:13.5px;color:#1f2937;line-height:1.7;display:flex;flex-direction:column;gap:13px">
-      <div><b style="color:#1e40af">카시트가 주력 상품</b><br>카시트 <b data-f="jeju.carseat" data-fmt="comma">-</b>건 결제로 유모차(<b data-f="jeju.stroller" data-fmt="comma">-</b>건)의 약 10배. 물량은 카시트 위주로 준비.</div>
-      <div><b style="color:#1e40af">노출되면 높은 확률로 구매</b><br>카시트 옵션 화면 본 고객의 <b data-f="jeju.funnel.carseat_sel" data-fmt="1dp">-</b>%가 선택으로 이어짐 (유모차는 <b data-f="jeju.funnel.stroller_sel" data-fmt="1dp">-</b>%).</div>
-      <div><b style="color:#1e40af">여행 한참 전에 미리 결제</b><br>예약에서 출발까지 중앙값 <b data-f="profile.lead_med">-</b>일, 2주 이상 선예약이 <b data-f="profile.lead_2wk_pct" data-fmt="1dp">-</b>%. 재고 준비 시간 확보 가능.</div>
-      <div><b style="color:#1e40af">30~40대 부모가 대부분</b><br>구매 고객의 <b data-f="profile.age_3040_pct" data-fmt="1dp">-</b>%가 30~40대.</div>
-      <div><b style="color:#1e40af">대부분 한 품목만 구매</b><br>카시트와 유모차를 함께 사는 예약은 <b data-f="jeju.both" data-fmt="comma">-</b>건뿐.</div>
+      <div><span class="rtag rtag-jeju">제주</span> <b style="color:#1e40af">카시트가 주력 상품</b><br>카시트 <b data-f="jeju.carseat" data-fmt="comma">-</b>건 결제로 유모차(<b data-f="jeju.stroller" data-fmt="comma">-</b>건)의 약 10배. 물량은 카시트 위주로 준비.</div>
+      <div><span class="rtag rtag-jeju">제주</span> <b style="color:#1e40af">노출되면 높은 확률로 구매</b><br>카시트 옵션 화면 본 고객의 <b data-f="jeju.funnel.carseat_sel" data-fmt="1dp">-</b>%가 선택으로 이어짐 (유모차는 <b data-f="jeju.funnel.stroller_sel" data-fmt="1dp">-</b>%). 카시트와 유모차를 함께 사는 예약은 <b data-f="jeju.both" data-fmt="comma">-</b>건뿐으로 대부분 한 품목만 구매.</div>
+      <div><span class="rtag rtag-inland">내륙</span> <b style="color:#1e40af">부산, 대구는 카시트만 판매</b><br>유모차 미취급. 부산 <b data-f="inland.busan" data-fmt="comma">-</b>건, 대구 <b data-f="inland.daegu" data-fmt="comma">-</b>건. 카시트 옵션 본 고객 선택률 <b data-f="inland.funnel.carseat_sel" data-fmt="1dp">-</b>%로 제주보다 낮음.</div>
+      <div><span class="rtag rtag-all">전체</span> <b style="color:#1e40af">여행 2주 이상 전에 미리 결제</b><br>구매자의 <b data-f="profile.lead_2wk_pct" data-fmt="1dp">-</b>%가 출발 2주 이상 전에 결제 (보통 3주 전쯤). 물량 준비 시간은 확보되는 편.</div>
+      <div><span class="rtag rtag-all">전체</span> <b style="color:#1e40af">30~40대 부모가 대부분</b><br>구매 고객의 <b data-f="profile.age_3040_pct" data-fmt="1dp">-</b>%가 30~40대.</div>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:12px 14px"><b style="color:#9a3412">리드타임 조절 여지</b><br>카시트를 추가하려던 고객 중 제주 <b data-f="jeju.funnel.block_rate" data-fmt="1dp">-</b>%, 내륙 <b data-f="inland.funnel.block_rate" data-fmt="1dp">-</b>%가 출발이 임박해 준비 시간 부족으로 막힘. 준비, 배송 리드타임을 줄이면 이 구간에서 추가 판매 여지 있음.</div>
     </div>
   </details>
 
