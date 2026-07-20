@@ -14,6 +14,13 @@ YESTERDAY=$(date -v-1d +%Y-%m-%d)
 # launchd 환경 PATH 보정
 export PATH="/opt/homebrew/bin:/usr/local/bin:/Users/admin/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 export HOME="/Users/admin"
+# 네트워크 대기: 노트북 깨어난 직후 등 인터넷 미연결 시 최대 약 5분 재시도, 그래도 없으면 조용히 종료(오류 아님)
+NET_OK=0
+for i in $(seq 1 10); do
+  if curl -sf --max-time 5 -o /dev/null https://www.google.com/generate_204; then NET_OK=1; break; fi
+  echo "$(date '+%F %T') 네트워크 대기 ($i/10)" >> "$LOG"; sleep 30
+done
+[ "$NET_OK" = 1 ] || { echo "$(date '+%F %T') 네트워크 없음, 종료" >> "$LOG"; exit 0; }
 # BQ 인증: gcloud 사용자 계정이 비어도 ADC 토큰으로 bq 실행 (auth 만료 방어)
 export CLOUDSDK_AUTH_ACCESS_TOKEN=$(gcloud auth application-default print-access-token 2>/dev/null)
 
